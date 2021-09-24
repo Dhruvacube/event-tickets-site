@@ -4,6 +4,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from localflavor.in_.models import INStateField
 from django.core.validators import MinLengthValidator, MaxLengthValidator
+from main.models import Games
+from payments.models import Payments
 
 
 # Create your models here.
@@ -58,8 +60,16 @@ class User(AbstractUser):
     city = models.CharField(_('city'),max_length=500, validators=[validate_city])
     state = INStateField(_('state'))
     zip_code = models.CharField(_('zip code'),max_length=6,validators=[validate_zip])
-    registration_no = models.IntegerField(_('Registration No'),validators=[MinLengthValidator(5),MaxLengthValidator(10)])
+    registration_no = models.IntegerField(_('Registration No'),validators=[MinLengthValidator(5),MaxLengthValidator(10)], null=True)
+    amount = models.DecimalField(help_text=_('Amount paid by the person/team'),max_digits=19, decimal_places=10, null=True)
+    orders = models.ForeignKey(Payments ,on_delete=models.CASCADE, help_text=_('This is to be filled by computer'), null=True)
 
     class Meta:
         unique_together = ('email','registration_no')
+
+
+class GameGroup(models.Model):
+    games=models.ManyToManyField(Games)
+    users=models.ManyToManyField(User)
+    payment_id = models.ForeignKey(Payments ,on_delete=models.CASCADE, help_text=_('This is to be filled by computer'))
     

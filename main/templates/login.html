@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="loginstyle.css">
+  </head>
+  <body>
+    <div class="login-box">
+      <div class="back-box">
+        <h1>Login</h1>
+        <div class="textbox">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Username">
+        </div>
+        <div class="textbox">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password" id="myInput">
+          <span class="eye" onclick="myFunctions()">
+            <i id="hide1" class="fas fa-eye"></i>
+            <i id="hide2" class="fas fa-eye-slash"></i>
+          </span>
+        </div>
+        <input type="button" class="sign_in_btn" value="Sign in">
+        <input type="button" class="sign_up_btn" value="Sign up">
+        <input type="button" class="back_btn" value="Home">
+      </div>
+    </div>
+    <script src="myScript.js"></script>
+  </body>
+</html>

@@ -1,19 +1,10 @@
+import os
 from pathlib import Path
+from django.contrib.messages import constants as messages
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8da_n$i1l-u7jjb(gu@fw)pibwpgn90pa_#$+612x*)oy$o6y+'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -28,7 +19,14 @@ INSTALLED_APPS = [
     
     'payments.apps.PaymentsConfig',
     'user.apps.UserConfig',
+    'main.apps.MainConfig',
+    
+    'localflavor',
+    "post_office",
+
 ]
+
+AUTH_USER_MODEL = 'user.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,16 +58,44 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tgl.wsgi.application'
 
+dotenv_file = BASE_DIR / ".env"
+if os.path.isfile(dotenv_file):
+    import dotenv
+    dotenv.load_dotenv(dotenv_file)
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+    PRODUCTION_SERVER = False
+    DEBUG = True
+    SECRET_KEY = '7$xw$^&2rne%#gqm!-n!y$%!7*uahe1cmnc!8hd3j+=syy3=$)'
+else:    
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    ADMINS = [('dhruva', os.environ['EMAIL_HOST_USER'])]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    PRODUCTION_SERVER = True
+    DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'False'))
+    SECRET_KEY = os.environ.get('SECRET_KEY','SECRET_KEY')
+    
+
+if os.getenv('DATABASE_URL'):
+    import dj_database_url
+    DATABASES = {'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+
+if not os.getenv('WHITENOISE'):
+    MIDDLEWARE = [MIDDLEWARE[0]] + \
+        ['whitenoise.middleware.WhiteNoiseMiddleware']+MIDDLEWARE[1:]
+    INSTALLED_APPS = INSTALLED_APPS[0:-1] + \
+        ['whitenoise.runserver_nostatic',]+[INSTALLED_APPS[-1]]
 
 
 # Password validation
@@ -96,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -108,7 +134,34 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATIC_URL = '/static/'
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
+
+
+LOGIN_REDIRECT_URL = 'view_profile'
+# LOGOUT_REDIRECT_URL = 'home'
+PASSWORD_RESET_TIMEOUT_DAYS = 1
+
+
+#Overiding a message tag
+MESSAGE_TAGS = {
+    messages.ERROR : 'danger'
+}
+
+# # Deployment check
+if PRODUCTION_SERVER:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000 
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_REFERRER_POLICY = "same-origin"
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

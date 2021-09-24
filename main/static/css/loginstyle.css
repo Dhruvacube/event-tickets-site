@@ -1,0 +1,116 @@
+@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
+body{
+  margin: 0;
+  padding: 0;
+  background-image: url('1159991.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: sans-serif;
+  background-position:center;
+  height: 100vh;
+
+}
+.back-box{
+  background-color: #000;
+  opacity: 80%;
+  padding: 1% 10% 10% 10%;
+  border-radius: 3%;
+}
+.login-box{
+  width: 280px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color: white;
+  opacity: 100%;
+}
+.login-box h1{
+  float: left;
+  font-size: 40px;
+  border-bottom: 6px solid #af2b2b;
+  margin-bottom: 50px;
+  padding: 13px 0;
+}
+.textbox{
+  width: 100%;
+  overflow: hidden;
+  font-size: 20px;
+  padding: 8px 0;
+  margin: 5% 0;
+  border-bottom: 1px solid #af2b2b;
+}
+.textbox i{
+  width: 2%;
+  float: left;
+  text-align: center;
+  padding-right: 5%;
+}
+.eye{
+  position: absolute;
+}
+.eye:hover{
+  cursor: pointer;
+}
+
+#hide1{
+  display:none;
+}
+.textbox input{
+  border: none;
+  outline: none;
+  background: none;
+  color: white;
+  font-size: 18px;
+  width: 80%;
+  float: left;
+  margin: 0 10px;
+}
+.sign_in_btn{
+  width: 100%;
+  background: none;
+  border: 4px solid #af2b2b;
+  color: white;
+  padding: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 12px 0;
+  transition: 0.6s ease;
+}
+.sign_up_btn{
+  width: 49%;
+  background: none;
+  border: 4px solid #af2b2b;
+  color: white;
+  padding: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.6s ease;
+}
+
+.back_btn{
+  width: 49%;
+  background: none;
+  border: 4px solid #af2b2b;
+  color: #fff;
+  padding: 5px;
+  font-size: 18px;
+  cursor: pointer;
+transition: 0.6s ease;
+}
+.back_btn:hover{
+background-color:#af2b2b;
+color:#fff;
+opacity:1;
+}
+.sign_in_btn:hover{
+background-color:#af2b2b;
+color:#000;
+opacity:1;
+}
+.sign_up_btn:hover{
+  background-color:#af2b2b;
+  color:#000;
+  opacity:1;
+  }
