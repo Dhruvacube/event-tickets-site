@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'payments.apps.PaymentsConfig',
-    'user.apps.UserConfig',
+    'accounts.apps.UserConfig',
     'main.apps.MainConfig',
     
     'localflavor',
@@ -26,7 +26,7 @@ INSTALLED_APPS = [
 
 ]
 
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -142,8 +142,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
 
 
-LOGIN_REDIRECT_URL = 'view_profile'
-# LOGOUT_REDIRECT_URL = 'home'
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
 

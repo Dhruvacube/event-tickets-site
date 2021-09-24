@@ -1,9 +1,13 @@
-{% load static %}{% extends "layout.html" %}
+{% extends "layout.html" %}{% load static %}{% block body %}
 <section id="hero-image">
     <div class="hero-marketing-text">
         <h1>The New <span>Era Of Gaming</span> Is Here</h1>
-        <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum. Ut ac ligula sapien. Suspendisse cursus faucibus finibus. </h5>
-        <a href="pdf/tgl_faq.pdf" target="_blank"><button class="btn btn-outline-warning">Read More</button></a>
+        <h4 class="text-white">Playing E-Games help the players to develop complex problem-solving skills, leadership skills, and the ability to deal better with unexpected consequences.
+            <br/>They also enhance a player's skills of observation, intuitive abilities and hone their alertness and concentration.
+            <br/>On the other hand, the basic theme of this tournament is to employ more and more people into something creative rather than spending time idly.
+        </h4>
+        <br/>
+        <a href="{% static 'pdf/tgl_faq.pdf' %}" target="_blank"><button class="btn btn-outline-warning">Read More</button></a>
     </div>
 </section>
 
@@ -11,86 +15,41 @@
     <h1>PC Games</h1>
     <div class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for i in games %} {% if i.platform == 'pc' or i.platform == 'a' %}
             <div class="col">
                 <div class="card">
-                    <img src="images/csgo.jpg" class="card-img-top" loading="lazy" />
+                    <img src="{{ i.image_url }}" class="card-img-top" loading="lazy" />
                     <div class="box-lower-section card-body">
-                        <h4 class="game-name">Counter Strike Global Offence </h4>
-                        <p>Lorem ipsum dolor sit amet, consectectur adipiscing elit lorem ipsum dolor sit amet.</p>
+                        <h4 class="game-name">{{i.name|capfirst}}</h4>
+                        <p>{{i.short_description}}</p>
                     </div>
                 </div>
             </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="images/2576093.jpg" class="card-img-top" loading="lazy" />
-                    <div class="box-lower-section card-body">
-                        <h4 class="game-name">Valorent</h4>
-                        <p>Lorem ipsum dolor sit amet, consectectur adipiscing elit lorem ipsum dolor sit amet.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="images/rocket.jpg" class="card-img-top" loading="lazy" />
-                    <div class="box-lower-section card-body">
-                        <h4 class="game-name">Rocket League</h4>
-                        <p>Lorem ipsum dolor sit amet, consectectur adipiscing elit lorem ipsum dolor sit amet.</p>
-                    </div>
-                </div>
-            </div>
+            {% endif %} {% endfor %}
         </div>
     </div>
 </section>
 
 <section id="tournaments">
-    <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt, sapiente.</h1>
+    <h1>Mobile and PC Gamer ?? Then check these events out !!</h1>
 </section>
 
 <section class="games" id="mgames">
-    <h1>Mobile Games</h1>
+    <h1>Mobile/PS Games</h1>
     <div class="container">
         <div class="container row row-cols-1 row-cols-md-4 g-4">
+            {% for i in games %} {% if i.platform == 'm' or i.platform == 'a' or i.platform == 'ps' %}
             <div class="col">
                 <div class="card">
-                    <img src="images/csgo.jpg" class="card-img-top" loading="lazy" />
+                    <img src="{{ i.image_url }}" class="card-img-top" loading="lazy" />
                     <div class="box-lower-section card-body">
-                        <h4 class="game-name">Counter Strike Global Offence </h4>
-                        <p>Lorem ipsum dolor sit amet, consectectur adipiscing elit lorem ipsum dolor sit amet.</p>
+                        <h4 class="game-name">{{i.name|capfirst}}</h4>
+                        <p>{{i.short_description}}</p>
                     </div>
                 </div>
             </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="images/2576093.jpg" class="card-img-top" loading="lazy" />
-                    <div class="box-lower-section card-body">
-                        <h4 class="game-name">Valorent</h4>
-                        <p>Lorem ipsum dolor sit amet, consectectur adipiscing elit lorem ipsum dolor sit amet.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="images/rocket.jpg" class="card-img-top" loading="lazy" />
-                    <div class="box-lower-section card-body">
-                        <h4 class="game-name">Rocket League</h4>
-                        <p>Lorem ipsum dolor sit amet, consectectur adipiscing elit lorem ipsum dolor sit amet.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="images/rocket.jpg" class="card-img-top" loading="lazy" />
-                    <div class="box-lower-section card-body">
-                        <h4 class="game-name">Rocket League</h4>
-                        <p>Lorem ipsum dolor sit amet, consectectur adipiscing elit lorem ipsum dolor sit amet.</p>
-                    </div>
-                </div>
-            </div>
+            {% endif %} {% endfor %}
         </div>
     </div>
 </section>
+{% endblock %}
