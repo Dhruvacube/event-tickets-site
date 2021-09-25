@@ -6,9 +6,16 @@ from localflavor.in_.models import INStateField
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from main.models import Games
 from payments.models import Payments
+import uuid
+from django.conf import settings
+
+class GameGroup(models.Model):
+    group_unique_id= models.UUIDField(default=uuid.uuid4)
+    games=models.ManyToManyField(Games)
+    users=models.ManyToManyField(settings.AUTH_USER_MODEL)
+    payment_id = models.ForeignKey(Payments ,on_delete=models.CASCADE, help_text=_('This is to be filled by computer'))
 
 
-# Create your models here.
 def validate_zip(value):
     if not value.isdigit():
         raise ValidationError(
@@ -58,18 +65,15 @@ class User(AbstractUser):
     address1 = models.TextField(_('address 1'), validators=[validate_address])
     address2 = models.TextField(_('address 2') ,validators=[validate_address])
     city = models.CharField(_('city'),max_length=500, validators=[validate_city])
-    state = INStateField(_('state'))
+    state = models.CharField(_('state'),max_length=250)
+    country = models.CharField(_('country'),max_length=250,null=True)
+    unique_id= models.UUIDField(default=uuid.uuid4)
     zip_code = models.CharField(_('zip code'),max_length=6,validators=[validate_zip])
-    registration_no = models.IntegerField(_('Registration No'),validators=[MinLengthValidator(5),MaxLengthValidator(10)], null=True)
-    amount = models.DecimalField(help_text=_('Amount paid by the person/team'),max_digits=19, decimal_places=10, null=True)
+    university_name = models.CharField(_('University or College Name'), max_length=250)
+    registration_no = models.CharField(_('Registration No'),validators=[MinLengthValidator(3)], null=True, max_length=250, help_text=_('Your college issued ID (Optional)'))
+    groups = models.ManyToManyField(GameGroup,null=True)
     orders = models.ForeignKey(Payments ,on_delete=models.CASCADE, help_text=_('This is to be filled by computer'), null=True)
 
     class Meta:
         unique_together = ('email','registration_no')
-
-
-class GameGroup(models.Model):
-    games=models.ManyToManyField(Games)
-    users=models.ManyToManyField(User)
-    payment_id = models.ForeignKey(Payments ,on_delete=models.CASCADE, help_text=_('This is to be filled by computer'))
     

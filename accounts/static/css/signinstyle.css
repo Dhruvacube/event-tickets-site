@@ -19,11 +19,7 @@ body {
 }
 
 .login-box {
-    width: 280px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 100%;
     color: white;
     opacity: 100%;
 }
@@ -64,15 +60,17 @@ body {
     display: none;
 }
 
-.textbox input {
-    border: none;
-    outline: none;
-    background: none;
-    color: white;
-    font-size: 18px;
-    width: 80%;
-    float: left;
-    margin: 0 10px;
+.textbox input,
+textarea,
+select {
+    border: none !important;
+    outline: none !important;
+    background: none !important;
+    color: white !important;
+    font-size: 18px !important;
+    width: 80% !important;
+    float: left !important;
+    margin: 0 10px !important;
 }
 
 .sign_in_btn {

@@ -22,6 +22,7 @@ class UserAdmin(UserAdmin):
                 )
     search_fields = UserAdmin.search_fields + ('registration_no', 'phone','address1','address2','state','city','zip_code','gender' 'amount', 'orders')
     verbose_name_plural = 'Profile'
+    readonly_fields = ('unique_id', )
 
 
 admin.site.register(User, UserAdmin)

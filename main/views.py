@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from .models import *
+from asgiref.sync import sync_to_async
 
-# Create your views here.
+@sync_to_async
 def home(request):
     return render(
         request,
@@ -11,6 +12,7 @@ def home(request):
         }
     )
 
+@sync_to_async
 def view_games(request, game_id: int):
     return render(
         request,

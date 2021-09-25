@@ -1,31 +1,40 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <title>login</title>
+
+<head>
+    <title>TGL 2.0 {{title}}</title>
+    <link rel="shortcut icon" type="image/icon" href="{% static 'icons/logo.png' %}" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="loginstyle.css">
-  </head>
-  <body>
+    <link rel="stylesheet" href="{% static 'css/loginstyle.css' %}">
+    <meta name="robots" content="NOINDEX, NOFOLLOW">
+</head>
+
+<body>
     <div class="login-box">
-      <div class="back-box">
-        <h1>Login</h1>
-        <div class="textbox">
-          <i class="fas fa-user"></i>
-          <input type="text" placeholder="Username">
+        <div class="back-box">
+            <h1>Login</h1>
+            <form action="{% url 'signin' %}" method="POST">{% csrf_token %} {% for field in form %} {% if forloop.counter == 1 %}
+                <div class="textbox">
+                    <i class="fas fa-user"></i> {{ field }}
+                </div>
+                {% else %}
+                <div class="textbox">
+                    <i class="fas fa-lock"></i> {{ field }}
+                    <span class="eye" onclick="myFunctions()">
+                  <i id="hide1" class="fas fa-eye"></i>
+                  <i id="hide2" class="fas fa-eye-slash"></i>
+                </span>
+                </div>
+                {% endif %} {% endfor %}
+                <button type="submit" class="sign_in_btn">Sign in</button>
+            </form>
+            <a href="{% url 'signup' %}"><input type="button" class="sign_up_btn" value="Sign up"></a>
+            <a href="{% url 'home' %}"><input type="button" class="back_btn" value="Home"></a>
         </div>
-        <div class="textbox">
-          <i class="fas fa-lock"></i>
-          <input type="password" placeholder="Password" id="myInput">
-          <span class="eye" onclick="myFunctions()">
-            <i id="hide1" class="fas fa-eye"></i>
-            <i id="hide2" class="fas fa-eye-slash"></i>
-          </span>
-        </div>
-        <input type="button" class="sign_in_btn" value="Sign in">
-        <input type="button" class="sign_up_btn" value="Sign up">
-        <input type="button" class="back_btn" value="Home">
-      </div>
     </div>
-    <script src="myScript.js"></script>
-  </body>
+    <script src="{% static 'js/login.js' %}"></script>
+</body>
+
 </html>

@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'payments.apps.PaymentsConfig',
-    'accounts.apps.UserConfig',
+    'accounts.apps.AccountsConfig',
     'main.apps.MainConfig',
     
     'localflavor',
@@ -96,6 +96,9 @@ if not os.getenv('WHITENOISE'):
         ['whitenoise.middleware.WhiteNoiseMiddleware']+MIDDLEWARE[1:]
     INSTALLED_APPS = INSTALLED_APPS[0:-1] + \
         ['whitenoise.runserver_nostatic',]+[INSTALLED_APPS[-1]]
+
+GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_RECAPTCHA_SECRET_KEY')
+GOOGLE_RECAPTCHA_SITE_KEY = os.environ.get('GOOGLE_RECAPTCHA_SITE_KEY')
 
 
 # Password validation
