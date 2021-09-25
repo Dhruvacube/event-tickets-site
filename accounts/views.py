@@ -49,7 +49,7 @@ class PasswordResetViews(PasswordResetView):
         opts = {
             'use_https': self.request.is_secure(),
             'token_generator': self.token_generator,
-            'from_email': self.from_email,
+            'from_email': 'dhruvashaw@gmail.com',
             'email_template_name': self.email_template_name,
             'subject_template_name': self.subject_template_name,
             'request': self.request,
@@ -83,7 +83,14 @@ def view_profile(request):
 
     else:
         form = EditProfileForm(instance=request.user)
-    return render(request, 'accounts/profile.html', {'form': form})
+    return render(
+        request, 
+        'accounts/signup_and_different_template.html', 
+        {
+            'form': form,
+            'heading': 'Update Profile'
+        }
+    )
 
 
 @sync_to_async
@@ -165,46 +172,20 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
 
-        if form.is_valid() and verify:
+        if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False
+            user.is_active = True
             user.save()
-            current_site = get_current_site(request)
-            ctx = {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            }
-            to_email = form.cleaned_data.get('email')
-            if not EmailTemplate.objects.filter(name='activate_account').all():
-                message = render_to_string('active.html')
-                mail_subject = 'Activate your TGL-2.0 account.'
-                EmailTemplate.objects.create(
-                    name='activate_account',
-                    description="The email HTML template to activate the user account",
-                    subject=mail_subject,
-                    html_content=message,
-                )
-                mail.send(
-                    to_email,
-                    settings.EMAIL_HOST_USER,
-                    template='activate_account',
-                    context=ctx,
-                    priority='now'
-                )
-                messages.success(
-                    request, 
-                    'Now please confirm your email address by clicking the link the email sent!'
-                )
+            messages.success(request, 'Account created')
+            
         else:
-            messages.error(request, 'Please do the recaptcha!!! or The data entered in invalid')
+            messages.error(request, 'There is some error please correct it!')
     else:
         form = SignupForm()
     current_site = get_current_site(request)
     return render(
         request, 
-        'signup.html', 
+        'accounts/signup_and_different_template.html', 
         {
         'title': '| SignUp |',
         'form': form,
@@ -214,7 +195,7 @@ def signup(request):
         'link_name': 'Log In',
         'link': f'{reverse("signin")}',
         'domain': current_site.domain,
-        "verify": True
+        "display": True
     })
 
 @sync_to_async

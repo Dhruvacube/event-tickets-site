@@ -7,6 +7,9 @@ from django.contrib.sites.shortcuts import get_current_site
 
 # Create your views here.
 
+def make_order(request):
+    pass
+
 @require_POST
 @sync_to_async
 def create_payment(request):

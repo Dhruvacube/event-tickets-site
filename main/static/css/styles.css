@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+html * {
+    font-family: url('../font/NineTsukiRegular.ttf') !important;
+}
+
 body {
-    font-family: 'helvetica', 'sans-serif';
     margin: 0;
 }
 
@@ -11,28 +15,34 @@ h2,
 h3,
 h4,
 h5 {
+    font-family: 'Architects Daughter', cursive;
     line-height: 1.5;
     font-weight: 300;
     margin: 0.5em 0;
 }
 
 h1 {
+    font-family: 'Architects Daughter', cursive;
     font-size: 2.5em;
 }
 
 h2 {
+    font-family: url('../font/NineTsukiRegular.ttf') !important;
     font-size: 2em;
 }
 
 h3 {
+    font-family: url('../font/NineTsukiRegular.ttf') !important;
     font-size: 1.6em;
 }
 
 h4 {
+    font-family: url('../font/NineTsukiRegular.ttf') !important;
     font-size: 1.4em;
 }
 
 h5 {
+    font-family: 'Architects Daughter', cursive;
     font-size: 1.2em;
 }
 
@@ -157,6 +167,7 @@ nav ul li a:hover {
 }
 
 .hero-marketing-text {
+    font-family: 'Architects Daughter', cursive;
     max-width: 1200px;
     margin: -30px auto 0;
     position: absolute;

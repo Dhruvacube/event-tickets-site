@@ -19,8 +19,9 @@ class GamesAdmin(admin.ModelAdmin):
         (_('Name'), {'fields': ('name',)}),
         (_('Description'), {'fields': ('short_description', 'long_description')}),
         (_('Image'), {'fields': ('image_url',)+readonly_fields}),
-        (_('pPlatform'), {'fields': ('platform', )}),
-        (_('Entry Price'), {'fields': ('solo_entry', 'squad_entry',)})
+        (_('Platform'), {'fields': ('platform', )}),
+        (_('Solo Entry'), {'fields': ('has_solo_entry', 'solo_entry')}),
+        (_('Squad Entry'), {'fields': ('has_squad_entry', 'squad_entry', 'squad_entry_members')})
     )
     class Media:
         js = ('js/richTextEditor.js',)

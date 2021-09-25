@@ -30,6 +30,7 @@ class SignupForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = User
         fields = (
+            'username',
             'first_name', 
             'last_name',
             'registration_no', 
@@ -56,6 +57,9 @@ class SignupForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["username"].widget.attrs["class"] = "form-control"
+        self.fields["username"].widget.attrs["required"] = "true"
+        
         self.fields["first_name"].widget.attrs["class"] = "form-control"
         self.fields["first_name"].widget.attrs["required"] = "true"
         
@@ -82,7 +86,7 @@ class SignupForm(UserCreationForm):
         self.fields["address1"].widget.attrs["rows"] = "50"
         
         self.fields["address2"].widget.attrs["class"] = "form-control"
-        self.fields["address2"].widget.attrs["required"] = "true"
+        self.fields["address2"].widget.attrs["required"] = "false"
         self.fields["address2"].widget.attrs["rows"] = "50"
         
         self.fields["city"].widget.attrs["class"] = "form-control"
@@ -98,7 +102,7 @@ class SignupForm(UserCreationForm):
         self.fields["zip_code"].widget.attrs["required"] = "true"
         
         self.fields["gender"].widget.attrs["class"] = "form-control"
-        self.fields["gender"].widget.attrs["style"] = "color: black !important;"
+        self.fields["gender"].widget.attrs["style"] = "color: black !important; background-color: white !important;"
 
 class LoginForm(AuthenticationForm):
     class Meta:
@@ -172,43 +176,52 @@ class PasswordReset(PasswordResetForm):
 class EditProfileForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["username"].widget.attrs["placeholder"] = "Username"
-        self.fields["username"].widget.attrs["class"] = "form-control mb-20"
-        self.fields['username'].label = "Your Username"
+        self.fields["username"].widget.attrs["class"] = "form-control"
+        self.fields["username"].widget.attrs["required"] = "true"
+        
+        self.fields["first_name"].widget.attrs["class"] = "form-control"
+        self.fields["first_name"].widget.attrs["required"] = "true"
+        
+        self.fields["last_name"].widget.attrs["class"] = "form-control"
+        self.fields["last_name"].widget.attrs["required"] = "true"
 
-        self.fields["email"].widget.attrs["placeholder"] = "Email address"
-        self.fields["email"].widget.attrs["class"] = "form-control mb-20"
-        self.fields['email'].label = "Your account email address"
-
-        self.fields["first_name"].widget.attrs["placeholder"] = "First Name"
-        self.fields["first_name"].widget.attrs["class"] = "form-control mb-20"
-
-        self.fields["last_name"].widget.attrs["placeholder"] = "Last Name"
-        self.fields["last_name"].widget.attrs["class"] = "form-control mb-20"
-
-        self.fields["address1"].widget.attrs["placeholder"] = "Address 1"
-        self.fields["address1"].widget.attrs["class"] = "h-200x ptb-20 form-control"
-        self.fields['address1'].label = "Address"
-
-        self.fields["address2"].widget.attrs["placeholder"] = "Address 2"
-        self.fields["address2"].widget.attrs["class"] = "h-200x ptb-20 form-control"
-        self.fields['address2'].label = "Address 2"
-
-        self.fields["phone"].widget.attrs["placeholder"] = "Phone Number"
-        self.fields["phone"].widget.attrs["class"] = "form-control mb-10"
-        self.fields["phone"].widget.attrs["value"] = "+91"
-        self.fields['phone'].label = "Phone Number"
-
-        self.fields["state"].widget.attrs["class"] = "form-control mb-20"
-
-        self.fields["city"].widget.attrs["placeholder"] = "City"
-        self.fields["city"].widget.attrs["class"] = "form-control mb-10"
-
-        self.fields["zip_code"].widget.attrs["placeholder"] = "Zip Code"
-        self.fields["zip_code"].widget.attrs["class"] = "form-control mb-10"
-        self.fields['zip_code'].label = "Zip Code"
-
-        self.fields["gender"].widget.attrs["class"] = "form-control mb-20"
+        self.fields["email"].widget.attrs["class"] = "form-control"
+        self.fields["email"].widget.attrs["required"] = "true"
+        
+        self.fields["registration_no"].widget.attrs["class"] = "form-control"
+        self.fields["registration_no"].widget.attrs["required"] = "true"
+        
+        self.fields["phone"].widget.attrs["class"] = "form-control"
+        self.fields["phone"].widget.attrs["required"] = "true"
+        
+        self.fields["address1"].widget.attrs["class"] = "form-control"
+        self.fields["address1"].widget.attrs["required"] = "true"
+        self.fields["address1"].widget.attrs["rows"] = "50"
+        
+        self.fields["address2"].widget.attrs["class"] = "form-control"
+        self.fields["address2"].widget.attrs["required"] = "true"
+        self.fields["address2"].widget.attrs["rows"] = "50"
+        
+        self.fields["city"].widget.attrs["class"] = "form-control"
+        self.fields["city"].widget.attrs["required"] = "true"
+        
+        self.fields["state"].widget.attrs["class"] = "form-control"
+        self.fields["state"].widget.attrs["required"] = "true"
+        
+        self.fields["country"].widget.attrs["class"] = "form-control"
+        self.fields["country"].widget.attrs["required"] = "true"
+        
+        self.fields["zip_code"].widget.attrs["class"] = "form-control"
+        self.fields["zip_code"].widget.attrs["required"] = "true"
+        
+        self.fields["gender"].widget.attrs["class"] = "form-control"
+        self.fields["gender"].widget.attrs["style"] = "color: black !important;"
+        
+        self.fields["unique_id"].widget.attrs["class"] = "form-control"
+        self.fields["unique_id"].widget.attrs["disabled"] = "true"
+        
+        self.fields["password"].widget.attrs["class"] = "d-none d-print-none"
+        self.fields["password"].widget.attrs["style"] = "display: none;"
 
     class Meta(UserChangeForm):
         model = User
@@ -226,7 +239,8 @@ class EditProfileForm(UserChangeForm):
             'city', 
             'state', 
             'country',
-            'zip_code'
+            'zip_code',
+            'unique_id'
         )
 
 
