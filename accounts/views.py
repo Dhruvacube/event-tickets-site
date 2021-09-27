@@ -104,7 +104,15 @@ def change_password(request):
         else: messages.error(request, "Please correct the errors mentioned below!")
     else:
         form = PasswordChangeForms(user=request.user)
-    return render(request, 'accounts/password-change.html', {'form': form})
+    return render(
+        request, 
+        'accounts/signup_and_different_template.html', 
+        {
+            'form': form,
+            'heading': 'Change Password',
+            'display_messages': True
+        }
+    )
 
 
 @sync_to_async
@@ -191,60 +199,4 @@ def signup(request):
         'link': f'{reverse("signin")}',
         'domain': current_site.domain,
         "display": True
-    })
-
-@sync_to_async
-def requestverification_mail(request):
-    if request.method == "POST":
-        form = request_verification_mail(request.POST)
-
-        if form.is_valid():
-            email = form.cleaned_data.get('email')
-            try:
-                userobject = User.objects.filter(email=email).get()
-                if userobject.is_active:
-                    messages.warning(
-                        request, '<marquee>Your acoount is <b>already active</b> please log into your account</marquee>')
-                else:
-
-                    if not EmailTemplate.objects.filter(name='activate_account').all():
-                        message = render_to_string('active.html')
-                        mail_subject = 'Activate your 24 Ave Pizza account.'
-                        EmailTemplate.objects.create(
-                            name='activate_account',
-                            description="The email HTML template to activate the user account",
-                            subject=mail_subject,
-                            html_content=message,
-                        )
-
-                    current_site = get_current_site(request)
-                    ctx = {
-                        'user': userobject,
-                        'domain': current_site.domain,
-                        'uid': urlsafe_base64_encode(force_bytes(userobject.pk)),
-                        'token': account_activation_token.make_token(userobject),
-                    }
-                    mail.send(
-                        email,
-                        settings.EMAIL_HOST_USER,
-                        template='activate_account',
-                        context=ctx,
-                        priority='now'
-                    )
-                    messages.success(
-                        request, 
-                        '<marquee>The mail has been <b>sent!</b> please check your <b>inbox or spam mail section</b></marquee>'
-                    )
-
-            except ObjectDoesNotExist:  messages.error(request, '<marquee>The account <b>dosen\'t seems to exists</b> please create a new one!</marquee>')
-    else: form = request_verification_mail()
-
-    return render(
-        request, 
-        'signup.html',
-        {
-        'form': form,
-        "heading": "Request Verification Mail",
-        "verify": False,
-        "subheading": "Didn't got the verfication mail? Then request it here!"
     })
