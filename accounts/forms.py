@@ -44,7 +44,8 @@ class SignupForm(UserCreationForm):
             'city', 
             'state', 
             'country',
-            'zip_code'
+            'zip_code',
+            'university_name',
         )
 
     def save(self, commit=True):
@@ -102,6 +103,9 @@ class SignupForm(UserCreationForm):
         self.fields["zip_code"].widget.attrs["required"] = "true"
         
         self.fields["gender"].widget.attrs["class"] = "form-control"
+        
+        self.fields["university_name"].widget.attrs["class"] = "form-control"
+        self.fields["university_name"].widget.attrs["required"] = "true"
         # self.fields["gender"].widget.attrs["style"] = "color: black !important; background-color: white !important;"
 
 class LoginForm(AuthenticationForm):
@@ -189,7 +193,6 @@ class EditProfileForm(UserChangeForm):
         self.fields["email"].widget.attrs["required"] = "true"
         
         self.fields["registration_no"].widget.attrs["class"] = "form-control"
-        self.fields["registration_no"].widget.attrs["required"] = "true"
         
         self.fields["phone"].widget.attrs["class"] = "form-control"
         self.fields["phone"].widget.attrs["required"] = "true"
@@ -220,6 +223,9 @@ class EditProfileForm(UserChangeForm):
         self.fields["unique_id"].widget.attrs["class"] = "form-control"
         self.fields["unique_id"].widget.attrs["disabled"] = "true"
         
+        self.fields["university_name"].widget.attrs["class"] = "form-control"
+        self.fields["university_name"].widget.attrs["required"] = "true"
+        
         self.fields["password"].widget.attrs["class"] = "d-none d-print-none"
         self.fields["password"].widget.attrs["style"] = "display: none;"
 
@@ -240,7 +246,8 @@ class EditProfileForm(UserChangeForm):
             'state', 
             'country',
             'zip_code',
-            'unique_id'
+            'university_name',
+            'unique_id',
         )
 
 

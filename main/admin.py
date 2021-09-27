@@ -27,3 +27,4 @@ class GamesAdmin(admin.ModelAdmin):
         js = ('js/richTextEditor.js',)
     
 admin.site.register(Games, GamesAdmin)
+admin.site.site_header = admin.site.site_title = 'Tanzanite Gaming League 2.0'

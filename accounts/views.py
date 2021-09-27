@@ -190,11 +190,9 @@ def signup(request):
         request, 
         'accounts/signup_and_different_template.html', 
         {
-        'title': '| SignUp |',
+        'title': '| Register Now |',
         'form': form,
-        'heading': 'Create Account',
-        'subheading': 'Get started with your account',
-        'message': 'Have an account???',
+        'heading': 'Register Now',
         'link_name': 'Log In',
         'link': f'{reverse("signin")}',
         'domain': current_site.domain,
