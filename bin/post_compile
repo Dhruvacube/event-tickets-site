@@ -1,0 +1,2 @@
+python manage.py compress --force
+python manage.py collectstatic --noinput
