@@ -1,5 +1,5 @@
-{% extends 'layout.html' %}{% load static %}{% block body %}
-<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" /> {% if not payafter %}
+{% extends 'layout.html' %}{% load static %}{% load compress %}{% block body %} {% compress css %}
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />{% endcompress %}{% if not payafter %}
 <div class="container">
     <form action="{% if action_url %}{{action_url}}{% else %}?{% endif %}" method="POST">{% csrf_token %}{% if display_games %}{% for i in games %} {% if forloop.counter|divisibleby:"3" or forloop.counter == 1 %}
         <div class="row">
