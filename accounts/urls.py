@@ -15,9 +15,7 @@ urlpatterns = [
     url(r'^profile/$', views.view_profile, name='view_profile'),
     url(r'^changepassword/$', views.change_password, name='change_password'),
     
-    path('activate/<slug:uidb64>/<slug:token>/', views.activate, name='activate'),
     url(r'^login/$', views.loginform, name='signin'),
     url(r'^logout/$', views.user_logout, name='signout'),
     path('signup/', views.signup, name='signup'),
-    path('verify/', views.requestverification_mail, name='verify'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

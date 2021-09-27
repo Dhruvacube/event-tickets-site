@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+* {
+    padding: 0;
+    font-family: 'Special Elite', cursive;
+}
+
+body {
+    background: url(../images/1173348.jpg);
+    background-repeat: no-repeat;
+    font-family: sans-serif;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    flex-wrap: wrap;
+}
+
+.games {
+    background-color: black;
+    color: white;
+    opacity: 80%;
+    text-align: center;
+    margin: 0 auto 0 auto;
+    justify-content: space-between;
+    box-shadow: 0px 0px 20px 2px #4417e6;
+    border-radius: 25px;
+}
+
+.payment {
+    margin: 0 auto 0 auto;
+    width: 47%;
+    flex: 50%;
+    opacity: 80%;
+    text-align: center;
+    height: 80vh;
+    padding-top: 20vh;
+    background-color: black;
+    color: white;
+    border-radius: 25px;
+    align-items: center;
+    box-shadow: 0px 0px 20px 2px #09b42e;
+}
+
+.games .container1,
+.container3 {
+    margin: 5vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    box-shadow: 0px 0px 20px 2px #fc0808;
+    border-radius: 25px;
+}
+
+.games .container2 {
+    margin: 5vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    box-shadow: 0px 0px 20px 2px #fc0808;
+    border-radius: 25px;
+}
+
+.container4 {
+    margin: 5vh;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    box-shadow: 0px 0px 20px 2px #fc0808;
+    border-radius: 25px;
+}
+
+.games .game-list {
+    width: 70%;
+    border-radius: 2px;
+    border: 3px solid #be3e3e;
+    height: 5vh;
+    border-radius: 15px;
+}
+
+h1 {
+    font-weight: 750;
+    position: relative;
+    font-family: 'Special Elite', cursive;
+}
+
+.games .mode {
+    width: 70%;
+    border-radius: 2px;
+    border: 3px solid #be3e3e;
+    height: 5vh;
+    border-radius: 15px;
+}
+
+.opt {
+    text-align: center;
+    height: 4vh;
+    font-size: 2.5vh;
+    font-family: 'Special Elite', cursive;
+}
+
+option {
+    font-family: 'Special Elite', cursive;
+}
+
+.payment .button {
+    width: 70%;
+    border-radius: 2px;
+    border: 3px solid #be3e3e;
+    height: 5vh;
+    border-radius: 15px;
+}
+
+p {
+    display: block;
+    padding: 5px;
+    margin-bottom: 3vh;
+    font-size: 5vh;
+    font-weight: 750;
+    position: relative;
+    font-family: 'Special Elite', cursive;
+}
+
+@media(max-width: 600px) {
+    .game,
+    .payment {
+        flex: 100%;
+    }
+}

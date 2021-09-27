@@ -102,7 +102,7 @@ class SignupForm(UserCreationForm):
         self.fields["zip_code"].widget.attrs["required"] = "true"
         
         self.fields["gender"].widget.attrs["class"] = "form-control"
-        self.fields["gender"].widget.attrs["style"] = "color: black !important; background-color: white !important;"
+        # self.fields["gender"].widget.attrs["style"] = "color: black !important; background-color: white !important;"
 
 class LoginForm(AuthenticationForm):
     class Meta:

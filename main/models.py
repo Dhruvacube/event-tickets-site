@@ -2,6 +2,9 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.utils.safestring import mark_safe
+import uuid
+from django.conf import settings
+from payments.models import *
 
 
 # Create your models here.
@@ -31,3 +34,14 @@ class Games(models.Model):
     
     class Meta:
         verbose_name_plural = _('Games')
+
+class GameGroup(models.Model):
+    group_unique_id= models.UUIDField(default=uuid.uuid4)
+    solo_or_squad = models.CharField(default='sq', choices=(('sq','SQUAD'),('so','SOLO')),max_length=15)
+    game=models.ForeignKey(Games,on_delete=models.CASCADE)
+    users=models.ManyToManyField(settings.AUTH_USER_MODEL)
+    payment_id = models.ForeignKey(Payments ,on_delete=models.CASCADE, help_text=_('This is to be filled by computer'))
+    
+    def __str__(self):
+        return self.group_unique_id
+    

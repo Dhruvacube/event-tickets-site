@@ -4,16 +4,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from localflavor.in_.models import INStateField
 from django.core.validators import MinLengthValidator, MaxLengthValidator
-from main.models import Games
+from main.models import Games, GameGroup
 from payments.models import Payments
 import uuid
 from django.conf import settings
-
-class GameGroup(models.Model):
-    group_unique_id= models.UUIDField(default=uuid.uuid4)
-    games=models.ManyToManyField(Games)
-    users=models.ManyToManyField(settings.AUTH_USER_MODEL)
-    payment_id = models.ForeignKey(Payments ,on_delete=models.CASCADE, help_text=_('This is to be filled by computer'))
 
 
 def validate_zip(value):

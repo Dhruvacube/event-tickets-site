@@ -1,4 +1,5 @@
 @import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 body {
     margin: 0;
     padding: 0;
@@ -9,6 +10,25 @@ body {
     font-family: sans-serif;
     background-position: center;
     height: 100vh;
+}
+
+input {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #be3e3e;
+}
+
+input:hover {
+    transition: all 1s ease;
+    background-color: #05b305;
 }
 
 .back-box {

@@ -13,6 +13,16 @@ def home(request):
     )
 
 @sync_to_async
+def group_make(request):
+    return render(
+        request,
+        'index.html',
+        {
+            'games': Games.objects.all()
+        }
+    )
+
+@sync_to_async
 def view_games(request, game_id: int):
     return render(
         request,

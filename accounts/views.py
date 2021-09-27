@@ -43,8 +43,6 @@ class PasswordResetViews(PasswordResetView):
     description = _(
         'Password Reset for the existing account for the 24 Ave Pizza')
 
-    @sync_to_async
-    @check_recaptcha
     def form_valid(self, form):
         opts = {
             'use_https': self.request.is_secure(),
@@ -56,11 +54,8 @@ class PasswordResetViews(PasswordResetView):
             'html_email_template_name': self.html_email_template_name,
             'extra_email_context': self.extra_email_context,
         }
-        if self.request.recaptcha_is_valid:
-            form.save(**opts)
-            return super().form_valid(form)
-        else:
-            messages.error(self.request, "Please do the recaptcha!")
+        form.save(**opts)
+        return super().form_valid(form)
 
 
 class PasswordResetDoneViews(PasswordResetDoneView):
@@ -253,20 +248,3 @@ def requestverification_mail(request):
         "verify": False,
         "subheading": "Didn't got the verfication mail? Then request it here!"
     })
-
-@sync_to_async
-def activate(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-        messages.success(
-            request, 'Thank you for your email confirmation. Now you have been logged into your account.')
-        return HttpResponsePermanentRedirect(reverse('home'))
-    else:
-        messages.error(request, 'The activat')

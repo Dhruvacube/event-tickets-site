@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
-
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -97,8 +98,8 @@ if not os.getenv('WHITENOISE'):
     INSTALLED_APPS = INSTALLED_APPS[0:-1] + \
         ['whitenoise.runserver_nostatic',]+[INSTALLED_APPS[-1]]
 
-GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_RECAPTCHA_SECRET_KEY')
-GOOGLE_RECAPTCHA_SITE_KEY = os.environ.get('GOOGLE_RECAPTCHA_SITE_KEY')
+INSTAMOJO_AUTH_KEY = os.environ.get('INSTAMOJO_AUTH_KEY')
+INSTAMOJO_PRIVATE_TOKEN = os.environ.get('INSTAMOJO_PRIVATE_TOKEN')
 
 
 # Password validation
@@ -168,3 +169,23 @@ if PRODUCTION_SERVER:
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+sentry_sdk.init(
+    dsn=os.environ.get('SENTRY_URL'),
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production,
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True,
+
+    # By default the SDK will try to use the SENTRY_RELEASE
+    # environment variable, or infer a git commit
+    # SHA as release, however you may want to set
+    # something more human-readable.
+    # release="myapp@1.0.0",
+)

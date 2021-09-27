@@ -8,5 +8,7 @@ from main.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
-    path('', home,name="home")
+    path('payments/', include('payments.urls')),
+    path('', home,name="home"),
+    path('make_groups/', group_make, name="make_groups"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
