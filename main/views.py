@@ -16,7 +16,7 @@ def home(request):
 def group_make(request):
     return render(
         request,
-        'index.html',
+        'groups.html',
         {
             'games': Games.objects.all()
         }

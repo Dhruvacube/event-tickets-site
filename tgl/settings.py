@@ -80,7 +80,9 @@ if os.path.isfile(dotenv_file):
     PRODUCTION_SERVER = False
     DEBUG = True
     SECRET_KEY = '7$xw$^&2rne%#gqm!-n!y$%!7*uahe1cmnc!8hd3j+=syy3=$)'
+    LOCAL = True
 else:    
+    LOCAL = False
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
     EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']

@@ -14,11 +14,11 @@ class UserAdmin(UserAdmin):
     add_form = SignupForm
     model = User
     fieldsets = (UserAdmin.fieldsets[0],) + (
-            (_('Personal info'), {'fields': UserAdmin.fieldsets[1][1]['fields']+('registration_no','phone', 'address1','address2','state','city','zip_code','gender') }),
+            (_('Personal info'), {'fields': UserAdmin.fieldsets[1][1]['fields']+('university_name', 'registration_no','phone', 'address1','address2','state','city','zip_code','gender') }),
             ) + ( 
                 UserAdmin.fieldsets[2], UserAdmin.fieldsets[3]
                 ) + (
-                    (_('Orders'), {'fields': ('amount','orders') }),
+                    (_('Orders'), {'fields': ('orders',) }),
                 )
     search_fields = UserAdmin.search_fields + ('registration_no', 'phone','address1','address2','state','city','zip_code','gender' 'amount', 'orders')
     verbose_name_plural = 'Profile'

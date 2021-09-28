@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from asgiref.sync import sync_to_async
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 import uuid
 
@@ -16,6 +17,7 @@ from .models import Payments
 
 
 @sync_to_async
+@login_required
 def make_order(request):
     if request.method == 'POST':
         order_list, total_value=[], 0
@@ -57,6 +59,7 @@ def make_order(request):
     )
 
 @sync_to_async
+@login_required
 def create_payment(request):
     amount = str(request.session.get('total_value'))
     purpose = str(uuid.uuid4())
@@ -65,14 +68,17 @@ def create_payment(request):
     phone = request.user.phone
     
     current_site = get_current_site(request)
-    redirect_url = f'{request.scheme}://{current_site.domain}{reverse("create_payment")}'
+    redirect_url = f'{request.scheme}://{current_site.domain}{reverse("payment_stats")}'
     
     allow_repeated_payments = False
     send_email = True
     send_sms = True
     expires_at = datetime.datetime.now() + datetime.timedelta(days=0, seconds=600)
     
-    api = Instamojo(api_key=settings.INSTAMOJO_AUTH_KEY,auth_token=settings.INSTAMOJO_PRIVATE_TOKEN)
+    if settings.LOCAL:
+        api = Instamojo(api_key=settings.INSTAMOJO_AUTH_KEY,auth_token=settings.INSTAMOJO_PRIVATE_TOKEN,endpoint='https://test.instamojo.com/api/1.1/')
+    else:
+        api = Instamojo(api_key=settings.INSTAMOJO_AUTH_KEY,auth_token=settings.INSTAMOJO_PRIVATE_TOKEN)
 
     # Create a new Payment Request
     response = api.payment_request_create(
@@ -87,36 +93,42 @@ def create_payment(request):
         send_email=send_email,
         send_sms=send_sms,
     )
-    pay=Payments(order_id=purpose, order_id_instamojo=response.get("payment_request")["id"],amount=int(request.session['total_value']),payment_status='P',orders_list=str(request.session['order_list']))
+    pay=Payments(order_id=purpose, request_id_instamojo=response.get("payment_request")["id"],amount=int(request.session['total_value']),payment_status='P',orders_list=str(request.session['order_list']))
     pay.save()
+    request.user.orders.add(pay)
     return HttpResponsePermanentRedirect(response.get("payment_request")["longurl"])
 
 @sync_to_async
+@login_required
 def payment_stats(request):
     payment_id = request.GET.get('payment_id')
     payment_request_id = request.GET.get('payment_request_id')
     payment_status = request.GET.get('payment_status')
-    
-    try:
-        payment_obj = Payments.objects.filter(order_id_instamojo=payment_request_id).get()
-        payment_obj.payment_status = 'S'
-        payment_obj.save()
-        messages.success(request, 'You have successfully paid the amount! Please wait for 2secs')
-        
-        order_list = request.session['order_list']
-        
-        for i in order_list:
-            game=Games.objects.filter(name=i[0]).get()
-            game_group = GameGroup(game=game,payment_id=payment_obj,solo_or_squad=i[1])
-            game_group.save()
-            game_group.users.add(request.user)
-        
-        redirect_link = reverse('make_groups')
-    except Payments.DoesNotExist:
-        messages.error(request, 'The transaction does not exists')
-        redirect_link = reverse('make_order')
-    except:
-        messages.error(request, 'There was some error processing at the backend! Please contact the support')
+    if 'credit' in payment_status.lower():
+        try:
+            payment_obj = Payments.objects.filter(request_id_instamojo=payment_request_id).get()
+            payment_obj.payment_status = 'S'
+            payment_obj.instamojo_order_id = payment_id
+            payment_obj.save()
+            messages.success(request, 'You have successfully paid the amount! Please wait for 2secs')
+            
+            order_list = request.session['order_list']
+            
+            for i in order_list:
+                game=Games.objects.filter(name=i[0]).get()
+                game_group = GameGroup(game=game,payment_id=payment_obj,solo_or_squad=i[1])
+                game_group.save()
+                game_group.users.add(request.user)
+            
+            redirect_link = reverse('make_groups')
+        except Payments.DoesNotExist:
+            messages.error(request, 'The transaction does not exists')
+            redirect_link = reverse('make_order')
+        except:
+            messages.error(request, 'There was some error processing at the backend! Please contact the support')
+            redirect_link = reverse('make_order')
+    else:
+        messages.error(request, 'The payment failed')
         redirect_link = reverse('make_order')
     del request.session['order_list']
     del request.session['total_value']

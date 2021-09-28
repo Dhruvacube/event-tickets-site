@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.admin import Group
 from django_admin_listfilter_dropdown.filters import DropdownFilter
 from .models import *
 
@@ -25,6 +26,26 @@ class GamesAdmin(admin.ModelAdmin):
     )
     class Media:
         js = ('js/richTextEditor.js',)
+
+class GameGroupAdmin(admin.ModelAdmin):
+    list_display = ('group_name', 'group_unique_id',
+                    'solo_or_squad', 'game','payment_id')
+    list_filter = (
+        'solo_or_squad', 'game'
+    )
+    search_fields = list_display + list_filter
+    list_per_page = 30
+
+    fieldsets = (
+        (_('Name'), {'fields': ('group_name', 'group_unique_id')}),
+        (_('Mode'), {'fields': ('solo_or_squad',)}),
+        (_('Game'), {'fields': ('game',)}),
+        (_('Users'), {'fields': ('users', )}),
+        (_('Payment ID'), {'fields': ('payment_id',)}),
+    )
     
 admin.site.register(Games, GamesAdmin)
+admin.site.register(GameGroup, GameGroupAdmin)
+admin.site.unregister(Group)
+
 admin.site.site_header = admin.site.site_title = 'Tanzanite Gaming League 2.0'

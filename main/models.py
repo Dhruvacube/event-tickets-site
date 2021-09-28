@@ -36,6 +36,7 @@ class Games(models.Model):
         verbose_name_plural = _('Games')
 
 class GameGroup(models.Model):
+    group_name = models.CharField(max_length=250)
     group_unique_id= models.UUIDField(default=uuid.uuid4)
     solo_or_squad = models.CharField(default='sq', choices=(('sq','SQUAD'),('so','SOLO')),max_length=15)
     game=models.ForeignKey(Games,on_delete=models.CASCADE)
@@ -43,5 +44,5 @@ class GameGroup(models.Model):
     payment_id = models.ForeignKey(Payments ,on_delete=models.CASCADE, help_text=_('This is to be filled by computer'))
     
     def __str__(self):
-        return self.group_unique_id
+        return str(self.group_name)
     
