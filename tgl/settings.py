@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'payments.apps.PaymentsConfig',
     'accounts.apps.AccountsConfig',
     'main.apps.MainConfig',
+    'announcements.apps.AnnouncementsConfig',
     
     'localflavor',
     "post_office",

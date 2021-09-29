@@ -28,7 +28,7 @@ class GamesAdmin(admin.ModelAdmin):
         js = ('js/richTextEditor.js',)
 
 class GameGroupAdmin(admin.ModelAdmin):
-    list_display = ('group_name', 'group_unique_id',
+    list_display = ('group_unique_id', 'group_name', 
                     'solo_or_squad', 'game','payment_id')
     list_filter = (
         'solo_or_squad', 'game'

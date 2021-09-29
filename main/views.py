@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import *
 from asgiref.sync import sync_to_async
+from django.contrib.auth.decorators import login_required
 
 @sync_to_async
 def home(request):
@@ -13,12 +14,13 @@ def home(request):
     )
 
 @sync_to_async
+@login_required
 def group_make(request):
     return render(
         request,
         'groups.html',
         {
-            'games': Games.objects.all()
+            'group': GameGroup.objects.filter(users__in=[request.user]).all()
         }
     )
 

@@ -36,8 +36,8 @@ class Games(models.Model):
         verbose_name_plural = _('Games')
 
 class GameGroup(models.Model):
-    group_name = models.CharField(max_length=250)
     group_unique_id= models.UUIDField(default=uuid.uuid4)
+    group_name = models.CharField(max_length=250)
     solo_or_squad = models.CharField(default='sq', choices=(('sq','SQUAD'),('so','SOLO')),max_length=15)
     game=models.ForeignKey(Games,on_delete=models.CASCADE)
     users=models.ManyToManyField(settings.AUTH_USER_MODEL)
