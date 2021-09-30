@@ -20,7 +20,8 @@ def group_make(request):
         request,
         'groups.html',
         {
-            'group': GameGroup.objects.filter(users__in=[request.user]).all()
+            'group': GameGroup.objects.filter(users__in=[request.user],solo_or_squad='sq').all(),
+            'solo': GameGroup.objects.filter(users__in=[request.user],solo_or_squad='so').all()
         }
     )
 

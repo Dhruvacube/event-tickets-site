@@ -213,8 +213,8 @@ sentry_sdk.init(
     # release="myapp@1.0.0",
 )
 
-COMPRESS_ENABLED = True
-COMPRESS_OFFLINE = True
+COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', True)
+COMPRESS_OFFLINE = os.environ.get('COMPRESS_OFFLINE', True)
 COMPRESS_PRECOMPILERS = (
     ('text/x-sass', 'django_libsass.SassCompiler'),
     ('text/x-scss', 'django_libsass.SassCompiler'),

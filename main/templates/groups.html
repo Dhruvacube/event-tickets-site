@@ -1,11 +1,23 @@
 {% extends 'layout.html' %}{% load static %}{% load compress %}{% block body %}
 <section class="games" id="games">
-    <h1>Make your groups</h1>
-    <div class="container">
-        <h5>dsghds</h5>
-        <h5>dsghds</h5>
-        <h5>dsghds</h5>
-        <h5>dsghds</h5>
+    {% if solo %}
+    <center>
+        <h2>Mode : Solo</h2>
+    </center>
+    <div class="container row row-cols-1 row-cols-md-3 g-4">
+        {% for i in solo %}
+        <div class="col">
+            <div class="card">
+                <img src="{{i.game.image_url}}" class="card-img-top" alt="{{i.game.name}} Image">
+                <div class="card-body">
+                    <h5 class="card-title">{{i.game.name|capfirst}}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
+    {% endif %}
+    <hr/>
 </section>
+
 {% endblock %}
