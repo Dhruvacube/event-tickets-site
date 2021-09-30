@@ -21,7 +21,7 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
         (_('Creation'), {'fields': list_filter}),
     )
     class Media:
-        js = ('js/richTextEditor.js',)
+        js = ('js/richTextEditorAnnouncements.js',)
 
 class GroupsAnnouncementsAdmin(admin.ModelAdmin):
     list_display = ('announcement_id', 'announncement_message',
@@ -40,7 +40,7 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
         (_('Creation'), {'fields': list_filter}),
     )
     class Media:
-        js = ('js/richTextEditor.js',)
+        js = ('js/richTextEditorAnnouncements.js',)
     
 class UsersAnnouncementsAdmin(admin.ModelAdmin):
     list_display = ('announcement_id', 'announncement_message',
@@ -59,7 +59,7 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
         (_('Creation'), {'fields': list_filter}),
     )
     class Media:
-        js = ('js/richTextEditor.js',)
+        js = ('js/richTextEditorAnnouncements.js',)
 
     
 admin.site.register(GlobalAnnouncements, GlobalAnnouncementsAdmin)
