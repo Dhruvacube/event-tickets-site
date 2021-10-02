@@ -1,1 +1,1 @@
-web: gunicorn tgl.asgi:application -k puja.workers.DynamicUvicornWorker
+web: gunicorn tgl.asgi:application -k tgl.workers.DynamicUvicornWorker
