@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}{% load static %}{% load payments_extras %}{% load compress %}{% block body %}
+<section class="games" id="games">
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Instamojo Request ID</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Request Date and Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in payments %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{i.order_id}}</td>
+                        <td>{{i.request_id_instamojo}}</td>
+                        <td>₹{{i.amount}}</td>
+                        <td>{{i.payment_status|payment_stats|safe}}</td>
+                        <td>{{i.created_at}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<section class="games" id="games">
+    <center>
+        <h3>Here your payments history is displayed, and it gets updated from time to time :)</h3>
+    </center>
+</section>
+{% endblock %}

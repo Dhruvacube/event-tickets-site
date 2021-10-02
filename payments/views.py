@@ -14,11 +14,24 @@ from django.http import HttpResponsePermanentRedirect
 from main.models import Games, GameGroup
 from django.urls import reverse
 from .models import Payments
+from .templatetags import payments_extras
 
 
 @sync_to_async
 @login_required
-def make_order(request):
+def view_payments_history(request):
+    return render(
+        request,
+        'payments.html',
+        {
+            'payments': request.user.orders.all()
+        }
+    )
+
+
+@sync_to_async
+@login_required
+def make_order(request): 
     if request.method == 'POST':
         order_list, total_value=[], 0
         for i in request.POST.dict():

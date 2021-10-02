@@ -18,3 +18,10 @@ def filter_users_id(queryset, value: int):
     if value > length:
         return False
     return queryset[value-1].unique_id
+
+@register.filter(name='check_success')
+def check_success(queryset):
+    payments_list = queryset.filter(payment_status='S').count()
+    if payments_list >= 1:
+        return False
+    return True

@@ -1,4 +1,4 @@
-{% load static %}{% load compress %}
+{% load static %}{% load extra %}{% load compress %}
 <!DOCTYPE html>
 <html>
 
@@ -80,8 +80,11 @@
                         <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><b>Take Actions</b> <i class='bx bx-arrow-back bx-tada'></i></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{% url 'view_profile' %}"><i class='bx bx-user-circle'></i> View Profile</a></li>
+                            {% if user.orders.all|check_success %}
                             <li><a class="dropdown-item" href="{% url 'make_order' %}"><i class='bx bx-cart'></i> Orders/Payments</a></li>
-                            {% if user.groups %}
+                            {% endif %}{% if user.orders %}
+                            <li><a class="dropdown-item" href="{% url 'view_payments_history' %}"><i class='bx bx-money'></i> Payments History</a></li>
+                            {% endif %} {% if user.groups %}
                             <li><a class="dropdown-item" href="{% url 'make_groups' %}"><i class='bx bx-group'></i> Game Groups</a></li>
                             {% endif %}
                             <li><a class="dropdown-item" href="{% url 'change_password' %}"><i class='bx bx-hash'></i> Change Password</a></li>
