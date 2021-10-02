@@ -1,23 +1,49 @@
-{% extends 'layout.html' %}{% load static %}{% load compress %}{% block body %}
+{% extends 'layout.html' %}{% load static %}{% load extra %}{% load compress %}{% block body %}
 <section class="games" id="games">
     {% if solo %}
     <center>
-        <h2>Mode : Solo</h2>
+        <h2>Mode : <u>Solo</u></h2>
     </center>
     <div class="container row row-cols-1 row-cols-md-3 g-4">
         {% for i in solo %}
         <div class="col">
-            <div class="card">
+            <div class="card container">
                 <img src="{{i.game.image_url}}" class="card-img-top" alt="{{i.game.name}} Image">
                 <div class="card-body">
-                    <h5 class="card-title">{{i.game.name|capfirst}}</h5>
+                    <h5 class="card-title">{{i.game.name|title}}</h5>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
     {% endif %}
-    <hr/>
+    <hr/> {% if group %}
+    <div class="container">
+        <center>
+            <h2>Mode : <u>Squad</u></h2>
+        </center>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+                {% for i in group %}
+                <div class="col container bg-white me-2 border border-primary rounded">
+                    {% ifequal message_group_id i.group_unique_id %} {% if messages %} {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{message.tags}} alert-dismissible fade show" {% endif %} role="alert">
+                        {{message|safe}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}{% endif %}{% endifequal %}
+                    <h3>{{i.game.name|title}}</h3>
+                    <form method="post" action="?">{% for j in i.game.squad_entry_members|range %}
+                        <label>Team Mate {{forloop.counter}} User ID</label>
+                        <input type="text" name="userid {{i.group_unique_id}} {{forloop.counter}}" class="form-control" placeholder="Team Mate {{forloop.counter}} User ID" aria-label="State"> &nbsp;&nbsp; {% endfor %}
+                        <button type="submit" class="btn btn-outline-success my-3">Save</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </section>
 
 {% endblock %}

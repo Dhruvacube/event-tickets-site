@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
 import sentry_sdk
+import ast
 from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -83,7 +84,7 @@ if os.path.isfile(dotenv_file):
     SECRET_KEY = '7$xw$^&2rne%#gqm!-n!y$%!7*uahe1cmnc!8hd3j+=syy3=$)'
     LOCAL = True
 else:    
-    LOCAL = False
+    LOCAL = ast.literal_eval(os.environ.get('LOCAL'))
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
     EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
@@ -213,8 +214,8 @@ sentry_sdk.init(
     # release="myapp@1.0.0",
 )
 
-COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', True)
-COMPRESS_OFFLINE = os.environ.get('COMPRESS_OFFLINE', True)
+COMPRESS_ENABLED = ast.literal_eval(os.environ.get('COMPRESS_ENABLED', 'True'))
+COMPRESS_OFFLINE = ast.literal_eval(os.environ.get('COMPRESS_OFFLINE', 'True'))
 COMPRESS_PRECOMPILERS = (
     ('text/x-sass', 'django_libsass.SassCompiler'),
     ('text/x-scss', 'django_libsass.SassCompiler'),

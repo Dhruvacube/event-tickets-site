@@ -38,7 +38,7 @@
         <!-- ==Ends== -->
         <div class="container">
             <form action="?" class="form-floating row needs-validation" method="POST">{% csrf_token %} {% for field in form %}
-                <div class="textbox form-floating col-md-{% if forloop.counter == 1 or forloop.counter == 14 %}12{% elif forloop.counter == 10 or forloop.counter == 11 or forloop.counter == 12 or forloop.counter == 13 %}4{% elif forloop.counter == 8  or forloop.counter == 9 %}12{% else %}6{% endif %}">
+                <div class="textbox form-floating col-md-{% if forloop.counter == 1 or forloop.counter == 14 or forloop.counter == 13 %}12{% elif forloop.counter == 10 or forloop.counter == 11 or forloop.counter == 12 %}4{% elif forloop.counter == 8  or forloop.counter == 9 %}12{% else %}6{% endif %}">
                     {{ field }}{{ field.label_tag }} {% if field.errors %}<br/><br/> {% for error in field.errors %}
                     <span style="font-size: 15px;" class="text-danger">
                         {{error}}

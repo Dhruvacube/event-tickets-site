@@ -110,7 +110,7 @@ def change_password(request):
         {
             'form': form,
             'heading': 'Change Password',
-            'display_messages': True
+            'no_display_messages': True
         }
     )
 
@@ -134,13 +134,7 @@ def loginform(request):
         except User.DoesNotExist:
             messages.warning(request, "Please create an new account !")
             return redirect(reverse('signin'))
-
-        if not user1.is_active: 
-            messages.warning(
-                request, 
-                "<strong>Please activate</strong> your account from the <strong>link</strong> sent to your <strong>email!</strong>"
-                )
-        elif form.is_valid():
+        if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
 
@@ -158,8 +152,6 @@ def loginform(request):
                 return HttpResponsePermanentRedirect(reverse('home'))
             else: 
                 messages.error(request, "Invalid username or password.")
-        else: 
-            messages.error(request, "Invalid username or password.")
     else:
         form = LoginForm()
     return render(
