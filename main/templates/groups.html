@@ -34,8 +34,9 @@
                     {% endfor %}{% endif %}{% endifequal %}
                     <h3>{{i.game.name|title}}</h3>
                     <form method="post" action="?">{% for j in i.game.squad_entry_members|range %}
-                        <label>Team Mate {{forloop.counter}} User ID</label>
-                        <input type="text" name="userid {{i.group_unique_id}} {{forloop.counter}}" class="form-control" placeholder="Team Mate {{forloop.counter}} User ID" aria-label="State"> &nbsp;&nbsp; {% endfor %}
+                        <label>Team Mate {{forloop.counter}} User ID {% if i.users.all|filter_users:forloop.counter %}| {{i.users.all|filter_users:forloop.counter}}{% endif %}</label>
+                        <input type="text" name="userid {{i.group_unique_id}} {{forloop.counter}}" {% if i.users.all|filter_users:forloop.counter %}value="{{i.users.all|filter_users_id:forloop.counter}}" {% endif %} {% ifequal i.users.all|filter_users:forloop.counter user %}disabled
+                            {% endifequal %} required class="form-control" placeholder="Team Mate {{forloop.counter}} User ID" aria-label="State"> &nbsp;&nbsp; {% endfor %}
                         <button type="submit" class="btn btn-outline-success my-3">Save</button>
                     </form>
                 </div>
