@@ -7,7 +7,7 @@
             <br/>On the other hand, the basic theme of this tournament is to employ more and more people into something creative rather than spending time idly.
         </h4>
         <br/>
-        <a href="{% static 'pdf/tgl_faq.pdf' %}" target="_blank"><button class="btn btn-outline-warning">Read More</button></a>
+        <a href="{% static 'pdf/tgl_faq.pdf' %}" target="_blank"><button class="btn btn-outline-warning">Read More</button></a> {% if not user.is_authenticated %}<a href="{% url 'signup' %}" target="_blank"><button class="btn btn-outline-danger">Register Now</button></a>        {% endif %}
     </div>
 </section>
 
@@ -27,6 +27,8 @@
             </div>
             {% endif %} {% endfor %}
         </div>
+        <hr/>
+        <center>{% if not user.is_authenticated %}<a href="{% url 'signup' %}" target="_blank"><button class="btn btn-outline-danger">Register Now</button></a> {% endif %}</center>
     </div>
 </section>
 
@@ -50,6 +52,8 @@
             </div>
             {% endif %} {% endfor %}
         </div>
+        <hr/>
+        <center>{% if not user.is_authenticated %}<a href="{% url 'signup' %}" target="_blank"><button class="btn btn-outline-danger">Register Now</button></a> {% endif %}</center>
     </div>
 </section>
 {% endblock %}

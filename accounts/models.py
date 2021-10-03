@@ -65,7 +65,6 @@ class User(AbstractUser):
     zip_code = models.CharField(_('zip code'),max_length=6,validators=[validate_zip])
     university_name = models.CharField(_('University or College Name'), max_length=250)
     registration_no = models.CharField(_('Registration No'),validators=[MinLengthValidator(3)], null=True, max_length=250, help_text=_('Your college issued ID (Optional)'))
-    groups = models.ManyToManyField(GameGroup,blank=True,)
     orders = models.ManyToManyField(Payments ,help_text=_('This is to be filled by computer'),blank=True,)
 
     class Meta:

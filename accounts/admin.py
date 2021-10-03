@@ -14,7 +14,7 @@ class UserAdmin(UserAdmin):
     add_form = SignupForm
     model = User
     fieldsets = (UserAdmin.fieldsets[0],) + (
-            (_('Personal info'), {'fields': UserAdmin.fieldsets[1][1]['fields']+('university_name', 'registration_no','phone', 'address1','address2','state','city','zip_code','gender') }),
+            (_('Personal info'), {'fields': UserAdmin.fieldsets[1][1]['fields']+('unique_id', 'university_name', 'registration_no','phone', 'address1','address2','state','city','zip_code','gender') }),
             ) + ( 
                 UserAdmin.fieldsets[2], UserAdmin.fieldsets[3]
                 ) + (

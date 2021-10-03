@@ -15,10 +15,12 @@ from main.models import Games, GameGroup
 from django.urls import reverse
 from .models import Payments
 from .templatetags import payments_extras
+from .decorators import verify_entry_for_orders, verify_entry_for_payments_history
 
 
 @sync_to_async
 @login_required
+@verify_entry_for_payments_history
 def view_payments_history(request):
     return render(
         request,
@@ -31,6 +33,7 @@ def view_payments_history(request):
 
 @sync_to_async
 @login_required
+@verify_entry_for_orders
 def make_order(request): 
     if request.method == 'POST':
         order_list, total_value=[], 0
@@ -73,6 +76,7 @@ def make_order(request):
 
 @sync_to_async
 @login_required
+@verify_entry_for_orders
 def create_payment(request):
     amount = str(request.session.get('total_value'))
     purpose = str(uuid.uuid4())
@@ -113,6 +117,7 @@ def create_payment(request):
 
 @sync_to_async
 @login_required
+@verify_entry_for_orders
 def payment_stats(request):
     payment_id = request.GET.get('payment_id')
     payment_request_id = request.GET.get('payment_request_id')

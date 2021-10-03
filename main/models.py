@@ -37,7 +37,7 @@ class Games(models.Model):
 
 class GameGroup(models.Model):
     group_unique_id= models.UUIDField(default=uuid.uuid4)
-    group_name = models.CharField(max_length=250)
+    group_name = models.CharField(max_length=250, unique=True, blank=True, null=True)
     solo_or_squad = models.CharField(default='sq', choices=(('sq','SQUAD'),('so','SOLO')),max_length=15)
     game=models.ForeignKey(Games,on_delete=models.CASCADE)
     users=models.ManyToManyField(settings.AUTH_USER_MODEL)
@@ -45,4 +45,13 @@ class GameGroup(models.Model):
     
     def __str__(self):
         return str(self.group_name)
+    
+    def save(self, *args, **kwargs):
+        if self.group_name in ('', ' ', False, None):
+            if self.solo_or_squad == 'so':
+                self.group_name = f'Solo {self.id}'
+            else:
+                self.group_name = f'Group {self.id}'
+        return super().save(*args, **kwargs)
+            
     
