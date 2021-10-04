@@ -209,16 +209,18 @@ if PRODUCTION_SERVER:
     SECURE_HSTS_PRELOAD = True
     SECURE_REFERRER_POLICY = "same-origin"
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    CACHES = {
-        'default': {
-            'BACKEND': 'django_bmemcached.memcached.BMemcached',
-            'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
-            'OPTIONS': {
-                'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
-                'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
+    try:
+        CACHES = {
+            'default': {
+                'BACKEND': 'django_bmemcached.memcached.BMemcached',
+                'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
+                'OPTIONS': {
+                    'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
+                    'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
+                }
             }
         }
-    }
+    except: pass
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
