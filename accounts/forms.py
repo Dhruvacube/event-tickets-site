@@ -219,10 +219,7 @@ class EditProfileForm(UserChangeForm):
         
         self.fields["gender"].widget.attrs["class"] = "form-control"
         self.fields["gender"].widget.attrs["style"] = "color: black !important;"
-        
-        self.fields["unique_id"].widget.attrs["class"] = "form-control"
-        self.fields["unique_id"].widget.attrs["disabled"] = "true"
-        
+                
         self.fields["university_name"].widget.attrs["class"] = "form-control"
         self.fields["university_name"].widget.attrs["required"] = "true"
         
@@ -230,7 +227,6 @@ class EditProfileForm(UserChangeForm):
         self.fields["password"].widget.attrs["style"] = "display: none;"
 
     class Meta(UserChangeForm):
-        model = User
         model = User
         fields = (
             'username',
@@ -247,7 +243,6 @@ class EditProfileForm(UserChangeForm):
             'country',
             'zip_code',
             'university_name',
-            'unique_id',
         )
 
 

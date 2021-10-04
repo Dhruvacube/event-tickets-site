@@ -62,6 +62,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'icons/logo.png' %}" alt="" width="30" height="24">
+                </a>
                 <div class="logo">
                     <a class="navLogo" href="#" style="text-decoration: none;">TGL 2.0</a>
                 </div>
@@ -82,7 +85,7 @@
                             <li><a class="dropdown-item" href="{% url 'view_profile' %}"><i class='bx bx-user-circle'></i> View Profile</a></li>
                             {% if user.orders.all|check_success %}
                             <li><a class="dropdown-item" href="{% url 'make_order' %}"><i class='bx bx-cart'></i> Orders/Payments</a></li>
-                            {% endif %}{% if user.orders %}
+                            {% endif %}{% if user.orders.all %}
                             <li><a class="dropdown-item" href="{% url 'view_payments_history' %}"><i class='bx bx-money'></i> Payments History</a></li>
                             {% endif %} {% if user.groups %}
                             <li><a class="dropdown-item" href="{% url 'make_groups' %}"><i class='bx bx-group'></i> Game Groups</a></li>
@@ -109,12 +112,12 @@
         </div>
     </nav>
     <main>
-        {% if not no_display_messages %} {% if messages %} {% for message in messages %}
+        {% if not no_display_messages %} {% for message in messages %}
         <div {% if message.tags %} class="alert alert-{{message.tags}} alert-dismissible fade show" {% endif %} role="alert">
             {{message|safe}}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        {% endfor %}{% endif %}{% endif %} {% block body %}{% endblock %}
+        {% endfor %}{% endif %} {% block body %}{% endblock %}
     </main>
     <footer id="footer" loading="lazy">
 

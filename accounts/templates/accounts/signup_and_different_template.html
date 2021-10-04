@@ -1,4 +1,4 @@
- {% extends "layout.html" %}{% load static %}{% load compress %}{% block body %} {% compress css %}
+ {% extends "layout.html" %}{% load static %}{% load getfunc %}{% load compress %}{% block body %} {% compress css %}
 <link rel="stylesheet" href="{% static 'css/signinstyle.css' %}"> {% endcompress %}
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
@@ -34,17 +34,23 @@
             {{message|safe}}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        {% endfor %} {% endif %} {% if form.errors %} {% for error in form.errors %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{form.errors|get_val:error}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         {% endfor %} {% endif %}
         <!-- ==Ends== -->
         <div class="container">
             <form action="?" class="form-floating row needs-validation" method="POST">{% csrf_token %} {% for field in form %}
                 <div class="textbox form-floating col-md-{% if forloop.counter == 1 or forloop.counter == 14 or forloop.counter == 13 %}12{% elif forloop.counter == 10 or forloop.counter == 11 or forloop.counter == 12 %}4{% elif forloop.counter == 8  or forloop.counter == 9 %}12{% else %}6{% endif %}">
-                    {{ field }}{{ field.label_tag }} {% if field.errors %}<br/><br/> {% for error in field.errors %}
+                    {{ field }}{{ field.label_tag }} <br/><br/> {% for error in field.errors %}
                     <span style="font-size: 15px;" class="text-danger">
                         {{error}}
-                    </span>{% endfor %}{% endif %}
+                    </span>{% endfor %}
                 </div>
-                {% endfor %}
+                {% endfor %}{% if view_profile %}
+                <div class="textbox form-floating col-md-10"><input class="form-control" disabled="true" id="id_unique_id" name="unique_id" type="text" value="{{user.unique_id}}" /><label for="id_unique_id">Unique id:</label></div>{% endif %}
                 <button type="submit" class="sign_in_btn">{{heading}}</button>
             </form>
         </div>

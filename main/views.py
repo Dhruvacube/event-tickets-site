@@ -57,7 +57,7 @@ def group_make(request):
             messages.success(request, f'Successfully updated Group Name')
         except:
             messages.error(request, 'This is already taken please try some other group name ¯\_(ツ)_/¯')
-    print(parameters)        
+        return redirect(reverse('make_groups'))
     return render(
         request,
         'groups.html',

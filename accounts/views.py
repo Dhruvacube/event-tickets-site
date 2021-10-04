@@ -11,6 +11,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 from datetime import datetime
+from .templatetags import getfunc
 import os
 
 import requests
@@ -74,7 +75,9 @@ def view_profile(request):
                 request, "Your <strong>Profile</strong> has been update successfully !")
             form.save()
             return redirect(reverse('view_profile'))
-        else: messages.error(request, "Please correct the errors mentioned below!")
+        else: 
+            if not form.errors:
+                messages.error(request, "Please correct the errors mentioned below!")
 
     else:
         form = EditProfileForm(instance=request.user)
@@ -85,6 +88,8 @@ def view_profile(request):
             'form': form,
             'heading': 'Update Profile',
             'title': 'Update Profile',
+            'view_profile': True,
+            'no_display_messages': True
         }
     )
 
@@ -154,6 +159,10 @@ def loginform(request):
                 return HttpResponsePermanentRedirect(reverse('home'))
             else: 
                 messages.error(request, "Invalid username or password.")
+                return redirect(revrse('signin'))
+        else:
+            messages.error(request, "Details Invalid")
+            return redirect(revrse('signin'))
     else:
         form = LoginForm()
     return render(
@@ -183,9 +192,10 @@ def signup(request):
             if user is not None:
                 login(request, user)
             messages.success(request, 'Account created')
-            
+            return redirect(reverse('make_order'))
         else:
             messages.error(request, 'There is some error please correct it!')
+            return redirect(reverse('signup'))
     else:
         form = SignupForm()
     current_site = get_current_site(request)

@@ -61,7 +61,7 @@ def make_order(request):
                 {
                     'total_value': total_value,
                     'action_url': reverse('create_payment'),
-                    'title': 'Pay for the Games that you want to participate'
+                    'title': 'Pay for the Games that you want to participate',
                 }
             )
         else:
@@ -71,6 +71,7 @@ def make_order(request):
         'checkout.html',
         {
             'games': Games.objects.all(),
+            'payafter': False,
             'display_games': True,
             'title': 'Pay for the Games that you want to participate'
         }
@@ -120,11 +121,11 @@ def create_payment(request):
 
 @sync_to_async
 @login_required
-@verify_entry_for_orders
+@verify_entry_for_payments_history
 def payment_stats(request):
-    payment_id = request.GET.get('payment_id')
-    payment_request_id = request.GET.get('payment_request_id')
-    payment_status = request.GET.get('payment_status')
+    payment_id = request.GET['payment_id']
+    payment_request_id = request.GET['payment_request_id']
+    payment_status = request.GET['payment_status']
     if 'credit' in payment_status.lower():
         try:
             payment_obj = Payments.objects.filter(request_id_instamojo=payment_request_id).get()
