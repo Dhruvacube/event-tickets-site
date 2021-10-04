@@ -32,6 +32,8 @@ INSTALLED_APPS = [
 
 ]
 
+ALLOWED_HOSTS = ['*']
+
 AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
@@ -85,8 +87,8 @@ if os.path.isfile(dotenv_file):
     DEBUG = True
     SECRET_KEY = '7$xw$^&2rne%#gqm!-n!y$%!7*uahe1cmnc!8hd3j+=syy3=$)'
     LOCAL = True
-else:    
-    LOCAL = ast.literal_eval(os.environ.get('LOCAL'))
+else:
+    LOCAL = ast.literal_eval(os.environ.get('LOCAL','False'))
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
     EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
@@ -209,18 +211,16 @@ if PRODUCTION_SERVER:
     SECURE_HSTS_PRELOAD = True
     SECURE_REFERRER_POLICY = "same-origin"
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    try:
-        CACHES = {
-            'default': {
-                'BACKEND': 'django_bmemcached.memcached.BMemcached',
-                'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
-                'OPTIONS': {
-                    'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
-                    'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
-                }
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_bmemcached.memcached.BMemcached',
+            'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
+            'OPTIONS': {
+                'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
+                'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
             }
         }
-    except: pass
+    }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
