@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>TGL 2.0 {{title}}</title>
+    <title>TGL 2.0 | {{title|title}}</title>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="{% static 'icons/logo.png' %}" sizes="180x180">
@@ -116,26 +116,37 @@
         </div>
         {% endfor %}{% endif %}{% endif %} {% block body %}{% endblock %}
     </main>
-    <footer>
-        <div class="flex">
-            <ul>
-                <li>
-                    <a href="{% url 'home' %}#">Home</a>
-                </li>
+    <footer id="footer" loading="lazy">
 
-                <li>
-                    <a href="{% url 'home' %}#games">Games</a>
-                </li>
+        <div class="footer-top">
 
-                <li>
-                    <a href="{% url 'home' %}#mgames">Mobile Games</a>
-                </li>
+            <div class="container">
 
-                <li>
-                    <a href="https://linktr.ee/tanzanite.lpu" target="_blank">Contact</a>
-                </li>
-            </ul>
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <a href="#header" class="scrollto footer-logo"><img loading="lazy" src="{% static 'icons/logo.png' %}" alt=""></a>
+                        <h3>Tanza Gaming League</h3>
+                        <hr/>
+                        <h5>Made with<i class='bx bxs-heart text-danger'></i> on <a href="https://github.com/Tanzanite-lpu" title="Github Repository" target="_blank"><i class='bx bxl-github text-white'></i></a> +
+                            <a href="https://discord.gg/4R3T68eZbU" title="Discord Community" target="_blank"><i class='bx bxl-discord'></i></a> &nbsp;
+                        </h5>
+                        <h2>
+                            <a href="https://www.facebook.com/tanzanitite.lpu/" title="Facebook" target="_blank"><i style="color: #1877F2;" class='bx bxl-facebook-circle'></i></a>
+                            <a href="https://in.linkedin.com/company/tanzanite-lpu" title="LinkedIn" target="_blank"><i style="color: #0A66C2;" class='bx bxl-linkedin-square' ></i></a>
+                            <a href="https://www.instagram.com/tanzanite.lpu/" title="Instagram" target="_blank"><i style="color: #E4405F;" class='bx bxl-instagram-alt' ></i></a>
+                            <a href="https://linktr.ee/tanzanite.lpu" title="Linktree" target="_blank"><i style="color: #39E09B;" class='bx bx-link-alt' ></i></a>
+                            <a href="https://www.youtube.com/channel/UCQdfgyUIe9l-uAkZRhGa1Mw?sub_confirmation=1" title="YouTube" target="_blank"><i style="color: #FF0000;" class='bx bxl-youtube' ></i></a>
+                            <a href="mailto:tanzanite.lpu@gmail.com" title="Gmail" target="_blank"><i style="color: #EA4335;" class='bx bx-mail-send'></i></a>
+                        </h2>
+                        <br/>
+                        <h6>tanzanite.lpu@gmail.com</h6>
+                        <h6><u>Umang:</u> <a style="text-decoration: none" href="tel:+91 62036 83509" class="text-white">+91 62036 83509</a> , <u>Jagadeesh:</u> <a style="text-decoration: none" href="tel:+91 70132 58814" class="text-white">+91 70132 58814</a></h6>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
     </footer>
 
 </body>

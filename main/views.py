@@ -15,7 +15,8 @@ def home(request):
         request,
         'index.html',
         {
-            'games': Games.objects.all()
+            'games': Games.objects.all(),
+            'title': 'Home'
         }
     )
 
@@ -26,7 +27,8 @@ def group_make(request):
     parameters = {
             'group': GameGroup.objects.filter(users__in=[request.user],solo_or_squad='sq').all(),
             'solo': GameGroup.objects.filter(users__in=[request.user],solo_or_squad='so').all(),
-            'no_display_messages': True
+            'no_display_messages': True,
+            'title': 'Register Groups'
         }
     if request.method == 'POST':
         group_id, users_list, inavlid_users_list = '', [], []
@@ -64,10 +66,12 @@ def group_make(request):
 
 @sync_to_async
 def view_games(request, game_id: int):
+    games = Games.objects.filter(id=game_id).get()
     return render(
         request,
         'about_games.html',
         {
-            'game': Games.object.filter(id=game_id).get()
+            'game': games,
+            'title': games.name,
         }
     )

@@ -1,4 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Stick+No+Bills:wght@300&display=swap');
 body {
+    font-family: "Open Sans", sans-serif;
     margin: 0;
 }
 
@@ -9,32 +11,9 @@ h1,
 h2,
 h3,
 h4,
-h5 {
-    font-family: 'Architects Daughter', cursive;
-    line-height: 1.5;
-    font-weight: 300;
-    margin: 0.5em 0;
-}
-
-h1 {
-    font-size: 2.5em;
-}
-
-h2 {
-    font-size: 2em;
-}
-
-h3 {
-    font-size: 1.6em;
-}
-
-h4 {
-    font-size: 1.4em;
-}
-
-h5 {
-    font-family: 'Architects Daughter', cursive;
-    font-size: 1.2em;
+h5,
+h6 {
+    font-family: "Montserrat", sans-serif;
 }
 
 a {
@@ -283,9 +262,24 @@ nav ul li a:hover {
 /* start: tournaments styles */
 
 #tournaments {
-    background: url('https://onclickwebdesign.com/wp-content/uploads/footer_bg_pattern.png') 0 0 repeat;
+    background: url('../icons/banner.jpg') 0 0 repeat;
     background-attachment: fixed;
     padding: 125px 0 105px;
+    color: #fff;
+    font-size: 14px;
+    position: relative;
+    font-family: 'Stick No Bills', sans-serif;
+}
+
+#tournaments::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1;
 }
 
 #tournaments h1 {
@@ -293,48 +287,128 @@ nav ul li a:hover {
     color: #fff;
 }
 
+#tournaments .footer-top {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 80px 0;
+}
+
+#tournaments .tournaments-top .tournaments-logo img {
+    height: 80px;
+}
+
+#tournaments .tournaments-top h3 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    padding: 30px 0 0 0;
+    margin-bottom: 0;
+}
+
+#tournaments .tournaments-top p {
+    font-size: 15px;
+    font-style: italic;
+    margin: 30px 0 0 0;
+    padding: 0;
+}
+
+#tournaments .tournaments-top {
+    text-align: center;
+    font-size: 15px;
+    margin-top: 30px;
+}
+
+#tournaments .tournaments-bottom {
+    border-top: 1px solid #222222;
+    z-index: 2;
+    position: relative;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+#tournaments .credits {
+    text-align: center;
+    font-size: 13px;
+    padding-top: 5px;
+}
+
 
 /* end: tournaments styles */
 
 
-/* start: footer styles */
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
 
-footer {
-    background-color: #252525;
-    position: bottom;
-    padding: 25px 0 20px;
+#footer {
+    background: url("../images/FzDvk15.png") center top no-repeat;
+    color: #fff;
+    font-size: 14px;
+    position: relative;
+    font-family: 'Stick No Bills', sans-serif;
 }
 
-footer small {
-    color: #ddd;
-    font-size: 0.9em;
+#footer::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1;
 }
 
-footer small .footer-heart {
-    font-size: 16px;
+#footer .footer-top {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 80px 0;
 }
 
-footer small a {
-    color: #007BDC;
+#footer .footer-top .footer-logo img {
+    height: 80px;
 }
 
-footer ul {
-    list-style-type: none;
-    margin: 0;
+#footer .footer-top h3 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    padding: 30px 0 0 0;
+    margin-bottom: 0;
 }
 
-footer ul li {
-    display: inline-block;
-    margin: 0 12px;
+#footer .footer-top p {
+    font-size: 15px;
+    font-style: italic;
+    margin: 30px 0 0 0;
+    padding: 0;
 }
 
-footer ul li a {
-    color: #ddd;
-    font-size: 0.8em;
+#footer .footer-top {
+    text-align: center;
+    font-size: 15px;
+    margin-top: 30px;
 }
 
+#footer .footer-bottom {
+    border-top: 1px solid #222222;
+    z-index: 2;
+    position: relative;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
 
-/* end: footer styles */
+#footer .credits {
+    text-align: center;
+    font-size: 13px;
+    padding-top: 5px;
+}
 
 
 /* start: media queries */

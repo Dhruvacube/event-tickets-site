@@ -1,1 +1,17 @@
-{% extends 'layout.html' %}{% load static %}{% load extra %}{% load compress %}{% block body %}{% endblock %}
+{% extends 'layout.html' %}{% load static %}{% load extra %}{% load compress %}{% block body %}
+<section class="games" id="games">
+    <div class="container">
+        <center>
+            <u><h1>{{game.name}}</h1></u>
+            <hr/>
+            <img src="{{game.image_url}}" width="50%" height="50%">
+        </center>
+    </div>
+    <hr/>
+    <div class="container">
+        <span>
+            {{game.long_description|safe}}
+        </span>
+    </div>
+</section>
+{% endblock %}

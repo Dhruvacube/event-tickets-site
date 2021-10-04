@@ -83,7 +83,8 @@ def view_profile(request):
         'accounts/signup_and_different_template.html', 
         {
             'form': form,
-            'heading': 'Update Profile'
+            'heading': 'Update Profile',
+            'title': 'Update Profile',
         }
     )
 
@@ -110,7 +111,8 @@ def change_password(request):
         {
             'form': form,
             'heading': 'Change Password',
-            'no_display_messages': True
+            'no_display_messages': True,
+            'title': 'Change Password',
         }
     )
 
@@ -158,7 +160,7 @@ def loginform(request):
         request, 
         'login.html',
         {
-        'title': '| Login |',
+        'title': 'Login',
         'form': form,
     })
 
@@ -182,7 +184,7 @@ def signup(request):
         request, 
         'accounts/signup_and_different_template.html', 
         {
-        'title': '| Register Now |',
+        'title': 'Register Now',
         'form': form,
         'heading': 'Register Now',
         'link_name': 'Log In',

@@ -26,7 +26,8 @@ def view_payments_history(request):
         request,
         'payments.html',
         {
-            'payments': request.user.orders.all()
+            'payments': request.user.orders.all(),
+            'title': 'Payments History'
         }
     )
 
@@ -59,7 +60,8 @@ def make_order(request):
                 'checkout.html',
                 {
                     'total_value': total_value,
-                    'action_url': reverse('create_payment')
+                    'action_url': reverse('create_payment'),
+                    'title': 'Pay for the Games that you want to participate'
                 }
             )
         else:
@@ -69,7 +71,8 @@ def make_order(request):
         'checkout.html',
         {
             'games': Games.objects.all(),
-            'display_games': True
+            'display_games': True,
+            'title': 'Pay for the Games that you want to participate'
         }
         
     )
@@ -148,14 +151,17 @@ def payment_stats(request):
     else:
         messages.error(request, 'The payment failed')
         redirect_link = reverse('make_order')
-    del request.session['order_list']
-    del request.session['total_value']
+    try: del request.session['order_list']
+    except: pass
+    try: del request.session['total_value']
+    except: pass
     return render(
         request,
         'checkout.html',
         {
             'payafter': True,
-            'redirect_link': redirect_link
+            'redirect_link': redirect_link,
+            'title': 'Payment Status check or verifier'
         }
     )
     
