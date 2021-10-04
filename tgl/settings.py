@@ -4,6 +4,7 @@ from django.contrib.messages import constants as messages
 import sentry_sdk
 import ast
 from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.redis import RedisIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +24,8 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'main.apps.MainConfig',
     'announcements.apps.AnnouncementsConfig',
-    
+
+    'django_admin_listfilter_dropdown',
     'localflavor',
     "post_office",
     'compressor',
@@ -111,6 +113,14 @@ else:
         }
     }
 
+
+sentry_sdk.init(
+    dsn=os.environ.get('SENTRY_URL'),
+    integrations=[DjangoIntegration(), RedisIntegration()],
+    traces_sample_rate=1.0,
+    send_default_pii=True,
+)
+
 if not os.getenv('WHITENOISE'):
     MIDDLEWARE = [MIDDLEWARE[0]] + \
         ['whitenoise.middleware.WhiteNoiseMiddleware']+MIDDLEWARE[1:]
@@ -145,7 +155,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Kolkata'
+CELERY_TIMEZONE = TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -169,6 +179,17 @@ STATICFILES_FINDERS = [
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
 
+WHITENOISE_MAX_AGE = 9000
+WHITENOISE_SKIP_COMPRESS_EXTENSIONS = []
+
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379')
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL', 'redis://localhost:6379')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
 
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
@@ -188,31 +209,21 @@ if PRODUCTION_SERVER:
     SECURE_HSTS_PRELOAD = True
     SECURE_REFERRER_POLICY = "same-origin"
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_bmemcached.memcached.BMemcached',
+            'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
+            'OPTIONS': {
+                'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
+                'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
+            }
+        }
+    }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-sentry_sdk.init(
-    dsn=os.environ.get('SENTRY_URL'),
-    integrations=[DjangoIntegration()],
-
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production,
-    traces_sample_rate=1.0,
-
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True,
-
-    # By default the SDK will try to use the SENTRY_RELEASE
-    # environment variable, or infer a git commit
-    # SHA as release, however you may want to set
-    # something more human-readable.
-    # release="myapp@1.0.0",
-)
 
 COMPRESS_ENABLED = ast.literal_eval(os.environ.get('COMPRESS_ENABLED', 'True'))
 COMPRESS_OFFLINE = ast.literal_eval(os.environ.get('COMPRESS_OFFLINE', 'True'))
@@ -235,3 +246,6 @@ KEEP_COMMENTS_ON_MINIFYING = False
 DJANGO_ALLOW_ASYNC_UNSAFE = True
 
 USE_THOUSAND_SEPARATOR = True
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 1 * 60 * 60

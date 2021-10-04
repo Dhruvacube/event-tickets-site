@@ -173,6 +173,15 @@ def signup(request):
             user = form.save(commit=False)
             user.is_active = True
             user.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(
+                request, 
+                username=username, 
+                password=password
+            )
+            if user is not None:
+                login(request, user)
             messages.success(request, 'Account created')
             
         else:
