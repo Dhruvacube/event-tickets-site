@@ -84,7 +84,7 @@ if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
     PRODUCTION_SERVER = False
-    DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'True'))
+    DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'True').capitalize())
     SECRET_KEY = '7$xw$^&2rne%#gqm!-n!y$%!7*uahe1cmnc!8hd3j+=syy3=$)'
     LOCAL = True
 else:
@@ -98,10 +98,8 @@ else:
     ADMINS = [('dhruva', os.environ['EMAIL_HOST_USER'])]
 
     PRODUCTION_SERVER = True
-    DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'False'))
+    DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'False').capitalize())
     SECRET_KEY = os.environ.get('SECRET_KEY','SECRET_KEY')
-    
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     
 
 if os.getenv('DATABASE_URL'):
