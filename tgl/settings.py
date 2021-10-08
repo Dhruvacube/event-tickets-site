@@ -84,7 +84,7 @@ if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
     PRODUCTION_SERVER = False
-    DEBUG = True
+    DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'True'))
     SECRET_KEY = '7$xw$^&2rne%#gqm!-n!y$%!7*uahe1cmnc!8hd3j+=syy3=$)'
     LOCAL = True
 else:
