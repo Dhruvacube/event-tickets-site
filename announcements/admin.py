@@ -3,6 +3,12 @@ from django.utils.translation import gettext_lazy as _
 from django_admin_listfilter_dropdown.filters import DropdownFilter
 from .models import *
 
+def retrivejsfile():
+    if settings.DEBUG:
+        return ('js/richTextEditor.js',)
+    else:
+        return ('https://tanzanite-lpu.github.io/tgl-2.0.0/announcements/static/js/richTextEditorAnnouncements.js',)
+
 
 # Register your models here.
 class GlobalAnnouncementsAdmin(admin.ModelAdmin):
@@ -21,7 +27,7 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
         (_('Creation'), {'fields': list_filter}),
     )
     class Media:
-        js = ('js/richTextEditorAnnouncements.js',)
+        js = retrivejsfile()
 
 class GroupsAnnouncementsAdmin(admin.ModelAdmin):
     list_display = ('announcement_id', 'announncement_message',
@@ -40,7 +46,7 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
         (_('Creation'), {'fields': list_filter}),
     )
     class Media:
-        js = ('js/richTextEditorAnnouncements.js',)
+        js = retrivejsfile()
     
 class UsersAnnouncementsAdmin(admin.ModelAdmin):
     list_display = ('announcement_id', 'announncement_message',
@@ -59,7 +65,7 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
         (_('Creation'), {'fields': list_filter}),
     )
     class Media:
-        js = ('js/richTextEditorAnnouncements.js',)
+        js = retrivejsfile()
 
     
 admin.site.register(GlobalAnnouncements, GlobalAnnouncementsAdmin)

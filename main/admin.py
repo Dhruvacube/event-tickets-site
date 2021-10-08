@@ -1,8 +1,17 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.admin import Group
+from django.conf import settings
+import os
 from django_admin_listfilter_dropdown.filters import DropdownFilter
 from .models import *
+
+
+def retrivejsfile():
+    if settings.DEBUG:
+        return ('js/richTextEditor.js',)
+    else:
+        return ('https://tanzanite-lpu.github.io/tgl-2.0.0/main/static/js/richtexteditor.js',)
 
 
 # Register your models here.
@@ -25,7 +34,7 @@ class GamesAdmin(admin.ModelAdmin):
         (_('Squad Entry'), {'fields': ('has_squad_entry', 'squad_entry', 'squad_entry_members')})
     )
     class Media:
-        js = ('js/richTextEditor.js',)
+        js = retrivejsfile()
 
 class GameGroupAdmin(admin.ModelAdmin):
     list_display = ('group_unique_id', 'group_name', 
@@ -47,5 +56,4 @@ class GameGroupAdmin(admin.ModelAdmin):
 admin.site.register(Games, GamesAdmin)
 admin.site.register(GameGroup, GameGroupAdmin)
 admin.site.unregister(Group)
-
 admin.site.site_header = admin.site.site_title = 'Tanzanite Gaming League 2.0'

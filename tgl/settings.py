@@ -113,6 +113,9 @@ else:
         }
     }
 
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 sentry_sdk.init(
     dsn=os.environ.get('SENTRY_URL'),
