@@ -5,14 +5,14 @@ from .models import *
 
 def retrivejsfile():
     if settings.DEBUG:
-        return ('js/richTextEditor.js',)
+        return ('js/richTextEditorAnnouncements.js',)
     else:
         return ('https://tanzanite-lpu.github.io/tgl-2.0.0/announcements/static/js/richTextEditorAnnouncements.js',)
 
 
 # Register your models here.
 class GlobalAnnouncementsAdmin(admin.ModelAdmin):
-    list_display = ('announcement_id', 'announncement_message',
+    list_display = ('announcement_id', 'announcement_heading',
                     'announncement_creation_date',)
     list_filter = (
         'announncement_creation_date',
@@ -30,7 +30,7 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
         js = retrivejsfile()
 
 class GroupsAnnouncementsAdmin(admin.ModelAdmin):
-    list_display = ('announcement_id', 'announncement_message',
+    list_display = ('announcement_id','announcement_heading',
                     'announncement_creation_date',)
     list_filter = (
         'announncement_creation_date',
@@ -49,7 +49,7 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
         js = retrivejsfile()
     
 class UsersAnnouncementsAdmin(admin.ModelAdmin):
-    list_display = ('announcement_id', 'announncement_message',
+    list_display = ('announcement_id','announcement_heading',
                     'announncement_creation_date',)
     list_filter = (
         'announncement_creation_date',

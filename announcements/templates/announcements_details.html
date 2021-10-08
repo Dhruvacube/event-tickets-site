@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}{% load static %} {% block body %}
+<section class="games" id="games">
+    <div class="container">
+        <center><strong><u><h1>{{announcement.announcement_heading}}</h1></u></strong></center>
+        <hr/>
+        <caption><u>Announcement ID</u>: {{announcement.announcement_id}}</caption><br/>
+        <caption><u>Created On</u>: {{announcement.announncement_creation_date}}</caption><br/>
+        <hr/> {{announcement.announncement_message|safe}}
+    </div>
+</section>
+{% endblock %}
