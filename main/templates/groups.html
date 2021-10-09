@@ -42,7 +42,7 @@
                         <hr/>{% for j in i.game.squad_entry_members|range %}
                         <label>Team Mate {{forloop.counter}} User ID {% if i.users.all|filter_users:forloop.counter %}| {{i.users.all|filter_users:forloop.counter}}{% endif %}</label>
                         <input type="text" name="userid {{i.group_unique_id}} {{forloop.counter}}" {% if i.users.all|filter_users:forloop.counter %}value="{{i.users.all|filter_users_id:forloop.counter}}" {% endif %} {% ifequal i.users.all|filter_users:forloop.counter user %}disabled
-                            {% endifequal %} required class="form-control" placeholder="Team Mate {{forloop.counter}} User ID" aria-label="Team Mate {{forloop.counter}} User ID"> &nbsp;&nbsp; {% endfor %}
+                            {% endifequal %} {% if group|if_user_payed:user %}disabled="true" {% endif %} required class="form-control" placeholder="Team Mate {{forloop.counter}} User ID" aria-label="Team Mate {{forloop.counter}} User ID">                        &nbsp;&nbsp; {% endfor %}
                         <button type="submit" class="btn btn-outline-success my-3">Save</button>
                     </form>
                 </div>

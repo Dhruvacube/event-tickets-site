@@ -87,7 +87,7 @@
                             <li><a class="dropdown-item" href="{% url 'make_order' %}"><i class='bx bx-cart'></i> Orders/Payments</a></li>
                             {% endif %}{% if user.orders.all %}
                             <li><a class="dropdown-item" href="{% url 'view_payments_history' %}"><i class='bx bx-money'></i> Payments History</a></li>
-                            {% endif %} {% if user.groups %}
+                            {% endif %} {% if user|if_groups %}
                             <li><a class="dropdown-item" href="{% url 'make_groups' %}"><i class='bx bx-group'></i> Game Groups</a></li>
                             {% endif %}
                             <li><a class="dropdown-item" href="{% url 'change_password' %}"><i class='bx bx-hash'></i> Change Password</a></li>
@@ -102,7 +102,11 @@
                             </li>
                             <li><a class="dropdown-item text-danger" href="{% url 'signout' %}"><i class='bx bx-log-out'></i> Logout</a></li>
                         </ul>
-                    </li> {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'all_anouncements' %}" tabindex="-1" aria-disabled="true"><i class='bx bxs-bell-ring bx-tada' ></i> Announcements</a>
+                    </li>
+                    {% endif %}
                 </ul>
                 {% if not user.is_authenticated %}
                 <a href="{% url 'signup' %}" class="btn btn-outline-warning login-register-button">Register Now</a>&nbsp;

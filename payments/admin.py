@@ -18,7 +18,7 @@ class PaymentsAdmin(admin.ModelAdmin):
     fieldsets = (
         (_('Order ID'), {'fields': ('order_id', 'request_id_instamojo', 'instamojo_order_id')}),
         (_('Amount'), {'fields': ('amount',)}),
-        (_('Status'), {'fields': ('payment_status', 'created_at')}),
+        (_('Status'), {'fields': ('payment_status', 'created_at',)}),
         (_('Orders List'), {'fields': ('orders_list', )}),
     )
 

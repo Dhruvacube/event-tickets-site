@@ -134,7 +134,7 @@ def payment_stats(request):
             payment_obj.save()
             messages.success(request, 'You have successfully paid the amount! Please wait for 2secs')
             
-            order_list = request.session['order_list']
+            order_list = request.session.get('order_list')
             
             for i in order_list:
                 game=Games.objects.filter(name=i[0]).get()

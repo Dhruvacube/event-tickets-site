@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from asgiref.sync import sync_to_async
 from django.contrib.auth.decorators import login_required
@@ -7,6 +7,8 @@ from django.conf import settings
 from django.contrib import messages
 from accounts.models import User
 from .decorators import verify_entry_to_group
+
+from django.urls import reverse
 
 
 @sync_to_async

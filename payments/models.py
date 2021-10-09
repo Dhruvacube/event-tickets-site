@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now
+from django.conf import settings
 
 # Create your models here.
 
@@ -13,6 +14,7 @@ class Payments(models.Model):
     payment_status = models.CharField(max_length=250,help_text=_('The status of payment'),choices=(('P','Pending'),('F','Failed'),('S','Success')), default='P')
     orders_list = models.TextField(help_text=_('The orders list value'))
     created_at = models.DateTimeField(default=now)
+    # payed_by = models.ForeignKey(settings.AUTH_USER_MODEL ,on_delete=models.CASCADE, help_text=_('This is to be filled by computer'))
     
     def __str__(self):
         return str(self.order_id)
