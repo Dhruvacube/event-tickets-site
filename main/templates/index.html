@@ -15,7 +15,7 @@
     <h1>PC Games</h1>
     <div class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% for i in games %} {% if i.platform == 'pc' or i.platform == 'a' %}
+            {% for i in games %}{% if i.platform == 'p' or i.platform == 'a' %}
             <div class="col">
                 <div class="card container">
                     <img src="{{ i.image_url }}" class="card-img-top" loading="lazy" />

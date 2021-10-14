@@ -27,18 +27,22 @@ class GamesAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (_('Name'), {'fields': ('name',)}),
-        (_('Description'), {'fields': ('short_description', 'long_description')}),
+        (_('Description'), {
+         'fields': ('short_description', 'long_description')}),
         (_('Image'), {'fields': ('image_url',)+readonly_fields}),
         (_('Platform'), {'fields': ('platform', )}),
         (_('Solo Entry'), {'fields': ('has_solo_entry', 'solo_entry')}),
-        (_('Squad Entry'), {'fields': ('has_squad_entry', 'squad_entry', 'squad_entry_members')})
+        (_('Squad Entry'), {'fields': ('has_squad_entry',
+         'squad_entry', 'squad_entry_members')})
     )
+
     class Media:
         js = retrivejsfile()
 
+
 class GameGroupAdmin(admin.ModelAdmin):
-    list_display = ('group_unique_id', 'group_name', 
-                    'solo_or_squad', 'game','payment_id')
+    list_display = ('group_unique_id', 'group_name',
+                    'solo_or_squad', 'game', 'payment_id')
     list_filter = (
         'solo_or_squad', 'game'
     )
@@ -52,7 +56,8 @@ class GameGroupAdmin(admin.ModelAdmin):
         (_('Users'), {'fields': ('users', )}),
         (_('Payment ID'), {'fields': ('payment_id',)}),
     )
-    
+
+
 admin.site.register(Games, GamesAdmin)
 admin.site.register(GameGroup, GameGroupAdmin)
 admin.site.unregister(Group)

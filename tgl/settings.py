@@ -19,7 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'payments.apps.PaymentsConfig',
     'accounts.apps.AccountsConfig',
     'main.apps.MainConfig',
@@ -53,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.admindocs.middleware.XViewMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'main.request_get_processor.RequestMiddleware',
 
     'django.middleware.cache.FetchFromCacheMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
@@ -88,7 +90,7 @@ if os.path.isfile(dotenv_file):
     SECRET_KEY = '7$xw$^&2rne%#gqm!-n!y$%!7*uahe1cmnc!8hd3j+=syy3=$)'
     LOCAL = True
 else:
-    LOCAL = ast.literal_eval(os.environ.get('LOCAL','False'))
+    LOCAL = ast.literal_eval(os.environ.get('LOCAL', 'False'))
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
     EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
@@ -99,12 +101,13 @@ else:
 
     PRODUCTION_SERVER = True
     DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'False').capitalize())
-    SECRET_KEY = os.environ.get('SECRET_KEY','SECRET_KEY')
-    
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'SECRET_KEY')
+
 
 if os.getenv('DATABASE_URL'):
     import dj_database_url
-    DATABASES = {'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))}
+    DATABASES = {'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'))}
 else:
     DATABASES = {
         'default': {
@@ -128,7 +131,7 @@ if not os.getenv('WHITENOISE'):
     MIDDLEWARE = [MIDDLEWARE[0]] + \
         ['whitenoise.middleware.WhiteNoiseMiddleware']+MIDDLEWARE[1:]
     INSTALLED_APPS = INSTALLED_APPS[0:-1] + \
-        ['whitenoise.runserver_nostatic',]+[INSTALLED_APPS[-1]]
+        ['whitenoise.runserver_nostatic', ]+[INSTALLED_APPS[-1]]
 
 INSTAMOJO_AUTH_KEY = os.environ.get('INSTAMOJO_AUTH_KEY')
 INSTAMOJO_PRIVATE_TOKEN = os.environ.get('INSTAMOJO_PRIVATE_TOKEN')
@@ -170,7 +173,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -179,7 +182,7 @@ STATICFILES_FINDERS = [
 ]
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 WHITENOISE_MAX_AGE = 9000
@@ -197,9 +200,9 @@ CELERY_RESULT_SERIALIZER = 'json'
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
 
-#Overiding a message tag
+# Overiding a message tag
 MESSAGE_TAGS = {
-    messages.ERROR : 'danger'
+    messages.ERROR: 'danger'
 }
 
 # # Deployment check
@@ -207,7 +210,7 @@ if PRODUCTION_SERVER:
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = True
-    SECURE_HSTS_SECONDS = 31536000 
+    SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     SECURE_REFERRER_POLICY = "same-origin"

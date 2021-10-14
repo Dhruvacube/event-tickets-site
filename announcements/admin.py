@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django_admin_listfilter_dropdown.filters import DropdownFilter
 from .models import *
 
+
 def retrivejsfile():
     if settings.DEBUG:
         return ('js/richTextEditorAnnouncements.js',)
@@ -23,14 +24,17 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (_('Id'), {'fields': ('announcement_id',)}),
-        (_('Message'), {'fields': ('announncement_message',)}),
+        (_('Message'), {
+         'fields': ('announcement_heading', 'announncement_message',)}),
         (_('Creation'), {'fields': list_filter}),
     )
+
     class Media:
         js = retrivejsfile()
+
 
 class GroupsAnnouncementsAdmin(admin.ModelAdmin):
-    list_display = ('announcement_id','announcement_heading',
+    list_display = ('announcement_id', 'announcement_heading',
                     'announncement_creation_date',)
     list_filter = (
         'announncement_creation_date',
@@ -41,15 +45,18 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (_('Id'), {'fields': ('announcement_id',)}),
-        (_('Message'), {'fields': ('announncement_message',)}),
-        (_('Groups'),{'fields': ('groups',)}),
+        (_('Message'), {
+         'fields': ('announcement_heading', 'announncement_message',)}),
+        (_('Groups'), {'fields': ('groups',)}),
         (_('Creation'), {'fields': list_filter}),
     )
+
     class Media:
         js = retrivejsfile()
-    
+
+
 class UsersAnnouncementsAdmin(admin.ModelAdmin):
-    list_display = ('announcement_id','announcement_heading',
+    list_display = ('announcement_id', 'announcement_heading',
                     'announncement_creation_date',)
     list_filter = (
         'announncement_creation_date',
@@ -60,14 +67,16 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (_('Id'), {'fields': ('announcement_id',)}),
-        (_('Message'), {'fields': ('announncement_message',)}),
-        (_('Users'),{'fields': ('users',)}),
+        (_('Message'), {
+         'fields': ('announcement_heading', 'announncement_message',)}),
+        (_('Users'), {'fields': ('users',)}),
         (_('Creation'), {'fields': list_filter}),
     )
+
     class Media:
         js = retrivejsfile()
 
-    
+
 admin.site.register(GlobalAnnouncements, GlobalAnnouncementsAdmin)
 admin.site.register(GroupsAnnouncements, GroupsAnnouncementsAdmin)
 admin.site.register(UsersAnnouncements, UsersAnnouncementsAdmin)
