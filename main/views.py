@@ -84,3 +84,4 @@ def view_games(request, game_id: int):
             'title': games.name,
         }
     )
+
