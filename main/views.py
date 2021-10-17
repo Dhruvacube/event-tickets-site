@@ -56,7 +56,7 @@ def group_make(request):
             messages.error(
                 request, f'Unable to add {len(users_list)} user(s) to the group!')
             messages.error(
-                request, 'Make sure that they have registered themselves first ¯\_(ツ)_/¯')
+                request, r'Make sure that they have registered themselves first ¯\_(ツ)_/¯')
             parameters.update({'message_group_id': group_id})
         try:
             groups.group_name = request.POST.get('groupname')
@@ -64,7 +64,7 @@ def group_make(request):
             messages.success(request, f'Successfully updated Group Name')
         except:
             messages.error(
-                request, 'This is already taken please try some other group name ¯\_(ツ)_/¯')
+                request, r'This is already taken please try some other group name ¯\_(ツ)_/¯')
         return redirect(reverse('make_groups'))
     return render(
         request,

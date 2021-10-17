@@ -18,7 +18,7 @@ def view_annoucements(request):
         groups__in=groups).union(UsersAnnouncements.objects.filter(users__in=[request.user, ]).all()))
 
     if announcements.count() <= 0:
-        messages.info(request, "No announcements there ¯\_(ツ)_/¯")
+        messages.info(request, r"No announcements there ¯\_(ツ)_/¯")
         return redirect(reverse("home"))
 
     page = request.GET.get('page', 1)
