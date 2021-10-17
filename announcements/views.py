@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import Http404
 
 from asgiref.sync import sync_to_async
-from django.contrib.auth.decorators import login_required
 from .models import *
 from main.models import GameGroup
-from django.http import Http404
-from django.contrib import messages
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
 @sync_to_async

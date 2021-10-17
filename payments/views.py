@@ -1,7 +1,10 @@
 from django.shortcuts import render
-from asgiref.sync import sync_to_async
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponsePermanentRedirect
+from django.urls import reverse
+from asgiref.sync import sync_to_async
 
 import uuid
 
@@ -9,10 +12,7 @@ import datetime
 from django.views.decorators.http import require_GET, require_POST
 from django.contrib.sites.shortcuts import get_current_site
 from instamojo_wrapper import Instamojo
-from django.conf import settings
-from django.http import HttpResponsePermanentRedirect
 from main.models import Games, GameGroup
-from django.urls import reverse
 from .models import Payments
 from .templatetags import payments_extras
 from .decorators import verify_entry_for_orders, verify_entry_for_payments_history

@@ -8,23 +8,20 @@ from django.utils.encoding import force_bytes, force_text
 from django.template.loader import render_to_string
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
+from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from datetime import datetime
 from .templatetags import getfunc
 import os
 
 import requests
-from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import (PasswordResetConfirmView,
-                                       PasswordResetDoneView,
-                                       PasswordResetView)
-from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
-from django.shortcuts import redirect, render
-from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 
 from .decorators import check_recaptcha
 from .forms import (EditProfileForm, PasswordChangeForms, PasswordReset,
