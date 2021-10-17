@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from main.models import *
 import uuid
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.conf import settings
 
 
 class GlobalAnnouncements(models.Model):
