@@ -85,7 +85,7 @@ class Sponser(models.Model):
     name = models.CharField(max_length=250, unique=True)
     website = models.URLField()
     image = models.URLField()
-    
+
     def view_image(self):
         if self.image:
             return mark_safe(
