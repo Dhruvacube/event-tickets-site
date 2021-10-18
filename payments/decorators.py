@@ -18,8 +18,7 @@ def verify_entry_for_payments_history(function):
         count = request.user.orders.count()
         if count > 0:
             return function(request, *args, **kwargs)
-        else:
-            raise PermissionDenied
+        raise PermissionDenied
     wrap.__doc__ = function.__doc__
     wrap.__name__ = function.__name__
     return wrap
