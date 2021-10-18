@@ -148,7 +148,6 @@ class PasswordReset(PasswordResetForm):
     def send_mail(self, subject_template_name, email_template_name,
                   context, from_email, to_email, html_email_template_name=None):
         '''Send mail'''
-
         if not EmailTemplate.objects.filter(name='password_reset').all():
             message = render_to_string(html_email_template_name)
 
