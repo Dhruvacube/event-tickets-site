@@ -1,4 +1,5 @@
 from django.core.exceptions import PermissionDenied
+
 from .models import GameGroup
 
 
@@ -8,6 +9,7 @@ def verify_entry_to_group(function):
         if count > 0:
             return function(request, *args, **kwargs)
         raise PermissionDenied
+
     wrap.__doc__ = function.__doc__
     wrap.__name__ = function.__name__
     return wrap
