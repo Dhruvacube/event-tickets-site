@@ -8,23 +8,20 @@ from django.utils.encoding import force_bytes, force_text
 from django.template.loader import render_to_string
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
+from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from datetime import datetime
 from .templatetags import getfunc
 import os
 
 import requests
-from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import (PasswordResetConfirmView,
-                                       PasswordResetDoneView,
-                                       PasswordResetView)
-from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
-from django.shortcuts import redirect, render
-from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 
 from .decorators import check_recaptcha
 from .forms import (EditProfileForm, PasswordChangeForms, PasswordReset,
@@ -75,9 +72,8 @@ def view_profile(request):
                 request, "Your <strong>Profile</strong> has been update successfully !")
             form.save()
             return redirect(reverse('view_profile'))
-        else: 
-            if not form.errors:
-                messages.error(request, "Please correct the errors mentioned below!")
+        if not form.errors:
+            messages.error(request, "Please correct the errors mentioned below!")
 
     else:
         form = EditProfileForm(instance=request.user)
@@ -106,8 +102,7 @@ def change_password(request):
             form.save()
             update_session_auth_hash(request, form.user)
             return HttpResponsePermanentRedirect(reverse('change_password'))
-
-        else: messages.error(request, "Please correct the errors mentioned below!")
+        messages.error(request, "Please correct the errors mentioned below!")
     else:
         form = PasswordChangeForms(user=request.user)
     return render(
@@ -157,14 +152,11 @@ def loginform(request):
                     f"You are now logged in as {username}"
                 )
                 return HttpResponsePermanentRedirect(reverse('home'))
-            else: 
-                messages.error(request, "Invalid username or password.")
-                return redirect(revrse('signin'))
-        else:
-            messages.error(request, "Details Invalid")
+            messages.error(request, "Invalid username or password.")
             return redirect(revrse('signin'))
-    else:
-        form = LoginForm()
+        messages.error(request, "Details Invalid")
+        return redirect(revrse('signin'))
+    form = LoginForm()
     return render(
         request, 
         'login.html',
@@ -193,11 +185,9 @@ def signup(request):
                 login(request, user)
             messages.success(request, 'Account created')
             return redirect(reverse('make_order'))
-        else:
-            messages.error(request, 'There is some error please correct it!')
-            return redirect(reverse('signup'))
-    else:
-        form = SignupForm()
+        messages.error(request, 'There is some error please correct it!')
+        return redirect(reverse('signup'))
+    form = SignupForm()
     current_site = get_current_site(request)
     return render(
         request, 

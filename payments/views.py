@@ -1,18 +1,18 @@
 from django.shortcuts import render
-from asgiref.sync import sync_to_async
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponsePermanentRedirect
+from django.urls import reverse
+from django.contrib.sites.shortcuts import get_current_site
+from django.views.decorators.http import require_GET, require_POST
+from asgiref.sync import sync_to_async
 
 import uuid
 
 import datetime
-from django.views.decorators.http import require_GET, require_POST
-from django.contrib.sites.shortcuts import get_current_site
 from instamojo_wrapper import Instamojo
-from django.conf import settings
-from django.http import HttpResponsePermanentRedirect
 from main.models import Games, GameGroup
-from django.urls import reverse
 from .models import Payments
 from .templatetags import payments_extras
 from .decorators import verify_entry_for_orders, verify_entry_for_payments_history
@@ -54,7 +54,7 @@ def make_order(request):
                         name=gamename).values(filter_name).get()[filter_name]
                     total_value += order_value
                     order_list.append([gamename, mode, order_value])
-        if not total_value <= 0:
+        if total_value > 0:
             request.session['order_list'] = order_list
             request.session['total_value'] = total_value
             return render(
@@ -66,8 +66,7 @@ def make_order(request):
                     'title': 'Pay for the Games that you want to participate',
                 }
             )
-        else:
-            messages.error(request, "Please select something in order to pay!")
+        messages.error(request, "Please select something in order to pay!")
     return render(
         request,
         'checkout.html',

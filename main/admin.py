@@ -10,8 +10,7 @@ from .models import *
 def retrivejsfile():
     if settings.DEBUG:
         return ('js/richTextEditor.js',)
-    else:
-        return ('https://tanzanite-lpu.github.io/tgl-2.0.0/main/static/js/richtexteditor.js',)
+    return ('https://tanzanite-lpu.github.io/tgl-2.0.0/main/static/js/richtexteditor.js',)
 
 
 # Register your models here.

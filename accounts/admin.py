@@ -20,7 +20,7 @@ class UserAdmin(UserAdmin):
                 ) + (
                     (_('Orders'), {'fields': ('orders',) }),
                 )
-    search_fields = UserAdmin.search_fields + ('registration_no', 'phone','address1','address2','state','city','zip_code','gender' 'amount', 'orders')
+    search_fields = UserAdmin.search_fields + ('registration_no', 'phone','address1','address2','state','city','zip_code','gender', 'amount', 'orders')
     verbose_name_plural = 'Profile'
     readonly_fields = ('unique_id', )
 

@@ -2,12 +2,12 @@ from django.contrib.auth.models import AbstractUser, User
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from localflavor.in_.models import INStateField
+from django.conf import settings
 from django.core.validators import MinLengthValidator, MaxLengthValidator
+from localflavor.in_.models import INStateField
 from main.models import Games, GameGroup
 from payments.models import Payments
 import uuid
-from django.conf import settings
 
 
 def validate_zip(value):
@@ -16,12 +16,11 @@ def validate_zip(value):
             _('%(value)s is not a valid zip code'),
             params={'value': value},
         )
-    else:
-        list_value=value.split(' ')
-        str_value=''
-        for i in list_value:
-            str_value+=i
-        return str_value    
+    list_value=value.split(' ')
+    str_value=''
+    for i in list_value:
+        str_value+=i
+    return str_value    
 
 def validate_city(value):
     if len(value) < 2:
