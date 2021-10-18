@@ -61,7 +61,7 @@ def group_make(request):
         try:
             groups.group_name = request.POST.get('groupname')
             groups.save()
-            messages.success(request, f'Successfully updated Group Name')
+            messages.success(request, 'Successfully updated Group Name')
         except:
             messages.error(
                 request, r'This is already taken please try some other group name ¯\_(ツ)_/¯')
