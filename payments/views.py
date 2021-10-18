@@ -54,7 +54,7 @@ def make_order(request):
                         name=gamename).values(filter_name).get()[filter_name]
                     total_value += order_value
                     order_list.append([gamename, mode, order_value])
-        if not total_value <= 0:
+        if total_value > 0:
             request.session['order_list'] = order_list
             request.session['total_value'] = total_value
             return render(
