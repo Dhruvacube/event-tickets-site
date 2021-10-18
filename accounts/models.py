@@ -10,6 +10,7 @@ from localflavor.in_.models import INStateField
 
 from main.models import GameGroup, Games
 from payments.models import Payments
+from referral.models import Referral
 
 
 def validate_zip(value):
@@ -88,6 +89,7 @@ class User(AbstractUser):
         help_text=_("This is to be filled by computer"),
         blank=True,
     )
+    referral_code = models.ForeignKey(Referral,on_delete=models.CASCADE, null=True)
 
     class Meta:
         unique_together = ("email", "registration_no")

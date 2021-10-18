@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "main.apps.MainConfig",
     "announcements.apps.AnnouncementsConfig",
+    'referral.apps.ReferralConfig',
     "django_admin_listfilter_dropdown",
     "localflavor",
     "post_office",
@@ -48,7 +49,6 @@ MIDDLEWARE = [
     "django.contrib.admindocs.middleware.XViewMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "main.request_get_processor.RequestMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
     "htmlmin.middleware.MarkRequestMiddleware",
 ]
@@ -247,3 +247,5 @@ DJANGO_ALLOW_ASYNC_UNSAFE = True
 USE_THOUSAND_SEPARATOR = True
 
 SESSION_COOKIE_AGE = 1 * 60 * 60
+
+ASYNC_RUN = ast.literal_eval(os.environ.get('ASYNC_RUN'))

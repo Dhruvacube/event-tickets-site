@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from django_admin_listfilter_dropdown.filters import DropdownFilter
+from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter
 
 from .models import *
 
@@ -14,7 +14,7 @@ class PaymentsAdmin(admin.ModelAdmin):
         "amount",
         "payment_status",
     )
-    list_filter = ("payment_status",)
+    list_filter = (("payment_status",ChoiceDropdownFilter),)
     search_fields = list_display + list_filter + ("orders_list",)
     readonly_fields = (
         "orders_list",
