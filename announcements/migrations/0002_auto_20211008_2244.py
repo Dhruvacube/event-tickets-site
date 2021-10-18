@@ -6,23 +6,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('announcements', '0001_initial'),
+        ("announcements", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='globalannouncements',
-            name='announcement_heading',
-            field=models.CharField(default='New Announcement Here', max_length=250),
+            model_name="globalannouncements",
+            name="announcement_heading",
+            field=models.CharField(
+                default="New Announcement Here", max_length=250),
         ),
         migrations.AddField(
-            model_name='groupsannouncements',
-            name='announcement_heading',
-            field=models.CharField(default='New Announcement Here', max_length=250),
+            model_name="groupsannouncements",
+            name="announcement_heading",
+            field=models.CharField(
+                default="New Announcement Here", max_length=250),
         ),
         migrations.AddField(
-            model_name='usersannouncements',
-            name='announcement_heading',
-            field=models.CharField(default='New Announcement Here', max_length=250),
+            model_name="usersannouncements",
+            name="announcement_heading",
+            field=models.CharField(
+                default="New Announcement Here", max_length=250),
         ),
     ]

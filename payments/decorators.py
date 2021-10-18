@@ -7,6 +7,7 @@ def verify_entry_for_orders(function):
         if count > 0:
             raise PermissionDenied
         return function(request, *args, **kwargs)
+
     wrap.__doc__ = function.__doc__
     wrap.__name__ = function.__name__
     return wrap
@@ -18,6 +19,7 @@ def verify_entry_for_payments_history(function):
         if count > 0:
             return function(request, *args, **kwargs)
         raise PermissionDenied
+
     wrap.__doc__ = function.__doc__
     wrap.__name__ = function.__name__
     return wrap
