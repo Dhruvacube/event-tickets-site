@@ -156,8 +156,7 @@ def loginform(request):
             return redirect(revrse('signin'))
         messages.error(request, "Details Invalid")
         return redirect(revrse('signin'))
-    else:
-        form = LoginForm()
+    form = LoginForm()
     return render(
         request, 
         'login.html',
