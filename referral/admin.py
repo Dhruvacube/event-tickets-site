@@ -12,12 +12,19 @@ class ReferralAdmin(admin.ModelAdmin):
         "description",
         "discount_percentage",
     )
-    readonly_fields = ("referral_code",)
+    readonly_fields = ("referral_code", )
     list_per_page = 20
 
     fieldsets = (
-        (_("Code"),{"fields": ("referral_code",)},),
-        (_("Details"), {"fields": ("name","description","discount_percentage")}),
+        (
+            _("Code"),
+            {
+                "fields": ("referral_code", )
+            },
+        ),
+        (_("Details"), {
+            "fields": ("name", "description", "discount_percentage")
+        }),
     )
 
 

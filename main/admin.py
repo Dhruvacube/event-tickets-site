@@ -8,9 +8,10 @@ from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter
 
 from .models import *
 
+
 def retrivejsfile():
     if settings.DEBUG:
-        return ("js/richTextEditor.js",)
+        return ("js/richTextEditor.js", )
     return (
         "https://tanzanite-lpu.github.io/tgl-2.0.0/main/static/js/richtexteditor.js",
     )
@@ -19,22 +20,33 @@ def retrivejsfile():
 # Register your models here.
 class GamesAdmin(admin.ModelAdmin):
     list_display = ("name", "platform", "solo_entry", "squad_entry")
-    list_filter = (("platform",ChoiceDropdownFilter),)
-    search_fields = list_display + list_filter + ("image_url",)
-    readonly_fields = ("view_image",)
+    list_filter = (("platform", ChoiceDropdownFilter), )
+    search_fields = list_display + list_filter + ("image_url", )
+    readonly_fields = ("view_image", )
     list_per_page = 15
 
     fieldsets = (
-        (_("Name"), {"fields": ("name",)}),
+        (_("Name"), {
+            "fields": ("name", )
+        }),
         (_("Description"), {
-         "fields": ("short_description", "long_description")}),
-        (_("Image"), {"fields": ("image_url",) + readonly_fields}),
-        (_("Platform"), {"fields": ("platform",)}),
-        (_("Solo Entry"), {"fields": ("has_solo_entry", "solo_entry")}),
+            "fields": ("short_description", "long_description")
+        }),
+        (_("Image"), {
+            "fields": ("image_url", ) + readonly_fields
+        }),
+        (_("Platform"), {
+            "fields": ("platform", )
+        }),
+        (_("Solo Entry"), {
+            "fields": ("has_solo_entry", "solo_entry")
+        }),
         (
             _("Squad Entry"),
-            {"fields": ("has_squad_entry", "squad_entry",
-                        "squad_entry_members")},
+            {
+                "fields":
+                ("has_squad_entry", "squad_entry", "squad_entry_members")
+            },
         ),
     )
 
@@ -50,16 +62,26 @@ class GameGroupAdmin(admin.ModelAdmin):
         "game",
         "payment_id",
     )
-    list_filter = (("solo_or_squad",ChoiceDropdownFilter), "game")
+    list_filter = (("solo_or_squad", ChoiceDropdownFilter), "game")
     search_fields = list_display + list_filter
     list_per_page = 30
 
     fieldsets = (
-        (_("Name"), {"fields": ("group_name", "group_unique_id")}),
-        (_("Mode"), {"fields": ("solo_or_squad",)}),
-        (_("Game"), {"fields": ("game",)}),
-        (_("Users"), {"fields": ("users",)}),
-        (_("Payment ID"), {"fields": ("payment_id",)}),
+        (_("Name"), {
+            "fields": ("group_name", "group_unique_id")
+        }),
+        (_("Mode"), {
+            "fields": ("solo_or_squad", )
+        }),
+        (_("Game"), {
+            "fields": ("game", )
+        }),
+        (_("Users"), {
+            "fields": ("users", )
+        }),
+        (_("Payment ID"), {
+            "fields": ("payment_id", )
+        }),
     )
 
 
