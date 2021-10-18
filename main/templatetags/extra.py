@@ -14,14 +14,14 @@ def filter_users(queryset, value: int):
     length = queryset.count()
     if value > length:
         return False
-    return [i for i in queryset][value-1]
+    return list(queryset)[value-1]
 
 @register.filter(name='filter_users_id')
 def filter_users_id(queryset, value: int):
     length = queryset.count()
     if value > length:
         return False
-    queryset1=[i for i in queryset]
+    queryset1=list(queryset)
     return queryset1[value-1].unique_id
 
 @register.filter(name='check_success')
