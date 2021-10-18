@@ -28,10 +28,10 @@ class Games(models.Model):
     )
 
     has_solo_entry = models.BooleanField(default=True)
-    solo_entry = models.IntegerField(help_text="Enter the Solo entry price")
+    solo_entry = models.IntegerField(help_text="Enter the Solo entry price",default=0)
 
     has_squad_entry = models.BooleanField(default=True)
-    squad_entry = models.IntegerField(help_text="Enter the Sqaud entry price")
+    squad_entry = models.IntegerField(help_text="Enter the Sqaud entry price",default=0)
     squad_entry_members = models.IntegerField(default=5)
 
     def __str__(self):
@@ -73,3 +73,4 @@ class GameGroup(models.Model):
             else:
                 self.group_name = f"Group {self.id}"
         return super().save(*args, **kwargs)
+    

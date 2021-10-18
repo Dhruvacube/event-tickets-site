@@ -4,10 +4,9 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.admin import Group
 from django.utils.translation import gettext_lazy as _
-from django_admin_listfilter_dropdown.filters import DropdownFilter
+from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter
 
 from .models import *
-
 
 def retrivejsfile():
     if settings.DEBUG:
@@ -20,7 +19,7 @@ def retrivejsfile():
 # Register your models here.
 class GamesAdmin(admin.ModelAdmin):
     list_display = ("name", "platform", "solo_entry", "squad_entry")
-    list_filter = ("platform",)
+    list_filter = (("platform",ChoiceDropdownFilter),)
     search_fields = list_display + list_filter + ("image_url",)
     readonly_fields = ("view_image",)
     list_per_page = 15
@@ -51,7 +50,7 @@ class GameGroupAdmin(admin.ModelAdmin):
         "game",
         "payment_id",
     )
-    list_filter = ("solo_or_squad", "game")
+    list_filter = (("solo_or_squad",ChoiceDropdownFilter), "game")
     search_fields = list_display + list_filter
     list_per_page = 30
 

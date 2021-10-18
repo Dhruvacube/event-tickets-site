@@ -31,6 +31,7 @@ class UserAdmin(UserAdmin):
                         "city",
                         "zip_code",
                         "gender",
+                        "referral_code",
                     )
                 },
             ),
@@ -49,6 +50,7 @@ class UserAdmin(UserAdmin):
         "gender",
         "amount",
         "orders",
+        "referral_code",
     )
     verbose_name_plural = "Profile"
     readonly_fields = ("unique_id",)
