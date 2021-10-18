@@ -16,12 +16,11 @@ def validate_zip(value):
             _('%(value)s is not a valid zip code'),
             params={'value': value},
         )
-    else:
-        list_value=value.split(' ')
-        str_value=''
-        for i in list_value:
-            str_value+=i
-        return str_value    
+    list_value=value.split(' ')
+    str_value=''
+    for i in list_value:
+        str_value+=i
+    return str_value    
 
 def validate_city(value):
     if len(value) < 2:

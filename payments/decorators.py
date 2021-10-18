@@ -6,8 +6,7 @@ def verify_entry_for_orders(function):
         count = request.user.orders.count()
         if count > 0:
             raise PermissionDenied
-        else:
-            return function(request, *args, **kwargs)
+        return function(request, *args, **kwargs)
     wrap.__doc__ = function.__doc__
     wrap.__name__ = function.__name__
     return wrap
