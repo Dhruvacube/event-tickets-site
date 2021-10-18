@@ -10,7 +10,7 @@ from .forms import SignupForm
 from .models import User
 
 
-class UserAdmin(UserAdmin):
+class CustomUserAdmin(UserAdmin):
     add_form = SignupForm
     model = User
     fieldsets = ((UserAdmin.fieldsets[0], ) + ((
@@ -51,4 +51,4 @@ class UserAdmin(UserAdmin):
     readonly_fields = ("unique_id", )
 
 
-admin.site.register(User, UserAdmin)
+admin.site.register(User, CustomUserAdmin)
