@@ -154,9 +154,8 @@ def loginform(request):
                 return HttpResponsePermanentRedirect(reverse('home'))
             messages.error(request, "Invalid username or password.")
             return redirect(revrse('signin'))
-        else:
-            messages.error(request, "Details Invalid")
-            return redirect(revrse('signin'))
+        messages.error(request, "Details Invalid")
+        return redirect(revrse('signin'))
     else:
         form = LoginForm()
     return render(
@@ -189,8 +188,7 @@ def signup(request):
             return redirect(reverse('make_order'))
         messages.error(request, 'There is some error please correct it!')
         return redirect(reverse('signup'))
-    else:
-        form = SignupForm()
+    form = SignupForm()
     current_site = get_current_site(request)
     return render(
         request, 
