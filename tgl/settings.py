@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "main.apps.MainConfig",
     "announcements.apps.AnnouncementsConfig",
-    'referral.apps.ReferralConfig',
+    "referral.apps.ReferralConfig",
     "django_admin_listfilter_dropdown",
     "localflavor",
     "post_office",
@@ -100,8 +100,9 @@ else:
 if os.getenv("DATABASE_URL"):
     import dj_database_url
 
-    DATABASES = {"default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL"))}
+    DATABASES = {
+        "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    }
 else:
     DATABASES = {
         "default": {
@@ -121,18 +122,12 @@ sentry_sdk.init(
 )
 
 if not os.getenv("WHITENOISE"):
-    MIDDLEWARE = (
-        [MIDDLEWARE[0]]
-        + ["whitenoise.middleware.WhiteNoiseMiddleware"]
-        + MIDDLEWARE[1:]
-    )
-    INSTALLED_APPS = (
-        INSTALLED_APPS[0:-1]
-        + [
-            "whitenoise.runserver_nostatic",
-        ]
-        + [INSTALLED_APPS[-1]]
-    )
+    MIDDLEWARE = ([MIDDLEWARE[0]] +
+                  ["whitenoise.middleware.WhiteNoiseMiddleware"] +
+                  MIDDLEWARE[1:])
+    INSTALLED_APPS = (INSTALLED_APPS[0:-1] + [
+        "whitenoise.runserver_nostatic",
+    ] + [INSTALLED_APPS[-1]])
 
 INSTAMOJO_AUTH_KEY = os.environ.get("INSTAMOJO_AUTH_KEY")
 INSTAMOJO_PRIVATE_TOKEN = os.environ.get("INSTAMOJO_PRIVATE_TOKEN")
@@ -142,16 +137,20 @@ INSTAMOJO_PRIVATE_TOKEN = os.environ.get("INSTAMOJO_PRIVATE_TOKEN")
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -248,4 +247,4 @@ USE_THOUSAND_SEPARATOR = True
 
 SESSION_COOKIE_AGE = 1 * 60 * 60
 
-ASYNC_RUN = ast.literal_eval(os.environ.get('ASYNC_RUN'))
+ASYNC_RUN = ast.literal_eval(os.environ.get("ASYNC_RUN"))
