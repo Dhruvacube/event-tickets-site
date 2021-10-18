@@ -79,13 +79,13 @@ def view_profile(request):
 
         if form.is_valid():
             messages.success(
-                request, "Your <strong>Profile</strong> has been update successfully !"
-            )
+                request,
+                "Your <strong>Profile</strong> has been update successfully !")
             form.save()
             return redirect(reverse("view_profile"))
         if not form.errors:
-            messages.error(
-                request, "Please correct the errors mentioned below!")
+            messages.error(request,
+                           "Please correct the errors mentioned below!")
 
     else:
         form = EditProfileForm(instance=request.user)
@@ -110,7 +110,8 @@ def change_password(request):
 
         if form.is_valid():
             messages.success(
-                request, "Your <strong>password</strong> has been update successfully !"
+                request,
+                "Your <strong>password</strong> has been update successfully !"
             )
             form.save()
             update_session_auth_hash(request, form.user)
