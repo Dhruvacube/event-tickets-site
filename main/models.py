@@ -79,3 +79,16 @@ class GameGroup(models.Model):
             else:
                 self.group_name = f"Group {self.id}"
         return super().save(*args, **kwargs)
+
+
+class Sponser(models.Model):
+    name = models.CharField(max_length=250, unique=True)
+    website = models.URLField()
+    image = models.URLField()
+    
+    def view_image(self):
+        if self.image:
+            return mark_safe(
+                f'<img loading="lazy" src="{self.image}" width="50%" height="50%" />'
+            )
+        return "None"

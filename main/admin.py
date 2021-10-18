@@ -84,7 +84,25 @@ class GameGroupAdmin(admin.ModelAdmin):
         }),
     )
 
+class SponserAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "website",
+    )
+    search_fields = list_display + ('image',)
+    readonly_fields = ("view_image", )
+    list_per_page = 10
 
+    fieldsets = (
+        (_("Name"), {
+            "fields": ("name",)
+        }),
+        (_("Details"), {
+            "fields": ("website", "image", "view_image")
+        }),
+    )
+
+admin.site.register(Sponser, SponserAdmin)
 admin.site.register(Games, GamesAdmin)
 admin.site.register(GameGroup, GameGroupAdmin)
 admin.site.unregister(Group)

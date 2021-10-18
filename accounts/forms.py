@@ -52,6 +52,7 @@ class SignupForm(UserCreationForm):
             "country",
             "zip_code",
             "university_name",
+            "referral_code"
         )
 
     def save(self, commit=True):
@@ -112,6 +113,10 @@ class SignupForm(UserCreationForm):
 
         self.fields["university_name"].widget.attrs["class"] = "form-control"
         self.fields["university_name"].widget.attrs["required"] = "true"
+        
+        self.fields["referral_code"].widget.attrs["class"] = "form-control"
+        self.fields["referral_code"].widget.attrs["required"] = "true"
+        
         # self.fields["gender"].widget.attrs["style"] = "color: black !important; background-color: white !important;"
 
 
