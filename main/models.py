@@ -31,8 +31,7 @@ class Games(models.Model):
     def view_image(self):
         if self.image_url:
             return mark_safe(f'<img loading="lazy" src="{self.image_url}" width="50%" height="50%" />')
-        else:
-            return 'None'
+        return 'None'
 
     class Meta:
         verbose_name_plural = _('Games')

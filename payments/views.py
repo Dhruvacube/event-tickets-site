@@ -66,8 +66,7 @@ def make_order(request):
                     'title': 'Pay for the Games that you want to participate',
                 }
             )
-        else:
-            messages.error(request, "Please select something in order to pay!")
+        messages.error(request, "Please select something in order to pay!")
     return render(
         request,
         'checkout.html',

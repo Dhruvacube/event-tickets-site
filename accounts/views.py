@@ -72,9 +72,8 @@ def view_profile(request):
                 request, "Your <strong>Profile</strong> has been update successfully !")
             form.save()
             return redirect(reverse('view_profile'))
-        else: 
-            if not form.errors:
-                messages.error(request, "Please correct the errors mentioned below!")
+        if not form.errors:
+            messages.error(request, "Please correct the errors mentioned below!")
 
     else:
         form = EditProfileForm(instance=request.user)
@@ -103,8 +102,7 @@ def change_password(request):
             form.save()
             update_session_auth_hash(request, form.user)
             return HttpResponsePermanentRedirect(reverse('change_password'))
-
-        else: messages.error(request, "Please correct the errors mentioned below!")
+        messages.error(request, "Please correct the errors mentioned below!")
     else:
         form = PasswordChangeForms(user=request.user)
     return render(
@@ -154,9 +152,8 @@ def loginform(request):
                     f"You are now logged in as {username}"
                 )
                 return HttpResponsePermanentRedirect(reverse('home'))
-            else: 
-                messages.error(request, "Invalid username or password.")
-                return redirect(revrse('signin'))
+            messages.error(request, "Invalid username or password.")
+            return redirect(revrse('signin'))
         else:
             messages.error(request, "Details Invalid")
             return redirect(revrse('signin'))
@@ -190,9 +187,8 @@ def signup(request):
                 login(request, user)
             messages.success(request, 'Account created')
             return redirect(reverse('make_order'))
-        else:
-            messages.error(request, 'There is some error please correct it!')
-            return redirect(reverse('signup'))
+        messages.error(request, 'There is some error please correct it!')
+        return redirect(reverse('signup'))
     else:
         form = SignupForm()
     current_site = get_current_site(request)
