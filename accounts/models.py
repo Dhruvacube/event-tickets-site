@@ -19,9 +19,7 @@ def validate_zip(value):
             params={"value": value},
         )
     list_value = value.split(" ")
-    str_value = ""
-    for i in list_value:
-        str_value += i
+    str_value = "".join(list_value)
     return str_value
 
 
