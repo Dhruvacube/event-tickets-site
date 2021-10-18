@@ -159,9 +159,9 @@ def loginform(request):
                 messages.info(request, f"You are now logged in as {username}")
                 return HttpResponsePermanentRedirect(reverse("home"))
             messages.error(request, "Invalid username or password.")
-            return redirect(revrse("signin"))
+            return redirect(reverse("signin"))
         messages.error(request, "Details Invalid")
-        return redirect(revrse("signin"))
+        return redirect(reverse("signin"))
     form = LoginForm()
     return render(
         request,
