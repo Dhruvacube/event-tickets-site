@@ -158,9 +158,7 @@ def loginform(request):
         form = LoginForm(request=request, data=request.POST)
 
         username = request.POST.get("username")
-        try:
-            user1 = User.objects.get(username=username)
-        except User.DoesNotExist:
+        if not User.objects.get(username=username):
             messages.warning(request, "Please create an new account !")
             return redirect(reverse("signin"))
         if form.is_valid():
