@@ -52,7 +52,6 @@ class SignupForm(UserCreationForm):
             "country",
             "zip_code",
             "university_name",
-            "referral_code",
         )
 
     def save(self, commit=True):
@@ -78,7 +77,7 @@ class SignupForm(UserCreationForm):
         self.fields["email"].widget.attrs["required"] = "true"
 
         self.fields["registration_no"].widget.attrs["class"] = "form-control"
-        self.fields["registration_no"].widget.attrs["required"] = "true"
+        self.fields["registration_no"].widget.attrs["required"] = "false"
 
         self.fields["password1"].widget.attrs["class"] = "form-control"
         self.fields["password1"].widget.attrs["required"] = "true"
@@ -113,9 +112,6 @@ class SignupForm(UserCreationForm):
 
         self.fields["university_name"].widget.attrs["class"] = "form-control"
         self.fields["university_name"].widget.attrs["required"] = "true"
-
-        self.fields["referral_code"].widget.attrs["class"] = "form-control"
-        self.fields["referral_code"].widget.attrs["required"] = "true"
 
         # self.fields["gender"].widget.attrs["style"] = "color: black !important; background-color: white !important;"
 

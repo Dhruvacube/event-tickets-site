@@ -22,6 +22,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from post_office import mail
+from referral.models import Referral
 from post_office.models import EmailTemplate
 
 from .decorators import check_recaptcha
@@ -78,6 +79,12 @@ def view_profile(request):
         form = EditProfileForm(request.POST, instance=request.user)
 
         if form.is_valid():
+            referral = request.POST.get('referral_code')
+            if Referral.filter(referral_code=referral).exists():
+                user.referral_code = Referral.filter(referral_code=referral).get()
+            else:
+                messages.warning(request, f"<strong>{referral}</strong> Referral Code does not exists")
+            
             messages.success(
                 request,
                 "Your <strong>Profile</strong> has been update successfully !")
@@ -98,6 +105,7 @@ def view_profile(request):
             "title": "Update Profile",
             "view_profile": True,
             "no_display_messages": True,
+            "referral": True
         },
     )
 
@@ -182,7 +190,14 @@ def signup(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = True
+
+            referral = request.POST.get('referral_code')
+            if Referral.filter(referral_code=referral).exists():
+                user.referral_code = Referral.filter(referral_code=referral).get()
+            else:
+                messages.warning(request, f"<strong>{referral}</strong> Referral Code does not exists")
             user.save()
+            
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
             user = authenticate(request, username=username, password=password)
@@ -205,5 +220,6 @@ def signup(request):
             "link": f'{reverse("signin")}',
             "domain": current_site.domain,
             "display": True,
+            "referral": True
         },
     )
