@@ -18,7 +18,7 @@
             {% for i in games %}{% if i.platform == 'p' or i.platform == 'a' %}
             <div class="col">
                 <div class="card container">
-                    <img src="{{ i.image_url }}" class="card-img-top" loading="lazy" />
+                    <img src="{% static i.image_url %}" class="card-img-top" loading="lazy" />
                     <div class="box-lower-section card-body">
                         <h4 class="game-name">{{i.name|capfirst}}</h4>
                         <p>{{i.short_description}}</p>
@@ -46,11 +46,11 @@
             {% for i in games %} {% if i.platform == 'm' or i.platform == 'a' or i.platform == 'ps' %}
             <div class="col">
                 <div class="card container">
-                    <img src="{{ i.image_url }}" class="card-img-top" loading="lazy" />
+                    <img src="{% static i.image_url %}" class="card-img-top" loading="lazy" />
                     <div class="box-lower-section card-body">
                         <h4 class="game-name">{{i.name|capfirst}}</h4>
                         <p>{{i.short_description}}</p>
-                        <a href="{% url 'about_game' i.id %}"><button class="btn btn-outline-info">Know More</button></a>
+                        <a href="{% url 'about_game' i.id %}" target="_blank"><button class="btn btn-outline-info">Know More</button></a>
                     </div>
                 </div>
             </div>
