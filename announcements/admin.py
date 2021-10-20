@@ -6,11 +6,12 @@ from .models import *
 
 
 def retrivejsfile():
-    if settings.DEBUG:
-        return ("js/richTextEditorAnnouncements.js",)
-    return (
-        "https://tanzanite-lpu.github.io/tgl-2.0.0/announcements/static/js/richTextEditorAnnouncements.js",
-    )
+    # if settings.DEBUG:
+    #     return ("js/richTextEditorAnnouncements.js",)
+    # return (
+    #     "https://tanzanite-lpu.github.io/tgl-2.0.0/announcements/static/js/richTextEditorAnnouncements.js",
+    # )
+    return ("js/richTextEditorAnnouncements.js",)
 
 
 # Register your models here.
