@@ -21,7 +21,7 @@ class Games(models.Model):
                     MaxLengthValidator(200)],
     )
     long_description = models.TextField(help_text=_("Here explain everything"))
-    image_url = models.URLField(help_text=_("Url of the game image"))
+    image_url = models.CharField(help_text=_("Url of the game image"),max_length=250)
     platform = models.CharField(
         max_length=11,
         choices=(("a", "ALL"), ("m", "Mobile"), ("p", "PC"), ("ps",
@@ -40,11 +40,18 @@ class Games(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def save(self,*args,**kwargs):
+        if self.image_url.startswith('/') :
+            self.image_url = self.image_url[1:]
+        if self.image_url.endswith('/'):
+            self.image_url = self.image_url[:-1]
+        return super().save(*args, **kwargs)
 
     def view_image(self):
         if self.image_url:
             return mark_safe(
-                f'<img loading="lazy" src="{self.image_url}" width="50%" height="50%" />'
+                f'<img loading="lazy" src="{settings.STATIC_URL}{self.image_url}" width="50%" height="50%" />'
             )
         return "None"
 

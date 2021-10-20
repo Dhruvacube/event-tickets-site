@@ -131,7 +131,7 @@ nav ul li a:hover {
 /* start: hero styles */
 
 #hero-image {
-    background: url("../images/valo.jpg") top center no-repeat;
+    background: url("../images/valo.webp") top center no-repeat;
     background-attachment: fixed;
     height: 820px;
 }
@@ -344,7 +344,7 @@ nav ul li a:hover {
 --------------------------------------------------------------*/
 
 #footer {
-    background: url("../images/FzDvk15.png") center top no-repeat;
+    background: url("../images/FzDvk15.webp") center top no-repeat;
     color: #fff;
     font-size: 14px;
     position: relative;

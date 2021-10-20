@@ -6,9 +6,9 @@
             {% for i in games %}
             <div class="col">
                 <div class="games">
-                    <u><h2>{{i.name}}</h2></u>
+                    <u><h2>{{i.name}} <i class='bx bx-link-external'></i></h2></u>
                     <div class="container1">
-                        <p><img src="{{i.image_url}}" class="card-img-top" loading="lazy" /></p>
+                        <p><img src="{% static i.image_url %}" class="card-img-top" loading="lazy" /></p>
                     </div>
                     <div class="container2">
                         <p>Select Mode</p>
