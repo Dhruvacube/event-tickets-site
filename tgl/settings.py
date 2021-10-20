@@ -1,5 +1,5 @@
-import logging
 import ast
+import logging
 import os
 from pathlib import Path
 
@@ -7,6 +7,7 @@ import sentry_sdk
 from django.contrib.messages import constants as messages
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
+
 from .django_logging import LOGGING
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

@@ -19,7 +19,11 @@ LOGGING = {
             "datefmt": "%Y-%m-%d %H:%M:%S",
         },
     },
-    "filters": {"autoreloadFilter": {"()": AutoreloadLogFilter}},
+    "filters": {
+        "autoreloadFilter": {
+            "()": AutoreloadLogFilter
+        }
+    },
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
@@ -30,9 +34,24 @@ LOGGING = {
             "class": "django.utils.log.AdminEmailHandler",
         },
     },
-    "root": {"level": "DEBUG", "handlers": ["console", ]},
+    "root": {
+        "level": "DEBUG",
+        "handlers": [
+            "console",
+        ],
+    },
     "loggers": {
-        "django": {"level": "DEBUG", "handlers": ["console", ]},
-        "django.template": {"level": "ERROR", "handlers": ["console", ]},
+        "django": {
+            "level": "DEBUG",
+            "handlers": [
+                "console",
+            ],
+        },
+        "django.template": {
+            "level": "ERROR",
+            "handlers": [
+                "console",
+            ],
+        },
     },
 }
