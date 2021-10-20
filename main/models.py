@@ -11,40 +11,40 @@ from payments.models import *
 
 # Create your models here.
 class Games(models.Model):
-    name = models.CharField(max_length=200,
-                            help_text=_("The name of the game"))
+    name = models.CharField(
+        max_length=200, help_text=_("The name of the game"))
     short_description = models.TextField(
         help_text=_(
-            "About this short event, better keep it in between 100 characters"
-        ),
-        validators=[MinLengthValidator(13),
-                    MaxLengthValidator(200)],
+            "About this short event, better keep it in between 100 characters"),
+        validators=[MinLengthValidator(13), MaxLengthValidator(200)],
     )
     long_description = models.TextField(help_text=_("Here explain everything"))
-    image_url = models.CharField(help_text=_("Url of the game image"),max_length=250)
+    image_url = models.CharField(help_text=_(
+        "Url of the game image"), max_length=250)
     platform = models.CharField(
         max_length=11,
-        choices=(("a", "ALL"), ("m", "Mobile"), ("p", "PC"), ("ps",
-                                                              "Play Station")),
+        choices=(("a", "ALL"), ("m", "Mobile"),
+                 ("p", "PC"), ("ps", "Play Station")),
         default="A",
     )
 
     has_solo_entry = models.BooleanField(default=True)
-    solo_entry = models.IntegerField(help_text="Enter the Solo entry price",
-                                     default=0)
+    solo_entry = models.IntegerField(
+        help_text="Enter the Solo entry price", default=0)
 
     has_squad_entry = models.BooleanField(default=True)
-    squad_entry = models.IntegerField(help_text="Enter the Sqaud entry price",
-                                      default=0)
+    squad_entry = models.IntegerField(
+        help_text="Enter the Sqaud entry price", default=0
+    )
     squad_entry_members = models.IntegerField(default=5)
 
     def __str__(self):
         return self.name
-    
-    def save(self,*args,**kwargs):
-        if self.image_url.startswith('/') :
+
+    def save(self, *args, **kwargs):
+        if self.image_url.startswith("/"):
             self.image_url = self.image_url[1:]
-        if self.image_url.endswith('/'):
+        if self.image_url.endswith("/"):
             self.image_url = self.image_url[:-1]
         return super().save(*args, **kwargs)
 
@@ -61,13 +61,11 @@ class Games(models.Model):
 
 class GameGroup(models.Model):
     group_unique_id = models.UUIDField(default=uuid.uuid4)
-    group_name = models.CharField(max_length=250,
-                                  unique=True,
-                                  blank=True,
-                                  null=True)
-    solo_or_squad = models.CharField(default="sq",
-                                     choices=(("sq", "SQUAD"), ("so", "SOLO")),
-                                     max_length=15)
+    group_name = models.CharField(
+        max_length=250, unique=True, blank=True, null=True)
+    solo_or_squad = models.CharField(
+        default="sq", choices=(("sq", "SQUAD"), ("so", "SOLO")), max_length=15
+    )
     game = models.ForeignKey(Games, on_delete=models.CASCADE)
     users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     payment_id = models.ForeignKey(

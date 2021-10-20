@@ -20,7 +20,8 @@ def retrivejsfile():
 
 # Register your models here.
 class GamesAdmin(admin.ModelAdmin):
-    list_display = ("name", "platform", "solo_entry", "squad_entry", "image_url")
+    list_display = ("name", "platform", "solo_entry",
+                    "squad_entry", "image_url")
     list_filter = (("platform", ChoiceDropdownFilter),)
     search_fields = list_display + list_filter
     readonly_fields = ("view_image",)
