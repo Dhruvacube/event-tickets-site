@@ -1,13 +1,14 @@
 {% extends 'layout.html' %}{% load static %}{% load compress %}{% block body %} {% compress css %}
 <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />{% endcompress %}{% if not payafter %}
 <div class="container">
-    <form action="{% if action_url %}{{action_url}}{% else %}?{% endif %}" method="POST">{% csrf_token %}{% if display_games %}{% for i in games %} {% if forloop.counter|divisibleby:"3" or forloop.counter == 1 %}
-        <div class="row">
-            {% endif %}
-            <div class="col-sm-6">
+    <form action="{% if action_url %}{{action_url}}{% else %}?{% endif %}" method="POST">{% csrf_token %}{% if display_games %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for i in games %}
+            <div class="col">
                 <div class="games">
+                    <u><h2>{{i.name}}</h2></u>
                     <div class="container1">
-                        <p>{{i.name}}</p>
+                        <p><img src="{{i.image_url}}" class="card-img-top" loading="lazy" /></p>
                     </div>
                     <div class="container2">
                         <p>Select Mode</p>
@@ -15,7 +16,7 @@
                         <select name="mode{{forloop.counter}}" class="mode" onclick="changeprice(this)">
                                 <option value="{{i.name}} SelectGame" class="opt">Select mode</option>
                                 {% if i.has_solo_entry %}
-                                <option value="{{i.name}} SingleGame" class="opt">Single</option>
+                                <option value="{{i.name}} SingleGame" class="opt">Solo</option>
                                 {% endif %}
                                 {% if i.has_squad_entry %}
                                 <option value="{{i.name}} SquadGame" class="opt">Squad</option>
@@ -24,9 +25,8 @@
                     </div>
                 </div>
             </div>
-            {% if forloop.counter|divisibleby:"3" or forloop.counter == games|length %}
+            {% endfor %}
         </div>
-        {% endif %} {% endfor %}
         <div class="games">
             <div class="container1">
                 <h1>Verify your order by clicking the button below</h1>
