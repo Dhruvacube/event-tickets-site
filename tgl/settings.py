@@ -1,3 +1,4 @@
+import logging
 import ast
 import os
 from pathlib import Path
@@ -6,6 +7,7 @@ import sentry_sdk
 from django.contrib.messages import constants as messages
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
+from .django_logging import LOGGING
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -248,3 +250,6 @@ USE_THOUSAND_SEPARATOR = True
 SESSION_COOKIE_AGE = 1 * 60 * 60
 
 ASYNC_RUN = ast.literal_eval(os.environ.get("ASYNC_RUN"))
+
+LOGGING = LOGGING
+logging.config.dictConfig(LOGGING)
