@@ -6,7 +6,7 @@
             {% for i in games %}
             <div class="col">
                 <div class="games">
-                    <u><h2>{{i.name}} <i class='bx bx-link-external'></i></h2></u>
+                    <u><a target="_blank" class="text-light" href="{% url 'about_game' i.id %}"><h2>{{i.name}} <i class='bx bx-link-external'></i></h2></a></u>
                     <div class="container1">
                         <p><img src="{% static i.image_url %}" class="card-img-top" loading="lazy" /></p>
                     </div>
