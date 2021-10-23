@@ -59,6 +59,10 @@ def make_order(request):
                     )
                     total_value += order_value
                     order_list.append([gamename, mode, order_value])
+        #discount code logic
+        if request.user.referral_code:
+            discount_value = request.user.referral_code.discount_percentage
+            total_value = total_value*(1-(discount_value/100))
         if total_value > 0:
             request.session["order_list"] = order_list
             request.session["total_value"] = total_value
