@@ -38,8 +38,11 @@
         {% else %}
         <div class="games">
             <div class="container1">
-                <h3>You have to pay a total of</h3>
+                <h3>You have to pay a {% if user.referral_code %}dicounted price{% else %}total{% endif %} of</h3>
                 <h1>₹{{total_value}}</h1>
+                {% if user.referral_code %}
+                <h4>Undiscounted Price was ₹{{undiscounted_value}}</h4>{% endif %}
+                <h4>{% if user.referral_code %}You got a discount of {{user.referral_code.discount_percentage}}% using the {{user.referral_code}} referral code{% endif %}</h4>
             </div>
             <div class="container2">
                 <button type="submit" class="button btn btn-outline-warning">Checkout</button>

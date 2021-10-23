@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Stick+No+Bills:wght@300&display=swap');
-body {
-    font-family: "Open Sans", sans-serif;
-    margin: 0;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+* {
+    padding: 0;
+    font-family: 'Special Elite', cursive;
 }
 
 

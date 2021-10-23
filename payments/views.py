@@ -35,7 +35,7 @@ def view_payments_history(request):
 @verify_entry_for_orders
 def make_order(request):
     if request.method == "POST":
-        order_list, total_value = [], 0
+        order_list, total_value, undiscounted_value = [], 0, False
         for i in request.POST.dict():
             if "mode" in i:
                 a = request.POST.dict()[i]
@@ -59,6 +59,11 @@ def make_order(request):
                     )
                     total_value += order_value
                     order_list.append([gamename, mode, order_value])
+        #discount code logic
+        if request.user.referral_code:
+            discount_value = request.user.referral_code.discount_percentage
+            undiscounted_value = int(total_value)
+            total_value = total_value*(1-(discount_value/100))
         if total_value > 0:
             request.session["order_list"] = order_list
             request.session["total_value"] = total_value
@@ -69,6 +74,7 @@ def make_order(request):
                     "total_value": total_value,
                     "action_url": reverse("create_payment"),
                     "title": "Pay for the Games that you want to participate",
+                    "undiscounted_value": undiscounted_value,
                 },
             )
         messages.error(request, "Please select something in order to pay!")

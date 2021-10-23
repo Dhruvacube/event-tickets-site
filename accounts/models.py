@@ -95,7 +95,7 @@ class User(AbstractUser):
     )
     referral_code = models.ForeignKey(Referral,
                                       on_delete=models.CASCADE,
-                                      null=True)
+                                      null=True,blank=True)
 
     class Meta:
         unique_together = ("email", "registration_no")

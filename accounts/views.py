@@ -80,20 +80,24 @@ def view_profile(request):
         form = EditProfileForm(request.POST, instance=request.user)
 
         if form.is_valid():
+            user = form.save(commit=False)
             referral = request.POST.get("referral_code")
-            if Referral.filter(referral_code=referral).exists():
-                user.referral_code = Referral.filter(
-                    referral_code=referral).get()
+            if len(referral) == 0 or referral in [None,'']:
+                user.referral_code = None
             else:
-                messages.warning(
-                    request,
-                    f"<strong>{referral}</strong> Referral Code does not exists",
-                )
+                if Referral.objects.filter(referral_code=referral).exists():
+                    request.user.referral_code = Referral.objects.filter(
+                        referral_code=referral).get()
+                else:
+                    messages.warning(
+                        request,
+                        f"<strong>{referral}</strong> Referral Code does not exists",
+                    )
 
             messages.success(
                 request,
                 "Your <strong>Profile</strong> has been update successfully !")
-            form.save()
+            form.save(commit=True)
             return redirect(reverse("view_profile"))
         if not form.errors:
             messages.error(request,
