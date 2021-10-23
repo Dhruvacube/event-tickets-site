@@ -82,12 +82,13 @@ def view_profile(request):
         if form.is_valid():
             user = form.save(commit=False)
             referral = request.POST.get("referral_code")
-            if len(referral) == 0 or referral in [None,'']:
+            if len(referral) == 0 or referral in [None, ""]:
                 user.referral_code = None
             else:
                 if Referral.objects.filter(referral_code=referral).exists():
                     request.user.referral_code = Referral.objects.filter(
-                        referral_code=referral).get()
+                        referral_code=referral
+                    ).get()
                 else:
                     messages.warning(
                         request,
@@ -95,13 +96,13 @@ def view_profile(request):
                     )
 
             messages.success(
-                request,
-                "Your <strong>Profile</strong> has been update successfully !")
+                request, "Your <strong>Profile</strong> has been update successfully !"
+            )
             form.save(commit=True)
             return redirect(reverse("view_profile"))
         if not form.errors:
-            messages.error(request,
-                           "Please correct the errors mentioned below!")
+            messages.error(
+                request, "Please correct the errors mentioned below!")
 
     else:
         form = EditProfileForm(instance=request.user)
@@ -127,8 +128,7 @@ def change_password(request):
 
         if form.is_valid():
             messages.success(
-                request,
-                "Your <strong>password</strong> has been update successfully !"
+                request, "Your <strong>password</strong> has been update successfully !"
             )
             form.save()
             update_session_auth_hash(request, form.user)
