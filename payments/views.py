@@ -211,6 +211,7 @@ def payment_stats(request):
     )
 
 @sync_to_async
+@require_POST
 def update_payments(request):
     current_site = get_current_site(request)
     payments = Payments.objects.filter(payment_status="P").iterator()
@@ -218,4 +219,4 @@ def update_payments(request):
         if i.created_at <= now() - datetime.timedelta(minutes=10):
             i.payment_status="F"
             i.save()
-    return HttpResponse(mark_safe(f'<html><head><title>Redirecting</title></head><body><meta http-equiv="refresh" content="1; URL=http://{current_site.domain}">Redirecting please wait...</body></html>'))
+    return HttpResponse(mark_safe(f'<html><head><title>Redirecting</title></head><body><meta http-equiv="refresh" content="5; URL=http://{current_site.domain}">Redirecting please wait...</body></html>'))
