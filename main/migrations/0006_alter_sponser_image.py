@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0005_alter_sponser_image'),
+        ("main", "0005_alter_sponser_image"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='sponser',
-            name='image',
+            model_name="sponser",
+            name="image",
             field=models.CharField(max_length=250),
         ),
     ]

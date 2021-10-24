@@ -15,7 +15,13 @@ from .templatetags import extra
 @sync_to_async
 def home(request):
     return render(
-        request, "index.html", {"games": Games.objects.all(), "title": "Home", "sponsers": Sponser.objects.all()}
+        request,
+        "index.html",
+        {
+            "games": Games.objects.all(),
+            "title": "Home",
+            "sponsers": Sponser.objects.all(),
+        },
     )
 
 

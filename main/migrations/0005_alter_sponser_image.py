@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0004_alter_games_image_url'),
+        ("main", "0004_alter_games_image_url"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='sponser',
-            name='image',
+            model_name="sponser",
+            name="image",
             field=models.TextField(max_length=250),
         ),
     ]
