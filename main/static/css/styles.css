@@ -167,17 +167,6 @@ nav ul li a:hover {
     margin-bottom: 2.5em;
 }
 
-.hero-marketing-text button {
-    background-color: #FFB320;
-    color: #131313;
-    border-radius: 25px;
-    padding: 15px 25px;
-    font-size: 0.85em;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-}
-
 
 /* end: hero styles */
 
@@ -185,7 +174,7 @@ nav ul li a:hover {
 /* start: games styles */
 
 .games {
-    background: url('https://onclickwebdesign.com/wp-content/uploads/recent_games_bg.png') top center no-repeat;
+    background: url('../icons/recent_games_bg.png') top center no-repeat;
     background-attachment: fixed;
     background-color: #eef2f6;
     border-top: 1px solid #d6dee7;
