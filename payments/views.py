@@ -6,17 +6,13 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponse, HttpResponsePermanentRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.contrib.sites.shortcuts import get_current_site
+from django.utils.safestring import mark_safe
+from django.utils.timezone import now
 from django.views.decorators.http import require_GET, require_POST
 from instamojo_wrapper import Instamojo
-from django.http import HttpResponse
-from django.utils.safestring import mark_safe
-
-from django.utils.timezone import now
-
 
 from main.models import GameGroup, Games
 
@@ -210,6 +206,7 @@ def payment_stats(request):
         },
     )
 
+
 @sync_to_async
 @require_POST
 def update_payments(request):
@@ -217,6 +214,10 @@ def update_payments(request):
     payments = Payments.objects.filter(payment_status="P").iterator()
     for i in payments:
         if i.created_at <= now() - datetime.timedelta(minutes=10):
-            i.payment_status="F"
+            i.payment_status = "F"
             i.save()
-    return HttpResponse(mark_safe(f'<html><head><title>Thanks</title></head><body><a href="http://{current_site.domain}">Click Here</a></body></html>'))
+    return HttpResponse(
+        mark_safe(
+            f'<html><head><title>Thanks</title></head><body><a href="http://{current_site.domain}">Click Here</a></body></html>'
+        )
+    )
