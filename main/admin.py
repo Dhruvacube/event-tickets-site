@@ -67,11 +67,11 @@ class GameGroupAdmin(admin.ModelAdmin):
 
 
 class SponserAdmin(admin.ModelAdmin):
-    list_display = (
+    list_display = search_fields = (
         "name",
         "website",
+        "image"
     )
-    search_fields = list_display + ("image",)
     readonly_fields = ("view_image",)
     list_per_page = 10
 

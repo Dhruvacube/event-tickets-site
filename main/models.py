@@ -89,11 +89,14 @@ class GameGroup(models.Model):
 class Sponser(models.Model):
     name = models.CharField(max_length=250, unique=True)
     website = models.URLField()
-    image = models.URLField()
+    image = models.CharField(max_length=250)
+    
+    def __str__(self):
+        return str(self.name)
 
     def view_image(self):
         if self.image:
             return mark_safe(
-                f'<img loading="lazy" src="{self.image}" width="50%" height="50%" />'
+                f'<img loading="lazy" src="{settings.STATIC_URL}{self.image}" width="50%" height="50%" />'
             )
         return "None"
