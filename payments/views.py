@@ -219,4 +219,4 @@ def update_payments(request):
         if i.created_at <= now() - datetime.timedelta(minutes=10):
             i.payment_status="F"
             i.save()
-    return HttpResponse(mark_safe(f'<html><head><title>Redirecting</title></head><body><meta http-equiv="refresh" content="5; URL=http://{current_site.domain}">Redirecting please wait...</body></html>'))
+    return HttpResponse(mark_safe(f'<html><head><title>Thanks</title></head><body><a href="http://{current_site.domain}">Click Here</a></body></html>'))

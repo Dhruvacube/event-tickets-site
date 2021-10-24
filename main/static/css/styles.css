@@ -288,10 +288,9 @@ nav ul li a:hover {
 }
 
 #tournaments .footer-top {
-    position: relative;
     z-index: 2;
     text-align: center;
-    padding: 80px 0;
+    padding: 80px;
 }
 
 #tournaments .tournaments-top .tournaments-logo img {
