@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@font-face {
+    font-family: Special Elite;
+    src: url("../font/SpecialElite.ttf");
+}
+
 * {
     padding: 0;
     font-family: 'Special Elite', cursive;
