@@ -1,1 +1,1 @@
-python manage.py collectcompress --noinput
+python manage.py collectcompress
