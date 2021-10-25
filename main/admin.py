@@ -73,13 +73,16 @@ class GameGroupAdmin(admin.ModelAdmin):
 @admin.register(Sponser)
 class SponserAdmin(admin.ModelAdmin):
     list_display = search_fields = ("name", "website", "image")
-    readonly_fields = ("view_image","static_images_list")
+    readonly_fields = ("view_image", "static_images_list")
     list_per_page = 10
 
     fieldsets = (
         (_("Name"), {"fields": ("name",)}),
         (_("Details"), {"fields": ("website", "image", "view_image")}),
-        (_("View the Sponsers Images in the backend"),{'classes': ('collapse',),'fields': ('static_images_list',)})
+        (
+            _("View the Sponsers Images in the backend"),
+            {"classes": ("collapse",), "fields": ("static_images_list",)},
+        ),
     )
 
 
