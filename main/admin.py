@@ -19,6 +19,8 @@ def retrivejsfile():
 
 
 # Register your models here.
+
+@admin.register(Games)
 class GamesAdmin(admin.ModelAdmin):
     list_display = ("name", "platform", "solo_entry",
                     "squad_entry", "image_url")
@@ -44,7 +46,7 @@ class GamesAdmin(admin.ModelAdmin):
     class Media:
         js = retrivejsfile()
 
-
+@admin.register(GameGroup)
 class GameGroupAdmin(admin.ModelAdmin):
     list_display = (
         "group_unique_id",
@@ -65,7 +67,7 @@ class GameGroupAdmin(admin.ModelAdmin):
         (_("Payment ID"), {"fields": ("payment_id",)}),
     )
 
-
+@admin.register(Sponser)
 class SponserAdmin(admin.ModelAdmin):
     list_display = search_fields = ("name", "website", "image")
     readonly_fields = ("view_image",)
@@ -77,8 +79,5 @@ class SponserAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(Sponser, SponserAdmin)
-admin.site.register(Games, GamesAdmin)
-admin.site.register(GameGroup, GameGroupAdmin)
 admin.site.unregister(Group)
 admin.site.site_header = admin.site.site_title = "Tanzanite Gaming League 2.0"

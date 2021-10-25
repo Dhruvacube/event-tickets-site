@@ -10,6 +10,7 @@ from .forms import SignupForm
 from .models import User
 
 
+@admin.register(User)
 class CustomUserAdmin(UserAdmin):
     add_form = SignupForm
     model = User
@@ -49,6 +50,4 @@ class CustomUserAdmin(UserAdmin):
     )
     verbose_name_plural = "Profile"
     readonly_fields = ("unique_id", )
-
-
-admin.site.register(User, CustomUserAdmin)
+    

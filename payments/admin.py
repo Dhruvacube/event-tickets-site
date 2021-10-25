@@ -6,6 +6,8 @@ from .models import *
 
 
 # Register your models here.
+
+@admin.register(Payments)
 class PaymentsAdmin(admin.ModelAdmin):
     list_display = (
         "order_id",
@@ -49,6 +51,3 @@ class PaymentsAdmin(admin.ModelAdmin):
             "fields": ("orders_list", )
         }),
     )
-
-
-admin.site.register(Payments, PaymentsAdmin)
