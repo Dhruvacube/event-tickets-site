@@ -8,7 +8,6 @@ from django.contrib.messages import constants as messages
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
 
-from .django_logging import LOGGING
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -255,5 +254,7 @@ ASYNC_RUN = ast.literal_eval(os.environ.get("ASYNC_RUN"))
 if ASYNC_RUN:
     DJANGO_ALLOW_ASYNC_UNSAFE = True
 
-LOGGING = LOGGING
-logging.config.dictConfig(LOGGING)
+if ast.literal_eval(os.environ.get('LOGGING','True').capitalize()):
+    from .django_logging import LOGGING
+    LOGGING = LOGGING
+    logging.config.dictConfig(LOGGING)

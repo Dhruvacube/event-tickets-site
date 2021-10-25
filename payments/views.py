@@ -179,7 +179,8 @@ def payment_stats(request):
         except Payments.DoesNotExist:
             messages.error(request, "The transaction does not exists")
             redirect_link = reverse("make_order")
-        except:
+        except Exception as e:
+            print(e)
             messages.error(
                 request,
                 "There was some error processing at the backend! Please contact the support",
