@@ -8,7 +8,7 @@
         {% for i in solo %}
         <div class="col">
             <div class="card container">
-                <img src="{{i.game.image_url}}" class="card-img-top" alt="{{i.game.name}} Image">
+                <img src="{% static  i.game.image_url %}" class="card-img-top" alt="{{i.game.name}} Image">
                 <div class="card-body">
                     <h5 class="card-title">{{i.game.name|title}}</h5>
                 </div>
@@ -33,6 +33,7 @@
                     </div>
                     {% endfor %}{% endif %}
                     <h3>{{i.game.name|title}}</h3>
+                    <img src="{% static  i.game.image_url %}" class="card-img-top" alt="{{i.game.name}} Image">
                     <form method="post" action="?">{% csrf_token %}
                         <label>Unique Group ID</label>
                         <input type="text" name="groupid" class="form-control" value="{{i.group_unique_id}}" disabled>
