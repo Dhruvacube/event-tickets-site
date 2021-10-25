@@ -7,10 +7,10 @@
     <div class="container row row-cols-1 row-cols-md-3 g-4">
         {% for i in solo %}
         <div class="col">
-            <div class="card container">
-                <img src="{% static  i.game.image_url %}" class="card-img-top" alt="{{i.game.name}} Image" loading="lazy">
+            <div class="card container" data-aos="flip-down">
+                <img data-aos="flip-down" src="{% static  i.game.image_url %}" class="card-img-top" alt="{{i.game.name}} Image" loading="lazy">
                 <div class="card-body">
-                    <h5 class="card-title">{{i.game.name|title}}</h5>
+                    <h5 class="card-title">{{i.game.name|title}} </h5>
                 </div>
             </div>
         </div>
@@ -32,19 +32,20 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     {% endfor %}{% endif %}
-                    <h3>{{i.game.name|title}}</h3>
-                    <img src="{% static  i.game.image_url %}" class="card-img-top" alt="{{i.game.name}} Image" loading="lazy">
-                    <form method="post" action="?">{% csrf_token %}
-                        <label>Unique Group ID</label>
-                        <input type="text" name="groupid" class="form-control" value="{{i.group_unique_id}}" disabled>
+                    <h3 data-aos="fade-down">{{i.game.name|title}}</h3>
+                    <img data-aos="fade-down" src=" {% static i.game.image_url %} " class="card-img-top " alt="{{i.game.name}} Image " loading="lazy ">
+                    <form method="post " action="? ">{% csrf_token %}
+                        <label data-aos="fade-down ">Unique Group ID</label>
+                        <input data-aos="fade-down " type="text " name="groupid " class="form-control " value="{{i.group_unique_id}} " disabled>
                         <hr/>
-                        <label>Group Name | {{i.group_name|title}}</label>
-                        <input type="text" name="groupname" required class="form-control" value="{{i.group_name|title}}" placeholder="The name of group :)">
+                        <label data-aos="fade-down ">Group Name | {{i.group_name|title}}</label>
+                        <input data-aos="fade-down " type="text " name="groupname " required class="form-control " value="{{i.group_name|title}} " placeholder="The name of group :) ">
                         <hr/>{% for j in i.game.squad_entry_members|range %}
-                        <label>Team Mate {{forloop.counter}} User ID {% if i.users.all|filter_users:forloop.counter %}| {{i.users.all|filter_users:forloop.counter}}{% endif %}</label>
-                        <input type="text" name="userid {{i.group_unique_id}} {{forloop.counter}}" {% if i.users.all|filter_users:forloop.counter %}value="{{i.users.all|filter_users_id:forloop.counter}}" {% endif %} {% ifequal i.users.all|filter_users:forloop.counter user %}disabled
-                            {% endifequal %} {% if group|if_user_payed:user %}disabled="true" {% endif %} required class="form-control" placeholder="Team Mate {{forloop.counter}} User ID" aria-label="Team Mate {{forloop.counter}} User ID">                        &nbsp;&nbsp; {% endfor %}
-                        <button type="submit" class="btn btn-outline-success my-3">Save</button>
+                        <label data-aos="fade-down ">Team Mate {{forloop.counter}} User ID {% if i.users.all|filter_users:forloop.counter %}| {{i.users.all|filter_users:forloop.counter}}{% endif %}</label>
+                        <input data-aos="fade-down " type="text " name="userid {{i.group_unique_id}} {{forloop.counter}} " value="{% if i.users.all|filter_users:forloop.counter %}{{i.users.all|filter_users_id:forloop.counter}}{% endif %}
+                        " disabled="{% ifequal i.users.all|filter_users:forloop.counter user %}true{% else %}false{% endifequal %} " {% if group|if_user_payed:user %}disabled="true " {% endif %} required class="form-control " placeholder="Team Mate {{forloop.counter}} User ID "
+                            aria-label="Team Mate {{forloop.counter}} User ID "> &nbsp;&nbsp; {% endfor %}
+                        <button type="submit " class="btn btn-outline-success my-3 ">Save</button>
                     </form>
                 </div>
             </div>

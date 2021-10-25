@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from functools import lru_cache
 
 from accounts.models import User
 
@@ -24,7 +25,7 @@ def home(request):
         },
     )
 
-
+@lru_cache(maxsize=5)
 @sync_to_async
 @login_required
 @verify_entry_to_group
