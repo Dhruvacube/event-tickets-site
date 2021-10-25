@@ -36,21 +36,24 @@ def group_make(request):
         "solo": GameGroup.objects.filter(
             users__in=[request.user], solo_or_squad="so"
         ).all(),
-        "no_display_messages": True,
         "title": "Register Groups",
     }
     if request.method == "POST":
         group_id, users_list, inavlid_users_list = "", [], []
         for i in request.POST.dict():
-            if "userid" in i:
-                tuple_3 = i.split(" ")
-                group_id = tuple_3[1]
-                if User.objects.filter(unique_id=request.POST.dict()[i]).exists():
-                    users_list.append(
-                        User.objects.filter(unique_id=request.POST.dict()[i])
-                    )
-                else:
-                    inavlid_users_list.append(request.POST.dict()[i])
+            try:
+                if "userid" in i:
+                    tuple_3 = i.split(" ")
+                    group_id = tuple_3[1]
+                    if User.objects.filter(unique_id=request.POST.dict()[i]).exists():
+                        users_list.append(
+                            User.objects.filter(unique_id=request.POST.dict()[i])
+                        )
+                    else:
+                        inavlid_users_list.append(request.POST.dict()[i])
+            except Exception as e:
+                messages.error(request, e)
+                return redirect(reverse("make_groups"))
         if len(users_list) > 0:
             groups = GameGroup.objects.filter(group_unique_id=group_id).get()
             groups.save()

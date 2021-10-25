@@ -256,78 +256,22 @@ nav ul li a:hover {
 
 /* start: tournaments styles */
 
+
+/* start: tournaments styles */
+
 #tournaments {
-    background: url('../icons/banner.jpg') 0 0 repeat;
+    background: url('../images/banner.jpg') 0 0 repeat;
     background-attachment: fixed;
     padding: 125px 0 105px;
-    color: #fff;
-    font-size: 14px;
-    position: relative;
-    font-family: 'Stick No Bills', sans-serif;
-}
-
-#tournaments::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.85);
-    z-index: 1;
-}
-
-#tournaments h1 {
-    text-align: center;
-    color: #fff;
-}
-
-#tournaments .footer-top {
-    z-index: 2;
-    text-align: center;
-    padding: 80px;
-}
-
-#tournaments .tournaments-top .tournaments-logo img {
-    height: 80px;
-}
-
-#tournaments .tournaments-top h3 {
-    font-size: 36px;
-    font-weight: 700;
-    color: #fff;
-    position: relative;
-    font-family: "Poppins", sans-serif;
-    padding: 30px 0 0 0;
-    margin-bottom: 0;
-}
-
-#tournaments .tournaments-top p {
-    font-size: 15px;
-    font-style: italic;
-    margin: 30px 0 0 0;
-    padding: 0;
-}
-
-#tournaments .tournaments-top {
-    text-align: center;
-    font-size: 15px;
-    margin-top: 30px;
-}
-
-#tournaments .tournaments-bottom {
-    border-top: 1px solid #222222;
-    z-index: 2;
-    position: relative;
-    padding-top: 40px;
-    padding-bottom: 40px;
 }
 
 #tournaments .credits {
     text-align: center;
-    font-size: 13px;
-    padding-top: 5px;
+    color: #fff;
 }
+
+
+/* end: tournaments styles */
 
 
 /* end: tournaments styles */

@@ -8,7 +8,7 @@
         {% for i in solo %}
         <div class="col">
             <div class="card container">
-                <img src="{% static  i.game.image_url %}" class="card-img-top" alt="{{i.game.name}} Image">
+                <img src="{% static  i.game.image_url %}" class="card-img-top" alt="{{i.game.name}} Image" loading="lazy">
                 <div class="card-body">
                     <h5 class="card-title">{{i.game.name|title}}</h5>
                 </div>
@@ -23,8 +23,8 @@
             <h2>Mode : <u>Squad</u></h2>
         </center>
         <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for i in group %}
             <div class="col">
-                {% for i in group %}
                 <div class="col container bg-white me-2 border border-primary rounded">
                     {% if message_group_id == i.group_unique_id %} {% for message in messages %}
                     <div {% if message.tags %} class="alert alert-{{message.tags}} alert-dismissible fade show" {% endif %} role="alert">
@@ -33,7 +33,7 @@
                     </div>
                     {% endfor %}{% endif %}
                     <h3>{{i.game.name|title}}</h3>
-                    <img src="{% static  i.game.image_url %}" class="card-img-top" alt="{{i.game.name}} Image">
+                    <img src="{% static  i.game.image_url %}" class="card-img-top" alt="{{i.game.name}} Image" loading="lazy">
                     <form method="post" action="?">{% csrf_token %}
                         <label>Unique Group ID</label>
                         <input type="text" name="groupid" class="form-control" value="{{i.group_unique_id}}" disabled>
@@ -47,8 +47,8 @@
                         <button type="submit" class="btn btn-outline-success my-3">Save</button>
                     </form>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
     </div>
     {% endif %}
