@@ -47,7 +47,8 @@ def group_make(request):
                     group_id = tuple_3[1]
                     if User.objects.filter(unique_id=request.POST.dict()[i]).exists():
                         users_list.append(
-                            User.objects.filter(unique_id=request.POST.dict()[i])
+                            User.objects.filter(
+                                unique_id=request.POST.dict()[i])
                         )
                     else:
                         inavlid_users_list.append(request.POST.dict()[i])
