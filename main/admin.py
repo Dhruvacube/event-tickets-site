@@ -20,6 +20,7 @@ def retrivejsfile():
 
 # Register your models here.
 
+
 @admin.register(Games)
 class GamesAdmin(admin.ModelAdmin):
     list_display = ("name", "platform", "solo_entry",
@@ -46,6 +47,7 @@ class GamesAdmin(admin.ModelAdmin):
     class Media:
         js = retrivejsfile()
 
+
 @admin.register(GameGroup)
 class GameGroupAdmin(admin.ModelAdmin):
     list_display = (
@@ -66,6 +68,7 @@ class GameGroupAdmin(admin.ModelAdmin):
         (_("Users"), {"fields": ("users",)}),
         (_("Payment ID"), {"fields": ("payment_id",)}),
     )
+
 
 @admin.register(Sponser)
 class SponserAdmin(admin.ModelAdmin):

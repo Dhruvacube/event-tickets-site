@@ -3,8 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 from .models import *
 
-
 # Register your models here.
+
 
 @admin.register(Referral)
 class ReferralAdmin(admin.ModelAdmin):
@@ -14,17 +14,14 @@ class ReferralAdmin(admin.ModelAdmin):
         "description",
         "discount_percentage",
     )
-    readonly_fields = ("referral_code", )
+    readonly_fields = ("referral_code",)
     list_per_page = 20
 
     fieldsets = (
         (
             _("Code"),
-            {
-                "fields": ("referral_code", )
-            },
+            {"fields": ("referral_code",)},
         ),
         (_("Details"), {
-            "fields": ("name", "description", "discount_percentage")
-        }),
+         "fields": ("name", "description", "discount_percentage")}),
     )
