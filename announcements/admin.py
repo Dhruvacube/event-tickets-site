@@ -16,6 +16,7 @@ def retrivejsfile():
 
 # Register your models here.
 
+
 @admin.register(GlobalAnnouncements)
 class GlobalAnnouncementsAdmin(admin.ModelAdmin):
     list_display = (
