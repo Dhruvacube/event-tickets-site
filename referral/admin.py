@@ -5,6 +5,8 @@ from .models import *
 
 
 # Register your models here.
+
+@admin.register(Referral)
 class ReferralAdmin(admin.ModelAdmin):
     list_display = search_fields = (
         "referral_code",
@@ -26,6 +28,3 @@ class ReferralAdmin(admin.ModelAdmin):
             "fields": ("name", "description", "discount_percentage")
         }),
     )
-
-
-admin.site.register(Referral, ReferralAdmin)

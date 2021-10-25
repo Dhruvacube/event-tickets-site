@@ -15,6 +15,8 @@ def retrivejsfile():
 
 
 # Register your models here.
+
+@admin.register(GlobalAnnouncements)
 class GlobalAnnouncementsAdmin(admin.ModelAdmin):
     list_display = (
         "announcement_id",
@@ -44,6 +46,7 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
         js = retrivejsfile()
 
 
+@admin.register(GroupsAnnouncements)
 class GroupsAnnouncementsAdmin(admin.ModelAdmin):
     list_display = (
         "announcement_id",
@@ -74,6 +77,7 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
         js = retrivejsfile()
 
 
+@admin.register(UsersAnnouncements)
 class UsersAnnouncementsAdmin(admin.ModelAdmin):
     list_display = (
         "announcement_id",
@@ -102,8 +106,3 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
 
     class Media:
         js = retrivejsfile()
-
-
-admin.site.register(GlobalAnnouncements, GlobalAnnouncementsAdmin)
-admin.site.register(GroupsAnnouncements, GroupsAnnouncementsAdmin)
-admin.site.register(UsersAnnouncements, UsersAnnouncementsAdmin)
