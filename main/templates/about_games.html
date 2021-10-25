@@ -4,11 +4,11 @@
         <center>
             <u><h1>{{game.name}}</h1></u>
             <hr/>
-            <img src="{% static game.image_url %}" width="50%" height="50%" loading="lazy">
+            <img src="{% static game.image_url %}" width="50%" height="50%" loading="lazy" data-aos="fade-down">
         </center>
     </div>
     <hr/>
-    <div class="container">
+    <div class="container" data-aos="fade-up">
         <span>
             {{game.long_description|safe}}
         </span>

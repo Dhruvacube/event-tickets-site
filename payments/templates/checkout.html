@@ -8,9 +8,9 @@
                 <div class="games">
                     <u><a target="_blank" class="text-light" href="{% url 'about_game' i.id %}"><h2>{{i.name}} <i class='bx bx-link-external'></i></h2></a></u>
                     <div class="container1">
-                        <p><img src="{% static i.image_url %}" class="card-img-top" loading="lazy" /></p>
+                        <p data-aos="zoom-in-down"><img src="{% static i.image_url %}" class="card-img-top" loading="lazy" /></p>
                     </div>
-                    <div class="container2">
+                    <div class="container2" data-aos="zoom-in-down">
                         <p>Select Mode</p>
                         <h6>{% if i.has_solo_entry %}Solo Entry: ₹{{i.solo_entry}}{% endif %} &nbsp;{% if i.has_squad_entry %}, Squad Entry: ₹{{i.squad_entry}} (Max {{i.squad_entry_members}} members){% endif %}</h6>
                         <select name="mode{{forloop.counter}}" class="mode" onclick="changeprice(this)">
@@ -27,11 +27,11 @@
             </div>
             {% endfor %}
         </div>
-        <div class="games">
+        <div class="games" data-aos="zoom-in-up" data-aos-duration="2000">
             <div class="container1">
                 <h1>Verify your order by clicking the button below</h1>
             </div>
-            <div class="container2">
+            <div class="container2" data-aos="flip-left">
                 <button type="submit" class="button btn btn-outline-success">View Orders Value</button>
             </div>
         </div>

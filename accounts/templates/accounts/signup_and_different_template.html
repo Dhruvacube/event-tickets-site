@@ -43,27 +43,27 @@
         <!-- ==Ends== -->
         <div class="container">
             <form action="?" class="form-floating row needs-validation" method="POST">{% csrf_token %} {% for field in form %} {% if not forloop.counter == 15 %}
-                <div class="textbox form-floating col-md-{% if forloop.counter == 1 or forloop.counter == 14 or forloop.counter == 13 %}12{% elif forloop.counter == 10 or forloop.counter == 11 or forloop.counter == 12 %}4{% elif forloop.counter == 8  or forloop.counter == 9 %}12{% else %}6{% endif %}">
+                <div data-aos="fade-down" class="textbox form-floating col-md-{% if forloop.counter == 1 or forloop.counter == 14 or forloop.counter == 13 %}12{% elif forloop.counter == 10 or forloop.counter == 11 or forloop.counter == 12 %}4{% elif forloop.counter == 8  or forloop.counter == 9 %}12{% else %}6{% endif %}">
                     {{ field }}{{ field.label_tag }}{% if field.help_text %}<br/><br/><span style="font-size: 15px;" class="help_text{{forloop.counter}}">{{ field.help_text }}</span> {% endif %} <br/><br/> {% for error in field.errors %}
                     <span style="font-size: 15px;" class="text-danger">
                         {{error}}
                     </span>{% endfor %}
                 </div>
                 {% endif %} {% endfor %} {% if referral %}
-                <div class="textbox form-floating col-md-12">
+                <div class="textbox form-floating col-md-12" data-aos="zoom-in">
                     <input class="form-control" id="id_referral_code" maxlength="6" name="referral_code" {% if user.referral_code %}value={{user.referral_code}}{% endif %} type="text" />
                     <label for="id_registration_no">Referral Code:</label>
                     <br/><br/>
                     <span style="font-size: 15px;">(Optional | Case Sensitive)</span> <br/><br/>
                 </div>
                 {% endif %}{% if view_profile %}
-                <div class="textbox form-floating col-md-10"><input class="form-control" disabled="true" id="id_unique_id" name="unique_id" type="text" value="{{user.unique_id}}" /><label for="id_unique_id">Unique id:</label></div>{% endif %}
-                <button type="submit" class="sign_in_btn">{{heading}}</button>
+                <div data-aos="zoom-in" class="textbox form-floating col-md-10"><input class="form-control" disabled="true" id="id_unique_id" name="unique_id" type="text" value="{{user.unique_id}}" /><label for="id_unique_id">Unique id:</label></div>{% endif %}
+                <button data-aos="zoom-in-up" type="submit" class="sign_in_btn">{{heading}}</button>
             </form>
         </div>
         {% if display %}
-        <a href="{% url 'signin' %}"><input type="button" class="sign_up_btn" value="Login"></a>
-        <a href="{% url 'home' %}"><input type="button" class="back_btn" value="Home"></a>
+        <a data-aos="zoom-in-up" href="{% url 'signin' %}"><input type="button" class="sign_up_btn" value="Login"></a>
+        <a data-aos="zoom-in-up" href="{% url 'home' %}"><input type="button" class="back_btn" value="Home"></a>
         {% endif %}
     </div>
 </div>

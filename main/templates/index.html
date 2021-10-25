@@ -1,13 +1,14 @@
 {% extends "layout.html" %}{% load static %}{% load compress %}{% block body %}
 <section id="hero-image">
     <div class="hero-marketing-text">
-        <h1>The New <span>Era Of Gaming</span> Is Here</h1>
-        <h4 class="text-white">Playing E-Games help the players to develop complex problem-solving skills, leadership skills, and the ability to deal better with unexpected consequences.
+        <h1 data-aos="zoom-in-up">The New <span>Era Of Gaming</span> Is Here</h1>
+        <h4 class="text-white" data-aos="zoom-in-down">Playing E-Games help the players to develop complex problem-solving skills, leadership skills, and the ability to deal better with unexpected consequences.
             <br/>They also enhance a player's skills of observation, intuitive abilities and hone their alertness and concentration.
             <br/>On the other hand, the basic theme of this tournament is to employ more and more people into something creative rather than spending time idly.
         </h4>
         <br/>
-        <a href="{% static 'pdf/tgl_faq.pdf' %}" target="_blank"><button class="btn btn-warning">Read More</button></a> {% if not user.is_authenticated %}<a href="{% url 'signup' %}" target="_blank"><button class="btn btn-danger btn-lg">Register Now</button></a>        {% endif %}
+        <a href="{% static 'pdf/tgl_faq.pdf' %}" target="_blank" data-aos="zoom-in-up"><button class="btn btn-warning">Read More</button></a> {% if not user.is_authenticated %}
+        <a href="{% url 'signup' %}" target="_blank" data-aos="zoom-in-up"><button class="btn btn-danger btn-lg">Register Now</button></a> {% endif %}
     </div>
 </section>
 
@@ -17,7 +18,7 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for i in games %}{% if i.platform == 'p' or i.platform == 'a' %}
             <div class="col">
-                <div class="card container">
+                <div class="card container" data-aos="zoom-out-down" data-aos-duration="1000">
                     <img src="{% static i.image_url %}" class="card-img-top" loading="lazy" />
                     <div class="box-lower-section card-body">
                         <h4 class="game-name">{{i.name|capfirst}}</h4>
@@ -29,13 +30,13 @@
             {% endif %} {% endfor %}
         </div>
         <hr/>
-        <center>{% if not user.is_authenticated %}<a href="{% url 'signup' %}"><button class="btn btn-lg btn-danger">Register Now</button></a> {% endif %}</center>
+        <center>{% if not user.is_authenticated %}<a href="{% url 'signup' %}" data-aos="zoom-in-up"><button class="btn btn-lg btn-danger">Register Now</button></a> {% endif %}</center>
     </div>
 </section>
 
 <section id="tournaments">
-    <div class="credits">
-        <h1 class="text-light" style="z-index: -1000;">Mobile and PC Gamer ?? Then check these events out !!</h1>
+    <div class="credits bg-dark py-2 rounded-pill">
+        <h1>Mobile and PC Gamer ?? Then check these events out !!</h1>
     </div>
 </section>
 
@@ -45,7 +46,7 @@
         <div class="container row row-cols-1 row-cols-md-4 g-4">
             {% for i in games %} {% if i.platform == 'm' or i.platform == 'a' or i.platform == 'ps' %}
             <div class="col">
-                <div class="card container">
+                <div class="card container" data-aos="zoom-out-down" data-aos-duration="1000">
                     <img src="{% static i.image_url %}" class="card-img-top" loading="lazy" />
                     <div class="box-lower-section card-body">
                         <h4 class="game-name">{{i.name|capfirst}}</h4>
@@ -57,7 +58,7 @@
             {% endif %} {% endfor %}
         </div>
         <hr/>
-        <center>{% if not user.is_authenticated %}<a href="{% url 'signup' %}" target="_blank"><button class="btn btn-danger btn-lg">Register Now</button></a> {% endif %}</center>
+        <center>{% if not user.is_authenticated %}<a href="{% url 'signup' %}" target="_blank" data-aos="zoom-in-up"><button class="btn btn-danger btn-lg">Register Now</button></a> {% endif %}</center>
     </div>
 </section>
 
@@ -67,7 +68,7 @@
         <div class="row row-cols-1 row-cols-md-4 g-4">
             {% for i in sponsers %}
             <div class="col">
-                <div class="card container">
+                <div class="card container" data-aos="flip-left" data-aos-duration="1000">
                     <img src="{% static i.image %}" class="card-img-top" loading="lazy" />
                     <div class="box-lower-section card-body">
                         <strong><h4 class="game-name"><u>{{i.name|capfirst}}</u></h4></strong> To know more visit their <a href="{{i.website}}" target="_blank"><button class="btn btn-outline-info">Website <i class='bx bx-link-external'></i></button></a>

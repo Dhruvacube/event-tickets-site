@@ -15,7 +15,7 @@
                 </thead>
                 <tbody>
                     {% for i in payments %}
-                    <tr>
+                    <tr data-aos="fade-down">
                         <th scope="row">{{forloop.counter}}</th>
                         <td>{{i.order_id}}</td>
                         <td>{{i.request_id_instamojo}}</td>
