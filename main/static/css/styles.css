@@ -260,7 +260,7 @@ nav ul li a:hover {
 /* start: tournaments styles */
 
 #tournaments {
-    background: url('../images/banner.jpg') 0 0 repeat;
+    background: url('../icons/banner.jpg') 0 0 repeat;
     background-attachment: fixed;
     padding: 125px 0 105px;
 }
