@@ -1,6 +1,7 @@
-import uuid,os
+import os
 import secrets
 import string
+import uuid
 
 from django.conf import settings
 from django.core.validators import MaxLengthValidator, MinLengthValidator
@@ -10,10 +11,13 @@ from django.utils.translation import gettext_lazy as _
 
 from payments.models import *
 
+
 def generate_unique_id():
     return "".join(
         secrets.choice(string.ascii_letters + string.digits +
-                       str(secrets.randbits(7))) for i in range(7)).upper()
+                       str(secrets.randbits(7)))
+        for i in range(7)
+    ).upper()
 
 
 # Create your models here.
@@ -107,8 +111,15 @@ class Sponser(models.Model):
                 f'<img loading="lazy" src="{settings.STATIC_URL}{self.image}" width="50%" height="50%" />'
             )
         return "None"
-    
+
     def static_images_list(self):
-        file_path = settings.BASE_DIR / os.path.join('main', 'static', 'images','sponsers')
-        html_string = ''.join(list(f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>{i.strip(' ')}</a></li>" for i in os.listdir(file_path)))
+        file_path = settings.BASE_DIR / os.path.join(
+            "main", "static", "images", "sponsers"
+        )
+        html_string = "".join(
+            list(
+                f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>{i.strip(' ')}</a></li>"
+                for i in os.listdir(file_path)
+            )
+        )
         return mark_safe(f"<ol>{html_string}</ol>")
