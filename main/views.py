@@ -1,10 +1,11 @@
+from functools import lru_cache
+
 from asgiref.sync import sync_to_async
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from functools import lru_cache
 
 from accounts.models import User
 
@@ -24,6 +25,7 @@ def home(request):
             "sponsers": Sponser.objects.all(),
         },
     )
+
 
 @lru_cache(maxsize=5)
 @sync_to_async

@@ -1,7 +1,9 @@
-from django.core.exceptions import PermissionDenied
 from functools import lru_cache
 
+from django.core.exceptions import PermissionDenied
+
 from .models import GameGroup
+
 
 @lru_cache(maxsize=5)
 def verify_entry_to_group(function):
