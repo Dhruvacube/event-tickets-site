@@ -9,9 +9,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse, HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
-
 from django.utils.timezone import now
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from instamojo_wrapper import Instamojo
 
@@ -29,7 +28,10 @@ def view_payments_history(request):
     return render(
         request,
         "payments.html",
-        {"payments": request.user.orders.all(), "title": "Payments History"},
+        {
+            "payments": request.user.orders.all(),
+            "title": "Payments History"
+        },
     )
 
 
@@ -42,12 +44,10 @@ def make_order(request):
         for i in request.POST.dict():
             if "mode" in i:
                 a = request.POST.dict()[i]
-                gamename = (
-                    a.replace("SelectGame", "")
-                    .replace("SingleGame", "")
-                    .replace("SquadGame", "")
-                    .strip(" ")
-                )
+                gamename = (a.replace("SelectGame",
+                                      "").replace("SingleGame",
+                                                  "").replace("SquadGame",
+                                                              "").strip(" "))
                 if "SelectGame" in a:
                     mode, make_req = "SelectGame", False
                 elif "SingleGame" in a:
@@ -55,11 +55,8 @@ def make_order(request):
                 else:
                     mode, make_req, filter_name = "sq", True, "squad_entry"
                 if make_req:
-                    order_value = (
-                        Games.objects.filter(name=gamename)
-                        .values(filter_name)
-                        .get()[filter_name]
-                    )
+                    order_value = (Games.objects.filter(
+                        name=gamename).values(filter_name).get()[filter_name])
                     total_value += order_value
                     order_list.append([gamename, mode, order_value])
         # discount code logic
@@ -109,7 +106,8 @@ def create_payment(request):
     allow_repeated_payments = False
     send_email = True
     send_sms = True
-    expires_at = datetime.datetime.now() + datetime.timedelta(days=0, seconds=600)
+    expires_at = datetime.datetime.now() + datetime.timedelta(days=0,
+                                                              seconds=600)
 
     if settings.LOCAL:
         api = Instamojo(
@@ -144,7 +142,8 @@ def create_payment(request):
     )
     pay.save()
     request.user.orders.add(pay)
-    return HttpResponsePermanentRedirect(response.get("payment_request")["longurl"])
+    return HttpResponsePermanentRedirect(
+        response.get("payment_request")["longurl"])
 
 
 @sync_to_async
@@ -157,22 +156,21 @@ def payment_stats(request):
     if "credit" in payment_status.lower():
         try:
             payment_obj = Payments.objects.filter(
-                request_id_instamojo=payment_request_id
-            ).get()
+                request_id_instamojo=payment_request_id).get()
             payment_obj.payment_status = "S"
             payment_obj.instamojo_order_id = payment_id
             payment_obj.save()
             messages.success(
-                request, "You have successfully paid the amount! Please wait for 2secs"
-            )
+                request,
+                "You have successfully paid the amount! Please wait for 2secs")
 
             order_list = request.session.get("order_list")
 
             for i in order_list:
                 game = Games.objects.filter(name=i[0]).get()
-                game_group = GameGroup(
-                    game=game, payment_id=payment_obj, solo_or_squad=i[1]
-                )
+                game_group = GameGroup(game=game,
+                                       payment_id=payment_obj,
+                                       solo_or_squad=i[1])
                 game_group.save()
                 game_group.users.add(request.user)
 
@@ -219,6 +217,6 @@ def update_payments(request):
             if i.created_at <= now() - datetime.timedelta(minutes=10):
                 i.payment_status = "F"
                 i.save()
-        return JsonResponse({'success':True})
+        return JsonResponse({"success": True})
     except Exception as e:
-        return JsonResponse({'success':False,'error':e})
+        return JsonResponse({"success": False, "error": e})
