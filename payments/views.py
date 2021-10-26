@@ -10,6 +10,8 @@ from django.http import HttpResponse, HttpResponsePermanentRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from django.views.decorators.csrf import csrf_exempt
+
 from django.utils.timezone import now
 from django.views.decorators.http import require_GET, require_POST
 from instamojo_wrapper import Instamojo
@@ -209,6 +211,7 @@ def payment_stats(request):
 
 
 @sync_to_async
+@csrf_exempt
 @require_POST
 def update_payments(request):
     current_site = get_current_site(request)
