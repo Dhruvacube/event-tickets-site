@@ -9,7 +9,7 @@ from django.core.management.base import BaseCommand
 
 class Command(BaseCommand):
     help = "It runs collectstatic and compress command simultaneously"
-    requires_system_checks = output_transaction = requires_migrations_checks = True
+    requires_system_checks = output_transaction = True
 
     def handle(self, *args, **options):
         print("Running `collectstatic` now :)\n")

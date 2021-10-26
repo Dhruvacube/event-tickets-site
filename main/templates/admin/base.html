@@ -1,9 +1,8 @@
-{% extends "admin/base.html" %}{% load static %} {% block extrahead %}
+{% extends "admin/base.html" %}{% load static %}{% load compress %}{% block extrahead %}
 <!-- ==Adding the favicons== -->
 <link rel="shortcut icon" href="{% static 'icons/logo.png' %}" />
 <!-- ==Ends== -->
-{{ block.super }}
-
+{{ block.super }} {% compress js %}
 <script>
     /**
      * Disable right-click of mouse, F12 key, and save key combinations on page
@@ -47,5 +46,4 @@
         }
     };
 </script>
-
-{% endblock %}
+{% endcompress %} {% endblock %}

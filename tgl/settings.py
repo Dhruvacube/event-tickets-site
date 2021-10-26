@@ -14,6 +14,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Application definition
 
 INSTALLED_APPS = [
+    "main.apps.MainConfig",
+    "announcements.apps.AnnouncementsConfig",
+    "referral.apps.ReferralConfig",
+    "django_admin_listfilter_dropdown",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -22,10 +26,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "payments.apps.PaymentsConfig",
     "accounts.apps.AccountsConfig",
-    "main.apps.MainConfig",
-    "announcements.apps.AnnouncementsConfig",
-    "referral.apps.ReferralConfig",
-    "django_admin_listfilter_dropdown",
     "localflavor",
     "post_office",
     "compressor",
