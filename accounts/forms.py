@@ -66,52 +66,54 @@ class SignupForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields["username"].widget.attrs["class"] = "form-control"
         self.fields["username"].widget.attrs["required"] = "true"
-
-        self.fields["first_name"].widget.attrs["class"] = "form-control"
-        self.fields["first_name"].widget.attrs["required"] = "true"
-
-        self.fields["last_name"].widget.attrs["class"] = "form-control"
-        self.fields["last_name"].widget.attrs["required"] = "true"
-
-        self.fields["email"].widget.attrs["class"] = "form-control"
-        self.fields["email"].widget.attrs["required"] = "true"
-
-        self.fields["registration_no"].widget.attrs["class"] = "form-control"
-        self.fields["registration_no"].widget.attrs["required"] = "false"
-
+        
         self.fields["password1"].widget.attrs["class"] = "form-control"
         self.fields["password1"].widget.attrs["required"] = "true"
 
         self.fields["password2"].widget.attrs["class"] = "form-control"
         self.fields["password2"].widget.attrs["required"] = "true"
+        
+        try:
+            self.fields["first_name"].widget.attrs["class"] = "form-control"
+            self.fields["first_name"].widget.attrs["required"] = "true"
 
-        self.fields["phone"].widget.attrs["class"] = "form-control"
-        self.fields["phone"].widget.attrs["required"] = "true"
+            self.fields["last_name"].widget.attrs["class"] = "form-control"
+            self.fields["last_name"].widget.attrs["required"] = "true"
+            
+            self.fields["email"].widget.attrs["class"] = "form-control"
+            self.fields["email"].widget.attrs["required"] = "true"
 
-        self.fields["address1"].widget.attrs["class"] = "form-control"
-        self.fields["address1"].widget.attrs["required"] = "true"
-        self.fields["address1"].widget.attrs["rows"] = "50"
+            self.fields["registration_no"].widget.attrs["class"] = "form-control"
+            self.fields["registration_no"].widget.attrs["required"] = "false"
 
-        self.fields["address2"].widget.attrs["class"] = "form-control"
-        self.fields["address2"].widget.attrs["required"] = "false"
-        self.fields["address2"].widget.attrs["rows"] = "50"
+            self.fields["phone"].widget.attrs["class"] = "form-control"
+            self.fields["phone"].widget.attrs["required"] = "true"
 
-        self.fields["city"].widget.attrs["class"] = "form-control"
-        self.fields["city"].widget.attrs["required"] = "true"
+            self.fields["address1"].widget.attrs["class"] = "form-control"
+            self.fields["address1"].widget.attrs["required"] = "true"
+            self.fields["address1"].widget.attrs["rows"] = "50"
 
-        self.fields["state"].widget.attrs["class"] = "form-control"
-        self.fields["state"].widget.attrs["required"] = "true"
+            self.fields["address2"].widget.attrs["class"] = "form-control"
+            self.fields["address2"].widget.attrs["required"] = "false"
+            self.fields["address2"].widget.attrs["rows"] = "50"
 
-        self.fields["country"].widget.attrs["class"] = "form-control"
-        self.fields["country"].widget.attrs["required"] = "true"
+            self.fields["city"].widget.attrs["class"] = "form-control"
+            self.fields["city"].widget.attrs["required"] = "true"
 
-        self.fields["zip_code"].widget.attrs["class"] = "form-control"
-        self.fields["zip_code"].widget.attrs["required"] = "true"
+            self.fields["state"].widget.attrs["class"] = "form-control"
+            self.fields["state"].widget.attrs["required"] = "true"
 
-        self.fields["gender"].widget.attrs["class"] = "form-control"
+            self.fields["country"].widget.attrs["class"] = "form-control"
+            self.fields["country"].widget.attrs["required"] = "true"
 
-        self.fields["university_name"].widget.attrs["class"] = "form-control"
-        self.fields["university_name"].widget.attrs["required"] = "true"
+            self.fields["zip_code"].widget.attrs["class"] = "form-control"
+            self.fields["zip_code"].widget.attrs["required"] = "true"
+
+            self.fields["gender"].widget.attrs["class"] = "form-control"
+
+            self.fields["university_name"].widget.attrs["class"] = "form-control"
+            self.fields["university_name"].widget.attrs["required"] = "true"
+        except: pass
 
         # self.fields["gender"].widget.attrs["style"] = "color: black !important; background-color: white !important;"
 

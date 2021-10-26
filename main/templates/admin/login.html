@@ -1,0 +1,41 @@
+{% extends "admin/login.html" %} {% load i18n static %}{% load compress %}{% block extrastyle %} {{ block.super }}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<style>
+    body {
+        background-image: url('{% static "images/freefire.webp" %}') !important;
+        background-position: center !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+    }
+    
+    #header {
+        background-color: transparent !important;
+    }
+    
+    #main-container {
+        display: none;
+    }
+    
+    #container {
+        margin-top: 15% !important;
+        margin-bottom: 0% !important;
+    }
+</style>
+{% endblock %} {% block branding %}
+<h1>
+    <span style="color: #daa83c !important ; font-weight: bold;">Tanzanite Gaming League</span>
+    <br />
+    <small>{% block head_title %}{% endblock %}</small>
+</h1>
+{% endblock %} {% block content_title %}
+<p class="lead" style="font-size: larger">
+    Admin Panel for managing this amazing site
+</p>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+{% compress js %}
+<script>
+    let e = document.getElementById("container");
+    e.setAttribute("data-aos", "flip-left");
+    AOS.init();
+</script>
+{% endcompress %} {% endblock %}
