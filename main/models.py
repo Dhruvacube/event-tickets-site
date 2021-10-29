@@ -117,7 +117,9 @@ class Sponser(models.Model):
             "main", "static", "images", "sponsers"
         )
         html_string = "".join(
-            [f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>{i.strip(' ')}</a></li>"
-                for i in os.listdir(file_path)]
+            [
+                f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>{i.strip(' ')}</a></li>"
+                for i in os.listdir(file_path)
+            ]
         )
         return mark_safe(f"<ol>{html_string}</ol>")
