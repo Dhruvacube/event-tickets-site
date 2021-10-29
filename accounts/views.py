@@ -214,24 +214,24 @@ def signup(request):
                     f"<strong>{referral}</strong> Referral Code does not exists",
                 )
             user.save()
-            to_email = form.cleaned_data.get('email')
+            to_email = form.cleaned_data.get("email")
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password1")
-            
+
             ctx = {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': account_activation_token.make_token(user),
-                    'username': username,
-                    'password': password1,
-                    'protocol': 'https' if request.is_secure() else 'http'
-                }
-            if not EmailTemplate.objects.filter(name='register_mail').all():
-                message = render_to_string('accounts/register_mail.html')
-                mail_subject = 'Thanks for Registering for TGL-2.0'
+                "user": user,
+                "domain": current_site.domain,
+                "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                "token": account_activation_token.make_token(user),
+                "username": username,
+                "password": password1,
+                "protocol": "https" if request.is_secure() else "http",
+            }
+            if not EmailTemplate.objects.filter(name="register_mail").all():
+                message = render_to_string("accounts/register_mail.html")
+                mail_subject = "Thanks for Registering for TGL-2.0"
                 EmailTemplate.objects.create(
-                    name='register_mail',
+                    name="register_mail",
                     description="Thank you E-Mail Template",
                     subject=mail_subject,
                     html_content=message,
@@ -239,7 +239,7 @@ def signup(request):
             mail.send(
                 to_email,
                 settings.EMAIL_HOST_USER,
-                template='register_mail',
+                template="register_mail",
                 context=ctx,
             )
             user = authenticate(request, username=username, password=password)
@@ -250,10 +250,10 @@ def signup(request):
         message_error_list = []
         if form.errors.as_data():
             for i in form.errors.as_data():
-                message = '\n'.join(form.errors.as_data()[i][0].messages)
+                message = "\n".join(form.errors.as_data()[i][0].messages)
                 message_error_list.append(message)
             for i in message_error_list:
-                messages.error(request, i)        
+                messages.error(request, i)
     form = SignupForm()
     return render(
         request,
