@@ -27,20 +27,24 @@ class GamesAdmin(admin.ModelAdmin):
                     "squad_entry", "image_url")
     list_filter = (("platform", ChoiceDropdownFilter),)
     search_fields = list_display + list_filter
-    readonly_fields = ("view_image",)
+    readonly_fields = ("view_image", "static_images_list")
     list_per_page = 15
 
     fieldsets = (
         (_("Name"), {"fields": ("name",)}),
         (_("Description"), {
          "fields": ("short_description", "long_description")}),
-        (_("Image"), {"fields": ("image_url",) + readonly_fields}),
+        (_("Image"), {"fields": ("image_url",) + (readonly_fields[0],)}),
         (_("Platform"), {"fields": ("platform",)}),
         (_("Solo Entry"), {"fields": ("has_solo_entry", "solo_entry")}),
         (
             _("Squad Entry"),
             {"fields": ("has_squad_entry", "squad_entry",
                         "squad_entry_members")},
+        ),
+        (
+            _("View the Sponsers Images in the backend"),
+            {"classes": ("collapse",), "fields": ("static_images_list",)},
         ),
     )
 

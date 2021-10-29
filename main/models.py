@@ -19,6 +19,10 @@ def generate_unique_id():
         for i in range(7)
     ).upper()
 
+def format_list(list_images: list):
+    list_images.remove('sponsers')
+    return list_images
+
 
 # Create your models here.
 class Games(models.Model):
@@ -65,6 +69,19 @@ class Games(models.Model):
                 f'<img loading="lazy" src="{settings.STATIC_URL}{self.image_url}" width="50%" height="50%" />'
             )
         return "None"
+    
+    @staticmethod
+    def static_images_list():
+        file_path = settings.BASE_DIR / os.path.join(
+            "main", "static", "images"
+        )
+        html_string = "".join(
+            [
+                f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>{i.strip(' ')}</a></li>"
+                for i in format_list(os.listdir(file_path))
+            ]
+        )
+        return mark_safe(f"<ol>{html_string}</ol>")
 
     class Meta:
         verbose_name_plural = _("Games")
