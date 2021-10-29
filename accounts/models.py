@@ -52,7 +52,8 @@ def validate_phone(value):
             )
     if not value.strip(" ")[0] in "+":
         raise ValidationError(
-            _(f"{value} is not a phone number, Please enter a no like +91 67xxxxxxxx"),
+            _(f"{value} is not a phone number, Please enter a no like +91 67xxxxxxxx"
+              ),
             params={"value": value},
         )
 
@@ -64,19 +65,24 @@ class User(AbstractUser):
         null=True,
     )
     phone = models.CharField(
-        _("phone"), max_length=15, validators=[MinLengthValidator(13), validate_phone], help_text=_('It should be +91 67xxx')
+        _("phone"),
+        max_length=15,
+        validators=[MinLengthValidator(13), validate_phone],
+        help_text=_("It should be +91 67xxx"),
     )
     address1 = models.TextField(_("address 1"), validators=[validate_address])
     address2 = models.TextField(_("address 2"), validators=[validate_address])
-    city = models.CharField(_("city"), max_length=500,
+    city = models.CharField(_("city"),
+                            max_length=500,
                             validators=[validate_city])
     state = models.CharField(_("state"), max_length=250)
     country = models.CharField(_("country"), max_length=250, null=True)
     unique_id = models.UUIDField(default=uuid.uuid4)
-    zip_code = models.CharField(
-        _("zip code"), max_length=6, validators=[validate_zip])
-    university_name = models.CharField(
-        _("University or College Name"), max_length=250)
+    zip_code = models.CharField(_("zip code"),
+                                max_length=6,
+                                validators=[validate_zip])
+    university_name = models.CharField(_("University or College Name"),
+                                       max_length=250)
     registration_no = models.CharField(
         _("Registration No"),
         validators=[MinLengthValidator(3)],
@@ -90,9 +96,10 @@ class User(AbstractUser):
         help_text=_("This is to be filled by computer"),
         blank=True,
     )
-    referral_code = models.ForeignKey(
-        Referral, on_delete=models.CASCADE, null=True, blank=True
-    )
+    referral_code = models.ForeignKey(Referral,
+                                      on_delete=models.CASCADE,
+                                      null=True,
+                                      blank=True)
 
     class Meta:
         unique_together = ("email", "registration_no")
