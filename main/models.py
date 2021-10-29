@@ -112,7 +112,8 @@ class Sponser(models.Model):
             )
         return "None"
 
-    def static_images_list(self):
+    @staticmethod
+    def static_images_list():
         file_path = settings.BASE_DIR / os.path.join(
             "main", "static", "images", "sponsers"
         )
