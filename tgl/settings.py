@@ -141,6 +141,7 @@ EMAIL_BACKEND = "post_office.EmailBackend"
 POST_OFFICE = {
     "CELERY_ENABLED": True,
     "DEFAULT_PRIORITY": "now",
+    "RENDER_ON_DELIVERY": True,
 }
 
 ADMINS = [("dhruva", os.environ["EMAIL_HOST_USER"])]
