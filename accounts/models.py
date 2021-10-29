@@ -81,6 +81,7 @@ class User(AbstractUser):
         _("Registration No"),
         validators=[MinLengthValidator(3)],
         null=True,
+        blank=True,
         max_length=250,
         help_text=_("Your college issued ID (Optional)"),
     )

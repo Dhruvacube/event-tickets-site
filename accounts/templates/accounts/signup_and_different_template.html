@@ -7,16 +7,8 @@
         background-image: url('{% static "images/freefire.webp" %}');
     }
     
-    label[for="id_password"] {
-        display: none;
-    }
-    
     label[for="id_gender"] {
         color: black;
-    }
-    
-    #id_password {
-        display: none;
     }
 </style>
 
@@ -34,22 +26,22 @@
             {{message|safe}}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        {% endfor %} {% endif %} {% if form.errors %} {% for error in form.errors %}
+        {% endfor %} {% endif %} {% for error in form.errors %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{form.errors|get_val:error}}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        {% endfor %} {% endif %}
+        {% endfor %}
         <!-- ==Ends== -->
         <div class="container">
-            <form action="?" class="form-floating row needs-validation" method="POST">{% csrf_token %} {% for field in form %} {% if not forloop.counter == 15 %}
+            <form action="?" class="form-floating row needs-validation" method="POST">{% csrf_token %} {% for field in form %}
                 <div data-aos="fade-down" class="textbox form-floating col-md-{% if forloop.counter == 1 or forloop.counter == 14 or forloop.counter == 13 %}12{% elif forloop.counter == 10 or forloop.counter == 11 or forloop.counter == 12 %}4{% elif forloop.counter == 8  or forloop.counter == 9 %}12{% else %}6{% endif %}">
                     {{ field }}{{ field.label_tag }}{% if field.help_text %}<br/><br/><span style="font-size: 15px;" class="help_text{{forloop.counter}}">{{ field.help_text }}</span> {% endif %} <br/><br/> {% for error in field.errors %}
                     <span style="font-size: 15px;" class="text-danger">
                         {{error}}
                     </span>{% endfor %}
                 </div>
-                {% endif %} {% endfor %} {% if referral %}
+                {% endfor %}{% if referral %}
                 <div class="textbox form-floating col-md-12" data-aos="zoom-in">
                     <input class="form-control" id="id_referral_code" maxlength="6" name="referral_code" {% if user.referral_code %}value={{user.referral_code}}{% endif %} type="text" />
                     <label for="id_registration_no">Referral Code:</label>

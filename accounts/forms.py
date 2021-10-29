@@ -84,7 +84,6 @@ class SignupForm(UserCreationForm):
             self.fields["email"].widget.attrs["required"] = "true"
 
             self.fields["registration_no"].widget.attrs["class"] = "form-control"
-            self.fields["registration_no"].widget.attrs["required"] = "false"
 
             self.fields["phone"].widget.attrs["class"] = "form-control"
             self.fields["phone"].widget.attrs["required"] = "true"

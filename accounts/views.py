@@ -165,7 +165,7 @@ def loginform(request):
         form = LoginForm(request=request, data=request.POST)
 
         username = request.POST.get("username")
-        if not User.objects.get(username=username):
+        if not User.objects.filter(username=username).exists():
             messages.warning(request, "Please create an new account !")
             return redirect(reverse("signin"))
         if form.is_valid():
@@ -194,6 +194,7 @@ def loginform(request):
 
 @sync_to_async
 def signup(request):
+    current_site = get_current_site(request)
     if request.method == "POST":
         form = SignupForm(request.POST)
 
@@ -202,7 +203,9 @@ def signup(request):
             user.is_active = True
 
             referral = request.POST.get("referral_code")
-            if Referral.filter(referral_code=referral).exists():
+            if len(referral) == 0 or referral in [None, ""]:
+                user.referral_code = None
+            elif Referral.objects.filter(referral_code=referral).exists():
                 user.referral_code = Referral.filter(
                     referral_code=referral).get()
             else:
@@ -211,18 +214,47 @@ def signup(request):
                     f"<strong>{referral}</strong> Referral Code does not exists",
                 )
             user.save()
-
+            to_email = form.cleaned_data.get('email')
             username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
+            password = form.cleaned_data.get("password1")
+            
+            ctx = {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                    'username': username,
+                    'password': password1,
+                    'protocol': 'https' if request.is_secure() else 'http'
+                }
+            if not EmailTemplate.objects.filter(name='register_mail').all():
+                message = render_to_string('accounts/register_mail.html')
+                mail_subject = 'Thanks for Registering for TGL-2.0'
+                EmailTemplate.objects.create(
+                    name='register_mail',
+                    description="Thank you E-Mail Template",
+                    subject=mail_subject,
+                    html_content=message,
+                )
+            mail.send(
+                to_email,
+                settings.EMAIL_HOST_USER,
+                template='register_mail',
+                context=ctx,
+            )
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
             messages.success(request, "Account created")
             return redirect(reverse("make_order"))
-        messages.error(request, "There is some error please correct it!")
-        return redirect(reverse("signup"))
+        message_error_list = []
+        if form.errors.as_data():
+            for i in form.errors.as_data():
+                message = '\n'.join(form.errors.as_data()[i][0].messages)
+                message_error_list.append(message)
+            for i in message_error_list:
+                messages.error(request, i)        
     form = SignupForm()
-    current_site = get_current_site(request)
     return render(
         request,
         "accounts/signup_and_different_template.html",
@@ -235,5 +267,6 @@ def signup(request):
             "domain": current_site.domain,
             "display": True,
             "referral": True,
+            "no_display_messages": True,
         },
     )

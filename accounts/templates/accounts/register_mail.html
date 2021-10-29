@@ -1,4 +1,4 @@
-{% verbatim %}
+{% load static %}{% verbatim %}{% load static %}
 <html>
 
 <head>
@@ -8,6 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <style type="text/css">
         /* FONTS */
+        
+        @font-face {
+            font-family: 'Special Elite';
+            src: url("{{ protocol }}://{{ domain }}{% static 'font/SpecialElite.ttf' %}");
+        }
         
         @media screen {
             @font-face {
@@ -96,15 +101,15 @@
 
     <!-- HIDDEN PREHEADER TEXT -->
     <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-        Looks like you tried signing in a few too many times. Let's see if we can get you back into your account.
+        Thanks for registering in the Tanzanite Gaming League 2.0
     </div>
 
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <!-- LOGO -->
         <tr>
-            <td bgcolor="#ffd503" align="center">
+            <td bgcolor="#ff6600" align="center">
                 <table border="0" cellpadding="0" cellspacing="0" width="480">
-                    <tr>{% load static %}
+                    <tr>
                         <td align="center" valign="top" style="padding: 40px 10px 40px 10px;">
                             <img alt="Logo" src="{{ protocol }}://{{ domain }}{% static 'icons/logo.png' %}" width="100" height="100" style="display: block;  font-family: 'Lato', Helvetica, Arial, sans-serif; color: #ffffff; font-size: 18px;" border="0">
                         </td>
@@ -114,7 +119,7 @@
         </tr>
         <!-- HERO -->
         <tr>
-            <td bgcolor="#ffd503" align="center" style="padding: 0px 10px 0px 10px;">
+            <td bgcolor="#ff6600" align="center" style="padding: 0px 10px 0px 10px;">
                 <table border="0" cellpadding="0" cellspacing="0" width="480">
                     <tr>
                         <td bgcolor="#ffffff" align="left" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
@@ -131,7 +136,19 @@
                     <!-- COPY -->
                     <tr>
                         <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Someone just requested that the password of your TGL 2.0 account be reset.</p>
+                            <p style="margin: 0;">Thank you for registering in <strong style="font-size: 30px; font-family: Special Elite;">TGL 2.0</strong></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <ul>
+                                <li>
+                                    <p style="margin: 0;"><u>Username</u>: <strong>{{username}}</strong></p>
+                                </li>
+                                <li>
+                                    <p style="margin: 0;"><u>Password</u>: <strong>{{password}}</strong></p>
+                                </li>
+                            </ul>
                         </td>
                     </tr>
                     <!-- BULLETPROOF BUTTON -->
@@ -142,7 +159,7 @@
                                     <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
                                         <table border="0" cellspacing="0" cellpadding="0">
                                             <tr>
-                                                <td align="center" style="border-radius: 3px;" bgcolor="#ff8400"><a href="{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uid token %}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #de8407; display: inline-block;">Reset Password</a></td>
+                                                <td align="center" style="border-radius: 3px;" bgcolor="#ff3300"><a href="{{ protocol }}://{{ domain }}{% url 'make_order' %}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid  #ff3300; display: inline-block;">Grab your Tournament Tickets !</a></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -173,7 +190,7 @@
 
                     <tr>
                         <td bgcolor="#de8407" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #dbdbdb; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uid token %}</p>
+                            <p style="margin: 0;">{{ protocol }}://{{ domain }}{% url 'make_order' %}</p>
                         </td>
                     </tr>
                 </table>
@@ -195,14 +212,8 @@
                     <tr>
                         <td bgcolor="#f4f4f4" align="left" style="padding: 0px 30px 30px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;">
                             <br/>
-                            <p style="margin: 0;">The generated link is valid for 24 hours.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#f4f4f4" align="left" style="padding: 0px 30px 30px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;">
-                            <br/>
-                            <p style="margin: 0;">You received this email because you requested a password reset. If you did not, then you can ignore this email or
-                                <a href='{{ protocol }}://{{ domain }}#footer'></a>let us know. Your password won't change until you create a new password.</p>
+                            <p style="margin: 0;">You received this email because you shown interest for the Tanzanite Gaming League. If you did not, then you can ignore this email or
+                                <a href='{{ protocol }}://{{ domain }}#footer'></a>let us know.</p>
                         </td>
                     </tr>
                     <tr>
