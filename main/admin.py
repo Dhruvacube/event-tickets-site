@@ -1,9 +1,11 @@
 import os
 
 from django.conf import settings
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.auth.admin import Group
 from django.utils.translation import gettext_lazy as _
+from django.contrib.admin.models import LogEntry
+from django.utils.translation import ngettext
 from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter
 
 from .models import *
@@ -120,6 +122,28 @@ class SponserAdmin(admin.ModelAdmin):
         ),
     )
 
+
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    def delete_admin_logs(self, request, queryset):
+        querysetmsg = queryset.delete()
+
+        self.message_user(
+            request,
+            ngettext(
+                "%d log was successfully deleted.",
+                "%d logs were successfully deleted.",
+                len(queryset),
+            )
+            % int(len(queryset)),
+            messages.SUCCESS,
+        )
+
+    delete_admin_logs.short_description = (
+        "Delete the selected ADMIN Logs without sticking"
+    )
+
+    actions = [delete_admin_logs]
 
 admin.site.unregister(Group)
 admin.site.site_header = admin.site.site_title = "Tanzanite Gaming League 2.0"
