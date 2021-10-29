@@ -51,13 +51,13 @@ class PasswordResetViews(PasswordResetView):
     form_class = PasswordReset
     title = _("Password reset")
     description = _(
-        "Password Reset for the existing account for the 24 Ave Pizza")
+        "Password Reset for the existing account for the Tanzanite Gaming League 2.0")
 
     def form_valid(self, form):
         opts = {
             "use_https": self.request.is_secure(),
             "token_generator": self.token_generator,
-            "from_email": "dhruvashaw@gmail.com",
+            "from_email": settings.EMAIL_HOST_USER,
             "email_template_name": self.email_template_name,
             "subject_template_name": self.subject_template_name,
             "request": self.request,

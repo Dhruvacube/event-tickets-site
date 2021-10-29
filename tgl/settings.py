@@ -87,14 +87,6 @@ if os.path.isfile(dotenv_file):
     LOCAL = True
 else:
     LOCAL = ast.literal_eval(os.environ.get("LOCAL", "False"))
-    EMAIL_HOST = "smtp.gmail.com"
-    EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
-    EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    ADMINS = [("dhruva", os.environ["EMAIL_HOST_USER"])]
-
     PRODUCTION_SERVER = True
     DEBUG = ast.literal_eval(os.environ.get("DEBUG", "False").capitalize())
     SECRET_KEY = os.environ.get("SECRET_KEY", "SECRET_KEY")
@@ -138,6 +130,20 @@ if not os.getenv("WHITENOISE"):
 
 INSTAMOJO_AUTH_KEY = os.environ.get("INSTAMOJO_AUTH_KEY")
 INSTAMOJO_PRIVATE_TOKEN = os.environ.get("INSTAMOJO_PRIVATE_TOKEN")
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'post_office.EmailBackend'
+# Put this in settings.py
+POST_OFFICE = {
+    'CELERY_ENABLED': True,
+    'DEFAULT_PRIORITY': 'now',
+}
+
+ADMINS = [("dhruva", os.environ["EMAIL_HOST_USER"])]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -249,7 +255,7 @@ USE_THOUSAND_SEPARATOR = True
 
 SESSION_COOKIE_AGE = 1 * 60 * 60
 
-ASYNC_RUN = ast.literal_eval(os.environ.get("ASYNC_RUN"))
+ASYNC_RUN = ast.literal_eval(os.environ.get("ASYNC_RUN", "True"))
 if ASYNC_RUN:
     DJANGO_ALLOW_ASYNC_UNSAFE = True
 
@@ -258,3 +264,4 @@ if ast.literal_eval(os.environ.get("LOGGING", "True").capitalize()):
 
     LOGGING = LOGGING
     logging.config.dictConfig(LOGGING)
+
