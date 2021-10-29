@@ -23,6 +23,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from post_office import mail
 from post_office.models import EmailTemplate
+import functools
 
 from referral.models import Referral
 
@@ -53,7 +54,8 @@ class PasswordResetViews(PasswordResetView):
     description = _(
         "Password Reset for the existing account for the Tanzanite Gaming League 2.0"
     )
-
+    
+    @functools.lru_cache(maxsize=4)
     def form_valid(self, form):
         opts = {
             "use_https": self.request.is_secure(),

@@ -140,7 +140,6 @@ EMAIL_BACKEND = "post_office.EmailBackend"
 # Put this in settings.py
 POST_OFFICE = {
     "CELERY_ENABLED": True,
-    "DEFAULT_PRIORITY": "now",
     "RENDER_ON_DELIVERY": True,
 }
 
