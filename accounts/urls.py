@@ -8,10 +8,22 @@ from . import views
 from .views import PasswordResetConfirmViews, PasswordResetDoneViews, PasswordResetViews
 
 urlpatterns = [
-    path("password_reset/", PasswordResetViews.as_view(),name='password_reset'),
-    url('password_reset/done/', PasswordResetDoneViews.as_view(), name='password_reset_done'),
-    url(r'^reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', PasswordResetConfirmViews.as_view(), name='password_reset_confirm'),
-    re_path('reset/done/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path("password_reset/", PasswordResetViews.as_view(), name="password_reset"),
+    url(
+        "password_reset/done/",
+        PasswordResetDoneViews.as_view(),
+        name="password_reset_done",
+    ),
+    url(
+        r"^reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$",
+        PasswordResetConfirmViews.as_view(),
+        name="password_reset_confirm",
+    ),
+    re_path(
+        "reset/done/",
+        PasswordResetCompleteView.as_view(),
+        name="password_reset_complete",
+    ),
     url(r"^profile/$", views.view_profile, name="view_profile"),
     url(r"^changepassword/$", views.change_password, name="change_password"),
     url(r"^login/$", views.loginform, name="signin"),

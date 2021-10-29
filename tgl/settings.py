@@ -136,11 +136,11 @@ EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'post_office.EmailBackend'
+EMAIL_BACKEND = "post_office.EmailBackend"
 # Put this in settings.py
 POST_OFFICE = {
-    'CELERY_ENABLED': True,
-    'DEFAULT_PRIORITY': 'now',
+    "CELERY_ENABLED": True,
+    "DEFAULT_PRIORITY": "now",
 }
 
 ADMINS = [("dhruva", os.environ["EMAIL_HOST_USER"])]
@@ -264,4 +264,3 @@ if ast.literal_eval(os.environ.get("LOGGING", "True").capitalize()):
 
     LOGGING = LOGGING
     logging.config.dictConfig(LOGGING)
-

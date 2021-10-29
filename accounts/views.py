@@ -51,7 +51,8 @@ class PasswordResetViews(PasswordResetView):
     form_class = PasswordReset
     title = _("Password reset")
     description = _(
-        "Password Reset for the existing account for the Tanzanite Gaming League 2.0")
+        "Password Reset for the existing account for the Tanzanite Gaming League 2.0"
+    )
 
     def form_valid(self, form):
         opts = {
