@@ -85,11 +85,17 @@ if os.path.isfile(dotenv_file):
     SECRET_KEY = "7$xw$^&2rne%#gqm!-n!y$%!7*uahe1cmnc!8hd3j+=syy3=$)"
     CACHE_MIDDLEWARE_SECONDS = 0
     LOCAL = True
+    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 else:
     LOCAL = ast.literal_eval(os.environ.get("LOCAL", "False"))
     PRODUCTION_SERVER = True
     DEBUG = ast.literal_eval(os.environ.get("DEBUG", "False").capitalize())
     SECRET_KEY = os.environ.get("SECRET_KEY", "SECRET_KEY")
+    EMAIL_HOST = os.environ.get('MAILGUN_SMTP_SERVER')
+    EMAIL_HOST_USER = os.environ.get("MAILGUN_SMTP_LOGIN")
+    EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_SMTP_PASSWORD")
 
 if os.getenv("DATABASE_URL"):
     import dj_database_url
@@ -126,10 +132,7 @@ if not os.getenv("WHITENOISE"):
 INSTAMOJO_AUTH_KEY = os.environ.get("INSTAMOJO_AUTH_KEY")
 INSTAMOJO_PRIVATE_TOKEN = os.environ.get("INSTAMOJO_PRIVATE_TOKEN")
 
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
-EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
-EMAIL_PORT = 587
+EMAIL_PORT = os.environ.get('MAILGUN_SMTP_PORT',587)
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = "post_office.EmailBackend"
 # Put this in settings.py
