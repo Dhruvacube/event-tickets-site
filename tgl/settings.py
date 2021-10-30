@@ -137,8 +137,9 @@ EMAIL_USE_TLS = True
 EMAIL_BACKEND = "post_office.EmailBackend"
 # Put this in settings.py
 POST_OFFICE = {
-    "CELERY_ENABLED": True,
-    "RENDER_ON_DELIVERY": True,
+    "CELERY_ENABLED": False,
+    "RENDER_ON_DELIVERY": False,
+    
 }
 
 ADMINS = [("dhruva", os.environ["EMAIL_HOST_USER"])]
