@@ -27,7 +27,6 @@ from post_office.models import EmailTemplate
 
 from referral.models import Referral
 
-from .decorators import check_recaptcha
 from .forms import (
     EditProfileForm,
     LoginForm,
@@ -227,7 +226,7 @@ def signup(request):
                 "password": password1,
                 "protocol": "https" if request.is_secure() else "http",
             }
-            if not EmailTemplate.objects.filter(name="register_mail").all():
+            if not EmailTemplate.objects.filter(name="register_mail").exists():
                 message = render_to_string("accounts/register_mail.html")
                 mail_subject = "Thanks for Registering for TGL-2.0"
                 EmailTemplate.objects.create(

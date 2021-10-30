@@ -174,7 +174,7 @@ class PasswordReset(PasswordResetForm):
         html_email_template_name=None,
     ):
         """Send mail"""
-        if not EmailTemplate.objects.filter(name="password_reset").all():
+        if not EmailTemplate.objects.filter(name="password_reset").exists():
             message = render_to_string(html_email_template_name)
 
             subject = loader.render_to_string(subject_template_name, context)
