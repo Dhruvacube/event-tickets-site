@@ -196,7 +196,7 @@ WHITENOISE_SKIP_COMPRESS_EXTENSIONS = []
 
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
-BROKER_URL = os.environ.get("REDIS_URL", "redis://localhost:6379")
+BROKER_URL = os.environ.get("CLOUDAMQP_URL", "amqp://localhost")
 CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL", "redis://localhost:6379")
 CELERY_ACCEPT_CONTENT = ["application/json",]
 CELERY_TASK_SERIALIZER = CELERY_RESULT_SERIALIZER = "json"
