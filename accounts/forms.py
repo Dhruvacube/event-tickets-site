@@ -13,9 +13,9 @@ from django.core.exceptions import ValidationError
 from django.template import loader
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
-from post_office import mail
 from post_office.models import EmailTemplate
 
+from post_office import mail
 from .models import User
 
 
@@ -187,7 +187,6 @@ class PasswordReset(PasswordResetForm):
             from_email,
             template="password_reset",
             context=context,
-            priority="now",
         )
 
     def __init__(self, *args, **kwargs):

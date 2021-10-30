@@ -51,3 +51,4 @@ webencodings==0.5.1
 whitenoise==5.3.0
 colorlog==6.5.0
 uvloop
+uwsgi

@@ -141,6 +141,7 @@ EMAIL_BACKEND = "post_office.EmailBackend"
 POST_OFFICE = {
     "CELERY_ENABLED": True,
     "RENDER_ON_DELIVERY": True,
+    "DEFAULT_PRIORITY": "low",
 }
 
 ADMINS = [("dhruva", os.environ["EMAIL_HOST_USER"])]
@@ -197,9 +198,8 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 BROKER_URL = os.environ.get("REDIS_URL", "redis://localhost:6379")
 CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL", "redis://localhost:6379")
-CELERY_ACCEPT_CONTENT = ["application/json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
+CELERY_ACCEPT_CONTENT = ["application/json",]
+CELERY_TASK_SERIALIZER = CELERY_RESULT_SERIALIZER = "json"
 
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
