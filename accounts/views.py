@@ -24,9 +24,9 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from post_office import mail
 from post_office.models import EmailTemplate
-from tgl.celery import mail_queue
 
 from referral.models import Referral
+from tgl.celery import mail_queue
 
 from .forms import (
     EditProfileForm,

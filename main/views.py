@@ -8,11 +8,12 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from accounts.models import User
+from tgl.celery import mail_queue
 
 from .decorators import verify_entry_to_group
 from .models import *
 from .templatetags import extra
-from tgl.celery import mail_queue
+
 
 @sync_to_async
 def home(request):
@@ -34,13 +35,14 @@ def home(request):
 @verify_entry_to_group
 def group_make(request):
     parameters = {
-        "group": GameGroup.objects.filter(
-            users__in=[request.user], solo_or_squad="sq"
-        ).all(),
-        "solo": GameGroup.objects.filter(
-            users__in=[request.user], solo_or_squad="so"
-        ).all(),
-        "title": "Register Groups",
+        "group":
+        GameGroup.objects.filter(users__in=[request.user],
+                                 solo_or_squad="sq").all(),
+        "solo":
+        GameGroup.objects.filter(users__in=[request.user],
+                                 solo_or_squad="so").all(),
+        "title":
+        "Register Groups",
     }
     if request.method == "POST":
         group_id, users_list, inavlid_users_list = "", [], []
@@ -49,11 +51,11 @@ def group_make(request):
                 if "userid" in i:
                     tuple_3 = i.split(" ")
                     group_id = tuple_3[1]
-                    if User.objects.filter(unique_id=request.POST.dict()[i]).exists():
+                    if User.objects.filter(
+                            unique_id=request.POST.dict()[i]).exists():
                         users_list.append(
                             User.objects.filter(
-                                unique_id=request.POST.dict()[i])
-                        )
+                                unique_id=request.POST.dict()[i]))
                     else:
                         inavlid_users_list.append(request.POST.dict()[i])
             except Exception as e:
@@ -65,13 +67,13 @@ def group_make(request):
             for i in users_list:
                 groups.users.add(i[0].id)
             messages.success(
-                request, f"Successfully added {len(users_list)} user(s) to the group!"
-            )
+                request,
+                f"Successfully added {len(users_list)} user(s) to the group!")
             parameters.update({"message_group_id": group_id})
         if len(inavlid_users_list) > 0:
             messages.error(
-                request, f"Unable to add {len(users_list)} user(s) to the group!"
-            )
+                request,
+                f"Unable to add {len(users_list)} user(s) to the group!")
             messages.error(
                 request,
                 r"Make sure that they have registered themselves first ¯\_(ツ)_/¯",

@@ -13,6 +13,7 @@ app = Celery("tgl", broker_url=settings.BROKER_URL)
 app.config_from_object("django.conf:settings")
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
+
 @app.task
 def mail_queue():
     call_command("send_queued_mail", processes=1)
