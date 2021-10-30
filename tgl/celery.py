@@ -16,3 +16,10 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 @app.task
 def mail_queue():
     call_command("send_queued_mail", processes=1)
+    
+app.conf.beat_schedule = {
+    'send-queued-mail': {
+        'task': 'post_office.tasks.send_queued_mail',
+        'schedule': 60.0,
+    },
+}

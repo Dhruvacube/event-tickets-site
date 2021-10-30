@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     "referral.apps.ReferralConfig",
     "payments.apps.PaymentsConfig",
     "accounts.apps.AccountsConfig",
+    "post_office",
     "django_admin_listfilter_dropdown",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -27,7 +28,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "localflavor",
-    "post_office",
     "compressor",
 ]
 
@@ -133,7 +133,7 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = "post_office.EmailBackend"
 POST_OFFICE = {
-    "CELERY_ENABLED": True,
+    "CELERY_ENABLED": False,
     "RENDER_ON_DELIVERY": True,
 }
 
