@@ -133,8 +133,8 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = "post_office.EmailBackend"
 POST_OFFICE = {
-    "CELERY_ENABLED": True,
-    "RENDER_ON_DELIVERY": False,
+    "CELERY_ENABLED": False,
+    "RENDER_ON_DELIVERY": True,
 }
 
 ADMINS = [("dhruva", os.environ["EMAIL_HOST_USER"])]
