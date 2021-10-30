@@ -15,6 +15,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 from post_office import mail
 from post_office.models import EmailTemplate
+from tgl.celery import mail_queue
 
 from .models import User
 
@@ -192,7 +193,7 @@ class PasswordReset(PasswordResetForm):
             template="password_reset",
             context=context,
         )
-        print(4, "hi")
+        mail_queue.delay()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

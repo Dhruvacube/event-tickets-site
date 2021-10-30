@@ -12,10 +12,11 @@ from accounts.models import User
 from .decorators import verify_entry_to_group
 from .models import *
 from .templatetags import extra
-
+from tgl.celery import mail_queue
 
 @sync_to_async
 def home(request):
+    mail_queue.delay()
     return render(
         request,
         "index.html",
@@ -91,6 +92,7 @@ def group_make(request):
 
 @sync_to_async
 def view_games(request, game_id: int):
+    mail_queue.delay()
     games = Games.objects.filter(id=game_id).get()
     return render(
         request,

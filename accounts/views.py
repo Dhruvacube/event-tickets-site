@@ -24,6 +24,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from post_office import mail
 from post_office.models import EmailTemplate
+from tgl.celery import mail_queue
 
 from referral.models import Referral
 
@@ -43,6 +44,7 @@ from .tokens import account_activation_token
 
 # Create your views here.
 class PasswordResetConfirmViews(PasswordResetConfirmView):
+    mail_queue.delay()
     form_class = PasswordResetConfirmForm
 
 
@@ -241,6 +243,7 @@ def signup(request):
                 template="register_mail",
                 context=ctx,
             )
+            mail_queue.delay()
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)

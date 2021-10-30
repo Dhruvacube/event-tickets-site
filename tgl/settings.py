@@ -133,7 +133,7 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = "post_office.EmailBackend"
 POST_OFFICE = {
-    "CELERY_ENABLED": False,
+    "CELERY_ENABLED": True,
     "RENDER_ON_DELIVERY": True,
 }
 
