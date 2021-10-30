@@ -3,8 +3,8 @@ from __future__ import absolute_import
 import os
 
 from celery import Celery
-from django.conf import settings
 from celery.schedules import crontab
+from django.conf import settings
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tgl.settings")
 
@@ -14,9 +14,8 @@ app.config_from_object("django.conf:settings")
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 app.conf.beat_schedule = {
-    'send-queued-mail': {
-        'task': 'post_office.tasks.send_queued_mail',
-        'schedule': 60.0,
+    "send-queued-mail": {
+        "task": "post_office.tasks.send_queued_mail",
+        "schedule": 60.0,
     },
 }
-
