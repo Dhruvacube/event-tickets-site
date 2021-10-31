@@ -16,7 +16,7 @@ from django.utils.translation import gettext_lazy as _
 from post_office import mail
 from post_office.models import EmailTemplate
 
-from tgl.celery import mail_queue
+from main.tasks import mail_queue
 
 from .models import User
 

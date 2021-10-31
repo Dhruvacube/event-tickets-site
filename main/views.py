@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from accounts.models import User
-from tgl.celery import mail_queue
+from .tasks import mail_queue
 
 from .decorators import verify_entry_to_group
 from .models import *

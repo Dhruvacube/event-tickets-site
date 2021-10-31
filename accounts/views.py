@@ -26,7 +26,7 @@ from post_office import mail
 from post_office.models import EmailTemplate
 
 from referral.models import Referral
-from tgl.celery import mail_queue
+from main.tasks import mail_queue
 
 from .forms import (
     EditProfileForm,
