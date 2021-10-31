@@ -34,7 +34,8 @@ def home(request):
 @verify_entry_to_group
 def group_make(request):
     parameters = {
-        "game_groups": GameGroup.objects.filter(users__in=[request.user]).all(),
+        "game_groups":
+        GameGroup.objects.filter(users__in=[request.user]).all(),
         "title": "Register Groups",
     }
     print(GameGroup.objects.filter(users__in=[request.user]).all())

@@ -41,32 +41,34 @@ def check_success(queryset):
 
 @register.filter(name="if_groups")
 def if_groups(user):
-    groups = GameGroup.objects.filter(
-        users__in=[
-            user,
-        ]
-    ).count()
+    groups = GameGroup.objects.filter(users__in=[
+        user,
+    ]).count()
     if groups >= 1:
         return True
     return False
+
 
 @register.filter(name="solo_user")
 def solo_user(user):
     groups = GameGroup.objects.filter(
         users__in=[
             user,
-        ], solo_or_squad='so'
+        ],
+        solo_or_squad="so",
     ).count()
     if groups >= 1:
         return True
     return False
+
 
 @register.filter(name="squad_user")
 def squad_user(user):
     groups = GameGroup.objects.filter(
         users__in=[
             user,
-        ], solo_or_squad='sq'
+        ],
+        solo_or_squad="sq",
     ).count()
     if groups >= 1:
         return True

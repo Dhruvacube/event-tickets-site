@@ -81,7 +81,9 @@ class PasswordResetDoneViews(PasswordResetDoneView):
 @login_required
 def view_profile(request):
     if request.method == "POST":
-        form = EditProfileForm(request.POST, instance=request.user, admin=False)
+        form = EditProfileForm(request.POST,
+                               instance=request.user,
+                               admin=False)
 
         if form.is_valid():
             user = form.save(commit=False)
