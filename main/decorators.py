@@ -1,7 +1,6 @@
-from functools import lru_cache
+from functools import lru_cache, wraps
 
 from django.core.exceptions import PermissionDenied
-from functools import wraps
 
 from .models import GameGroup
 
@@ -14,4 +13,5 @@ def verify_entry_to_group(function):
         if count > 0:
             return function(request, *args, **kwargs)
         raise PermissionDenied
+
     return wrap

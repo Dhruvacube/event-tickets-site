@@ -1,5 +1,7 @@
-from django.core.exceptions import PermissionDenied
 from functools import wraps
+
+from django.core.exceptions import PermissionDenied
+
 
 def verify_entry_for_orders(function):
     @wraps(function)
@@ -8,6 +10,7 @@ def verify_entry_for_orders(function):
         if count > 0:
             raise PermissionDenied
         return function(request, *args, **kwargs)
+
     return wrap
 
 
@@ -18,4 +21,5 @@ def verify_entry_for_payments_history(function):
         if count > 0:
             return function(request, *args, **kwargs)
         raise PermissionDenied
+
     return wrap
