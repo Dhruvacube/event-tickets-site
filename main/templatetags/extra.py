@@ -50,9 +50,31 @@ def if_groups(user):
         return True
     return False
 
+@register.filter(name="solo_user")
+def solo_user(user):
+    groups = GameGroup.objects.filter(
+        users__in=[
+            user,
+        ], solo_or_squad='so'
+    ).count()
+    if groups >= 1:
+        return True
+    return False
+
+@register.filter(name="squad_user")
+def squad_user(user):
+    groups = GameGroup.objects.filter(
+        users__in=[
+            user,
+        ], solo_or_squad='sq'
+    ).count()
+    if groups >= 1:
+        return True
+    return False
+
 
 @register.filter(name="if_user_payed")
 def if_user_payed(payment_obj, user):
-    if payment_obj[0].payment_id in user.orders.all():
+    if payment_obj.payment_id in list(user.orders.iterator()):
         return False
     return True

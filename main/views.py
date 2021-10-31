@@ -17,7 +17,6 @@ from .templatetags import extra
 
 @sync_to_async
 def home(request):
-    mail_queue.delay()
     return render(
         request,
         "index.html",
@@ -35,15 +34,10 @@ def home(request):
 @verify_entry_to_group
 def group_make(request):
     parameters = {
-        "group":
-        GameGroup.objects.filter(users__in=[request.user],
-                                 solo_or_squad="sq").all(),
-        "solo":
-        GameGroup.objects.filter(users__in=[request.user],
-                                 solo_or_squad="so").all(),
-        "title":
-        "Register Groups",
+        "game_groups": GameGroup.objects.filter(users__in=[request.user]).all(),
+        "title": "Register Groups",
     }
+    print(GameGroup.objects.filter(users__in=[request.user]).all())
     if request.method == "POST":
         group_id, users_list, inavlid_users_list = "", [], []
         for i in request.POST.dict():

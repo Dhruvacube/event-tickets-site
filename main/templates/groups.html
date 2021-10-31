@@ -1,11 +1,11 @@
 {% extends 'layout.html' %}{% load static %}{% load extra %}{% load compress %}{% block body %}
 <section class="games" id="games">
-    {% if solo %}
+    {% if user|solo_user %}
     <center>
         <h2>Mode : <u>Solo</u></h2>
     </center>
     <div class="container row row-cols-1 row-cols-md-3 g-4">
-        {% for i in solo %}
+        {% for i in game_groups %}{% if i.solo_or_squad == 'so' %}
         <div class="col">
             <div class="card container" data-aos="flip-down">
                 <img data-aos="flip-down" src="{% static  i.game.image_url %}" class="card-img-top" alt="{{i.game.name}} Image" loading="lazy">
@@ -14,16 +14,16 @@
                 </div>
             </div>
         </div>
-        {% endfor %}
+        {% endif %} {% endfor %}
     </div>
     {% endif %}
-    <hr/> {% if group %}
+    <hr/> {% if user|squad_user %}
     <div class="container">
         <center>
             <h2>Mode : <u>Squad</u></h2>
         </center>
         <div class="row row-cols-1 row-cols-md-2 g-4">
-            {% for i in group %}
+            {% for i in game_groups %}{% if i.solo_or_squad == 'sq' %}
             <div class="col">
                 <div class="col container bg-white me-2 border border-primary rounded">
                     {% if message_group_id == i.group_unique_id %} {% for message in messages %}
@@ -43,13 +43,13 @@
                         <hr/>{% for j in i.game.squad_entry_members|range %}
                         <label data-aos="fade-down ">Team Mate {{forloop.counter}} User ID {% if i.users.all|filter_users:forloop.counter %}| {{i.users.all|filter_users:forloop.counter}}{% endif %}</label>
                         <input data-aos="fade-down " type="text " name="userid {{i.group_unique_id}} {{forloop.counter}} " value="{% if i.users.all|filter_users:forloop.counter %}{{i.users.all|filter_users_id:forloop.counter}}{% endif %}
-                        " disabled="{% ifequal i.users.all|filter_users:forloop.counter user %}true{% else %}false{% endifequal %} " {% if group|if_user_payed:user %}disabled="true " {% endif %} required class="form-control " placeholder="Team Mate {{forloop.counter}} User ID "
+                        " disabled="{% ifequal i.users.all|filter_users:forloop.counter user %}true{% else %}false{% endifequal %} " {% if i|if_user_payed:user %}disabled="true " {% endif %} required class="form-control " placeholder="Team Mate {{forloop.counter}} User ID "
                             aria-label="Team Mate {{forloop.counter}} User ID "> &nbsp;&nbsp; {% endfor %}
                         <button type="submit " class="btn btn-outline-success my-3 ">Save</button>
                     </form>
                 </div>
             </div>
-            {% endfor %}
+            {% endif %} {% endfor %}
         </div>
     </div>
     {% endif %}

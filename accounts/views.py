@@ -81,7 +81,7 @@ class PasswordResetDoneViews(PasswordResetDoneView):
 @login_required
 def view_profile(request):
     if request.method == "POST":
-        form = EditProfileForm(request.POST, instance=request.user)
+        form = EditProfileForm(request.POST, instance=request.user, admin=False)
 
         if form.is_valid():
             user = form.save(commit=False)
@@ -108,7 +108,7 @@ def view_profile(request):
                            "Please correct the errors mentioned below!")
 
     else:
-        form = EditProfileForm(instance=request.user)
+        form = EditProfileForm(instance=request.user, admin=False)
     return render(
         request,
         "accounts/signup_and_different_template.html",
