@@ -25,8 +25,8 @@ from django.utils.translation import gettext_lazy as _
 from post_office import mail
 from post_office.models import EmailTemplate
 
-from referral.models import Referral
 from main.tasks import mail_queue
+from referral.models import Referral
 
 from .forms import (
     EditProfileForm,

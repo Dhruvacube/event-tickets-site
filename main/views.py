@@ -8,10 +8,10 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from accounts.models import User
-from .tasks import mail_queue
 
 from .decorators import verify_entry_to_group
 from .models import *
+from .tasks import mail_queue
 from .templatetags import extra
 
 
