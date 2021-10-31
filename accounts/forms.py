@@ -205,9 +205,9 @@ class PasswordReset(PasswordResetForm):
 
 class EditProfileForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
-        if 'admin' in kwargs:
-            self.admin = kwargs['admin']
-            kwargs.pop('admin')
+        if "admin" in kwargs:
+            self.admin = kwargs["admin"]
+            kwargs.pop("admin")
         super().__init__(*args, **kwargs)
         self.fields["username"].widget.attrs["class"] = "form-control"
         self.fields["username"].widget.attrs["required"] = "true"
@@ -247,14 +247,14 @@ class EditProfileForm(UserChangeForm):
         self.fields["zip_code"].widget.attrs["required"] = "true"
 
         self.fields["gender"].widget.attrs["class"] = "form-control"
-        self.fields["gender"].widget.attrs["style"] = "color: black !important;"
+        self.fields["gender"].widget.attrs[
+            "style"] = "color: black !important;"
 
         self.fields["university_name"].widget.attrs["class"] = "form-control"
         self.fields["university_name"].widget.attrs["required"] = "true"
-        
+
         if not self.admin:
             self.fields.pop("password")
-            
 
     class Meta(UserChangeForm):
         model = User
