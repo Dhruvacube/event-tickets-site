@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 import datetime
 import uuid
 
@@ -17,7 +19,7 @@ from instamojo_wrapper import Instamojo
 from main.models import GameGroup, Games
 
 from .decorators import verify_entry_for_orders, verify_entry_for_payments_history
-from .models import Payments
+from .models import Payments, ComboOffers
 from .templatetags import payments_extras
 
 
@@ -34,7 +36,7 @@ def view_payments_history(request):
         },
     )
 
-
+@lru_cache(maxsize=5)
 @sync_to_async
 @login_required
 @verify_entry_for_orders
@@ -57,10 +59,37 @@ def make_order(request):
                     total_value += order_value
                     order_list.append([gamename, mode, order_value])
         squad_list = list(i[1] for i in order_list)
-        if 'sq' in squad_list and 'so' not in squad_list:
-            total_value = 690
-        elif 'sq' not in squad_list and 'so' in squad_list:
-            total_value = 190
+        applied_internal_discount = False
+        if 'sq' in squad_list and 'so' not in squad_list and settings.ALL_SQUAD_PRICE is not None and Games.objects.filter(has_squad_entry=True).count() == squad_list.count('sq'):
+            total_value = int(settings.ALL_SQUAD_PRICE)
+            applied_internal_discount = True
+        elif 'sq' not in squad_list and 'so' in squad_list and settings.ALL_SOLO_PRICE is not None and Games.objects.filter(has_solo_entry=True).count() == squad_list.count('so'):
+            total_value = int(settings.ALL_SOLO_PRICE)
+            applied_internal_discount = True
+        else:
+            if not ComboOffers.objects.count() <= 0:
+                games_list = list(i[0] for i in order_list)
+                for i in ComboOffers.objects.iterator():
+                    combo_offers_games_list = list(j.name.lower() for j in i.games.iterator())
+                    users_selected_games_list = []
+                    squad_list = []
+                    for j in games_list:
+                        if j.lower() in combo_offers_games_list:
+                            users_selected_games_list.append(j.lower())
+                    if combo_offers_games_list == users_selected_games_list:
+                        for i in order_list:
+                            if i[0].lower() in users_selected_games_list:
+                                squad_list.append(i[1])
+                        if squad_list.count(squad_list[0]) == len(squad_list):
+                            if squad_list[0] == 'sq' and i.if_squad or squad_list[0] == 'so' and i.if_solo:
+                                for i in order_list:
+                                    if i[0].lower() in users_selected_games_list:
+                                        total_value-=int(i[-1])
+                                if squad_list[0] == 'sq':
+                                    total_value+=int(i.squad)
+                                else:
+                                    total_value+=int(i.solo)   
+                applied_internal_discount = True            
         # discount code logic
         if request.user.referral_code:
             discount_value = request.user.referral_code.discount_percentage
@@ -77,6 +106,7 @@ def make_order(request):
                     "action_url": reverse("create_payment"),
                     "title": "Pay for the Games that you want to participate",
                     "undiscounted_value": undiscounted_value,
+                    "applied_internal_discount": applied_internal_discount,
                 },
             )
         messages.error(request, "Please select something in order to pay!")

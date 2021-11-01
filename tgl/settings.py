@@ -262,3 +262,6 @@ if ast.literal_eval(os.environ.get("LOGGING", "True").capitalize()):
 
     LOGGING = LOGGING
     logging.config.dictConfig(LOGGING)
+
+ALL_SQUAD_PRICE = ast.literal_eval(os.environ.get("ALL_SQUAD_PRICE", "None"))
+ALL_SOLO_PRICE = ast.literal_eval(os.environ.get("ALL_SOLO_PRICE", "None"))

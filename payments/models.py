@@ -1,12 +1,16 @@
 import uuid
+import secrets
+import string
 
 from django.conf import settings
 from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
-
+def generate_combo_code():
+    return "".join(
+        secrets.choice(string.ascii_letters + string.digits +
+                       str(secrets.randbits(7))) for i in range(5)).upper()
 
 class Payments(models.Model):
     order_id = models.UUIDField(
@@ -34,11 +38,28 @@ class Payments(models.Model):
     orders_list = models.TextField(help_text=_("The orders list value"))
     created_at = models.DateTimeField(default=now)
 
-    # payed_by = models.ForeignKey(settings.AUTH_USER_MODEL ,on_delete=models.CASCADE, help_text=_('This is to be filled by computer'))
-
     def __str__(self):
         return str(self.order_id)
 
     class Meta:
         verbose_name_plural = "Payments"
         ordering = ("-created_at",)
+
+class ComboOffers(models.Model):
+    combo_id =  models.CharField(
+        default=generate_combo_code,
+        help_text=_("The Combo ID by which the system refers"),
+        max_length=250,
+        unique=True
+    )
+    games = models.ManyToManyField('main.Games')
+    if_squad = models.BooleanField(default=True, help_text=_("If Squad Option is there"))
+    squad = models.IntegerField(default=0)
+    if_solo = models.BooleanField(default=True, help_text=_("If Solo Option is there"))
+    solo = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return f'Combo Offer - {self.combo_id}'
+    
+    class Meta:
+        verbose_name_plural = "Combo Offers"

@@ -44,7 +44,6 @@ sqlparse==0.4.2
 uhashring==2.1
 urllib3==1.26.7
 uvicorn==0.15.0
-uwsgidecorators==1.1.0
 vine==5.0.0
 wcwidth==0.2.5
 webencodings==0.5.1

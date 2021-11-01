@@ -41,8 +41,14 @@
                 <h3 data-aos="fade-down">You have to pay a {% if user.referral_code %}dicounted price{% else %}total{% endif %} of</h3>
                 <h1 data-aos="flip-down">₹{{total_value}}</h1>
                 {% if user.referral_code %}
-                <h4>Undiscounted Price was ₹{{undiscounted_value}}</h4>{% endif %}
-                <h4>{% if user.referral_code %}You got a discount of {{user.referral_code.discount_percentage}}% using the {{user.referral_code}} referral code{% endif %}</h4>
+                <h4>Undiscounted Price was ₹{{undiscounted_value}}</h4>
+                <h4>You got a discount of {{user.referral_code.discount_percentage}}% using the {{user.referral_code}} referral code</h4>
+                {% endif %} {% if applied_internal_discount and user.referral_code %}
+                <h3>Also,</h3>
+                {% endif %} {% if applied_internal_discount %}
+                <h3>Also,</h3>
+                <h4>We have applied some discount from our side to benefit you 😉</h4>
+                {% endif %}
             </div>
             <div class="container2">
                 <button data-aos="zoom-in" type="submit" class="button btn btn-outline-warning">Checkout</button>
