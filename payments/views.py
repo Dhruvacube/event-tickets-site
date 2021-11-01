@@ -62,7 +62,7 @@ def make_order(request):
                         name=gamename).values(filter_name).get()[filter_name])
                     total_value += order_value
                     order_list.append([gamename, mode, order_value])
-        squad_list = list(i[1] for i in order_list)
+        squad_list = [i[1] for i in order_list]
         applied_internal_discount = False
         if ("sq" in squad_list and "so" not in squad_list
                 and settings.ALL_SQUAD_PRICE is not None
@@ -78,10 +78,11 @@ def make_order(request):
             applied_internal_discount = True
         else:
             if not ComboOffers.objects.count() <= 0:
-                games_list = list(i[0] for i in order_list)
+                games_list = [i[0] for i in order_list]
                 for i in ComboOffers.objects.iterator():
-                    combo_offers_games_list = list(j.name.lower()
-                                                   for j in i.games.iterator())
+                    combo_offers_games_list = [
+                        j.name.lower() for j in i.games.iterator()
+                    ]
                     users_selected_games_list = []
                     squad_list = []
                     for j in games_list:
