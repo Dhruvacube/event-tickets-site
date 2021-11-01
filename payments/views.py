@@ -92,17 +92,17 @@ def make_order(request):
                         for i in order_list:
                             if i[0].lower() in users_selected_games_list:
                                 squad_list.append(i[1])
-                        if squad_list.count(squad_list[0]) == len(squad_list):
-                            if (squad_list[0] == "sq" and i.if_squad
+                        if squad_list.count(
+                                squad_list[0]) == len(squad_list) and (
+                                    squad_list[0] == "sq" and i.if_squad
                                     or squad_list[0] == "so" and i.if_solo):
-                                for i in order_list:
-                                    if i[0].lower(
-                                    ) in users_selected_games_list:
-                                        total_value -= int(i[-1])
-                                if squad_list[0] == "sq":
-                                    total_value += int(i.squad)
-                                else:
-                                    total_value += int(i.solo)
+                            for i in order_list:
+                                if i[0].lower() in users_selected_games_list:
+                                    total_value -= int(i[-1])
+                            if squad_list[0] == "sq":
+                                total_value += int(i.squad)
+                            else:
+                                total_value += int(i.solo)
                 applied_internal_discount = True
         # discount code logic
         if request.user.referral_code:
