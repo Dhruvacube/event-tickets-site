@@ -18,4 +18,8 @@ app.conf.beat_schedule = {
         "task": "post_office.tasks.send_queued_mail",
         "schedule": 60.0,
     },
+    "send-queued-mail-main": {
+        "task": "main.tasks.mail_queue",
+        "schedule": 60.0,
+    },
 }
