@@ -38,7 +38,6 @@ def group_make(request):
         GameGroup.objects.filter(users__in=[request.user]).all(),
         "title": "Register Groups",
     }
-    print(GameGroup.objects.filter(users__in=[request.user]).all())
     if request.method == "POST":
         group_id, users_list, inavlid_users_list = "", [], []
         for i in request.POST.dict():
