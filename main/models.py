@@ -15,12 +15,15 @@ from payments.models import *
 def generate_unique_id():
     return "".join(
         secrets.choice(string.ascii_letters + string.digits +
-                       str(secrets.randbits(7))) for i in range(7)).upper()
+                       str(secrets.randbits(7)))
+        for i in range(7)
+    ).upper()
 
 
 def format_list(list_images: list):
     list_images.remove("sponsers")
     return list_images
+
 
 # Create your models here.
 class Games(models.Model):
@@ -30,32 +33,31 @@ class Games(models.Model):
         max_length=250,
         unique=True,
     )
-    name = models.CharField(max_length=200,
-                            help_text=_("The name of the game"))
+    name = models.CharField(
+        max_length=200, help_text=_("The name of the game"))
     short_description = models.TextField(
         help_text=_(
-            "About this short event, better keep it in between 100 characters"
-        ),
-        validators=[MinLengthValidator(13),
-                    MaxLengthValidator(200)],
+            "About this short event, better keep it in between 100 characters"),
+        validators=[MinLengthValidator(13), MaxLengthValidator(200)],
     )
     long_description = models.TextField(help_text=_("Here explain everything"))
-    image_url = models.CharField(help_text=_("Url of the game image"),
-                                 max_length=250)
+    image_url = models.CharField(help_text=_(
+        "Url of the game image"), max_length=250)
     platform = models.CharField(
         max_length=11,
-        choices=(("a", "ALL"), ("m", "Mobile"), ("p", "PC"), ("ps",
-                                                              "Play Station")),
+        choices=(("a", "ALL"), ("m", "Mobile"),
+                 ("p", "PC"), ("ps", "Play Station")),
         default="A",
     )
 
     has_solo_entry = models.BooleanField(default=True)
-    solo_entry = models.IntegerField(help_text="Enter the Solo entry price",
-                                     default=0)
+    solo_entry = models.IntegerField(
+        help_text="Enter the Solo entry price", default=0)
 
     has_squad_entry = models.BooleanField(default=True)
-    squad_entry = models.IntegerField(help_text="Enter the Sqaud entry price",
-                                      default=0)
+    squad_entry = models.IntegerField(
+        help_text="Enter the Sqaud entry price", default=0
+    )
     squad_entry_members = models.IntegerField(default=5)
 
     def __str__(self):
@@ -77,12 +79,14 @@ class Games(models.Model):
 
     @staticmethod
     def static_images_list():
-        file_path = settings.BASE_DIR / os.path.join("main", "static",
-                                                     "images")
-        html_string = "".join([
-            f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>{i.strip(' ')}</a></li>"
-            for i in format_list(os.listdir(file_path))
-        ])
+        file_path = settings.BASE_DIR / \
+            os.path.join("main", "static", "images")
+        html_string = "".join(
+            [
+                f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>{i.strip(' ')}</a></li>"
+                for i in format_list(os.listdir(file_path))
+            ]
+        )
         return mark_safe(f"<ol>{html_string}</ol>")
 
     class Meta:
@@ -91,13 +95,11 @@ class Games(models.Model):
 
 class GameGroup(models.Model):
     group_unique_id = models.UUIDField(default=uuid.uuid4)
-    group_name = models.CharField(max_length=250,
-                                  unique=True,
-                                  blank=True,
-                                  null=True)
-    solo_or_squad = models.CharField(default="sq",
-                                     choices=(("sq", "SQUAD"), ("so", "SOLO")),
-                                     max_length=15)
+    group_name = models.CharField(
+        max_length=250, unique=True, blank=True, null=True)
+    solo_or_squad = models.CharField(
+        default="sq", choices=(("sq", "SQUAD"), ("so", "SOLO")), max_length=15
+    )
     game = models.ForeignKey(Games, on_delete=models.CASCADE)
     users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     payment_id = models.ForeignKey(
@@ -135,10 +137,13 @@ class Sponser(models.Model):
 
     @staticmethod
     def static_images_list():
-        file_path = settings.BASE_DIR / os.path.join("main", "static",
-                                                     "images", "sponsers")
-        html_string = "".join([
-            f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>{i.strip(' ')}</a></li>"
-            for i in os.listdir(file_path)
-        ])
+        file_path = settings.BASE_DIR / os.path.join(
+            "main", "static", "images", "sponsers"
+        )
+        html_string = "".join(
+            [
+                f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>{i.strip(' ')}</a></li>"
+                for i in os.listdir(file_path)
+            ]
+        )
         return mark_safe(f"<ol>{html_string}</ol>")
