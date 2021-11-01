@@ -80,8 +80,9 @@ def make_order(request):
             if not ComboOffers.objects.count() <= 0:
                 games_list = [i[0] for i in order_list]
                 for i in ComboOffers.objects.iterator():
-                    combo_offers_games_list = [j.name.lower()
-                                                   for j in i.games.iterator()]
+                    combo_offers_games_list = [
+                        j.name.lower() for j in i.games.iterator()
+                    ]
                     users_selected_games_list = []
                     squad_list = []
                     for j in games_list:
