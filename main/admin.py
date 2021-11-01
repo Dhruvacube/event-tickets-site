@@ -25,15 +25,15 @@ def retrivejsfile():
 
 @admin.register(Games)
 class GamesAdmin(admin.ModelAdmin):
-    list_display = ("name", "platform", "solo_entry",
+    list_display = ("name", "game_unique_id","platform", "solo_entry",
                     "squad_entry", "image_url")
     list_filter = (("platform", ChoiceDropdownFilter),)
     search_fields = list_display + list_filter
-    readonly_fields = ("view_image", "static_images_list")
+    readonly_fields = ("view_image", "static_images_list", "game_unique_id")
     list_per_page = 15
 
     fieldsets = (
-        (_("Name"), {"fields": ("name",)}),
+        (_("Name"), {"fields": ("game_unique_id", "name")}),
         (_("Description"), {
          "fields": ("short_description", "long_description")}),
         (_("Image"), {"fields": ("image_url",) + (readonly_fields[0],)}),

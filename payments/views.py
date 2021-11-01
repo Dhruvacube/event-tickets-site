@@ -58,7 +58,7 @@ def make_order(request):
                     mode, make_req, filter_name = "sq", True, "squad_entry"
                 if make_req:
                     order_value = (
-                        Games.objects.filter(name=gamename)
+                        Games.objects.filter(game_unique_id=gamename)
                         .values(filter_name)
                         .get()[filter_name]
                     )
@@ -89,7 +89,7 @@ def make_order(request):
                 games_list = [i[0] for i in order_list]
                 for i in ComboOffers.objects.iterator():
                     combo_offers_games_list = [
-                        j.name.lower() for j in i.games.iterator()
+                        j.game_unique_id.lower() for j in i.games.iterator()
                     ]
                     users_selected_games_list = []
                     squad_list = []

@@ -22,9 +22,14 @@ def format_list(list_images: list):
     list_images.remove("sponsers")
     return list_images
 
-
 # Create your models here.
 class Games(models.Model):
+    game_unique_id = models.CharField(
+        default=generate_unique_id,
+        help_text=_("The Games ID by which the system refers"),
+        max_length=250,
+        unique=True,
+    )
     name = models.CharField(max_length=200,
                             help_text=_("The name of the game"))
     short_description = models.TextField(

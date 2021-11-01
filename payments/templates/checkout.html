@@ -14,12 +14,12 @@
                         <p>Select Mode</p>
                         <h6>{% if i.has_solo_entry %}Solo Entry: ₹{{i.solo_entry}}{% endif %} &nbsp;{% if i.has_squad_entry %}, Squad Entry: ₹{{i.squad_entry}} (Max {{i.squad_entry_members}} members){% endif %}</h6>
                         <select name="mode{{forloop.counter}}" class="mode" onclick="changeprice(this)">
-                                <option value="{{i.name}} SelectGame" class="opt">Select mode</option>
+                                <option value="{{i.game_unique_id}} SelectGame" class="opt">Select mode</option>
                                 {% if i.has_solo_entry %}
-                                <option value="{{i.name}} SingleGame" class="opt">Solo</option>
+                                <option value="{{i.game_unique_id}} SingleGame" class="opt">Solo</option>
                                 {% endif %}
                                 {% if i.has_squad_entry %}
-                                <option value="{{i.name}} SquadGame" class="opt">Squad</option>
+                                <option value="{{i.game_unique_id}} SquadGame" class="opt">Squad</option>
                                 {% endif %}
                             </select>
                     </div>
