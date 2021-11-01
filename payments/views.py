@@ -220,7 +220,7 @@ def payment_stats(request):
             order_list = request.session.get("order_list")
 
             for i in order_list:
-                game = Games.objects.filter(name=i[0]).get()
+                game = Games.objects.filter(game_unique_id=i[0]).get()
                 game_group = GameGroup(
                     game=game, payment_id=payment_obj, solo_or_squad=i[1]
                 )
