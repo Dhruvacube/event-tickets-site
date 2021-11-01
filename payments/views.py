@@ -1,7 +1,6 @@
-from functools import lru_cache
-
 import datetime
 import uuid
+from functools import lru_cache
 
 from asgiref.sync import sync_to_async
 from django.conf import settings
@@ -19,7 +18,7 @@ from instamojo_wrapper import Instamojo
 from main.models import GameGroup, Games
 
 from .decorators import verify_entry_for_orders, verify_entry_for_payments_history
-from .models import Payments, ComboOffers
+from .models import ComboOffers, Payments
 from .templatetags import payments_extras
 
 
@@ -36,18 +35,22 @@ def view_payments_history(request):
         },
     )
 
+
 @lru_cache(maxsize=5)
 @sync_to_async
 @login_required
 @verify_entry_for_orders
 def make_order(request):
     if request.method == "POST":
-        #calculating orders amount logic
+        # calculating orders amount logic
         order_list, total_value, undiscounted_value = [], 0, False
         for i in request.POST.dict():
             if "mode" in i:
                 a = request.POST.dict()[i]
-                gamename = (a.replace("SelectGame","").replace("SingleGame","").replace("SquadGame","").strip(" "))
+                gamename = (a.replace("SelectGame",
+                                      "").replace("SingleGame",
+                                                  "").replace("SquadGame",
+                                                              "").strip(" "))
                 if "SelectGame" in a:
                     mode, make_req = "SelectGame", False
                 elif "SingleGame" in a:
@@ -55,22 +58,30 @@ def make_order(request):
                 else:
                     mode, make_req, filter_name = "sq", True, "squad_entry"
                 if make_req:
-                    order_value = (Games.objects.filter(name=gamename).values(filter_name).get()[filter_name])
+                    order_value = (Games.objects.filter(
+                        name=gamename).values(filter_name).get()[filter_name])
                     total_value += order_value
                     order_list.append([gamename, mode, order_value])
         squad_list = list(i[1] for i in order_list)
         applied_internal_discount = False
-        if 'sq' in squad_list and 'so' not in squad_list and settings.ALL_SQUAD_PRICE is not None and Games.objects.filter(has_squad_entry=True).count() == squad_list.count('sq'):
+        if ("sq" in squad_list and "so" not in squad_list
+                and settings.ALL_SQUAD_PRICE is not None
+                and Games.objects.filter(has_squad_entry=True).count()
+                == squad_list.count("sq")):
             total_value = int(settings.ALL_SQUAD_PRICE)
             applied_internal_discount = True
-        elif 'sq' not in squad_list and 'so' in squad_list and settings.ALL_SOLO_PRICE is not None and Games.objects.filter(has_solo_entry=True).count() == squad_list.count('so'):
+        elif ("sq" not in squad_list and "so" in squad_list
+              and settings.ALL_SOLO_PRICE is not None
+              and Games.objects.filter(has_solo_entry=True).count()
+              == squad_list.count("so")):
             total_value = int(settings.ALL_SOLO_PRICE)
             applied_internal_discount = True
         else:
             if not ComboOffers.objects.count() <= 0:
                 games_list = list(i[0] for i in order_list)
                 for i in ComboOffers.objects.iterator():
-                    combo_offers_games_list = list(j.name.lower() for j in i.games.iterator())
+                    combo_offers_games_list = list(j.name.lower()
+                                                   for j in i.games.iterator())
                     users_selected_games_list = []
                     squad_list = []
                     for j in games_list:
@@ -81,15 +92,17 @@ def make_order(request):
                             if i[0].lower() in users_selected_games_list:
                                 squad_list.append(i[1])
                         if squad_list.count(squad_list[0]) == len(squad_list):
-                            if squad_list[0] == 'sq' and i.if_squad or squad_list[0] == 'so' and i.if_solo:
+                            if (squad_list[0] == "sq" and i.if_squad
+                                    or squad_list[0] == "so" and i.if_solo):
                                 for i in order_list:
-                                    if i[0].lower() in users_selected_games_list:
-                                        total_value-=int(i[-1])
-                                if squad_list[0] == 'sq':
-                                    total_value+=int(i.squad)
+                                    if i[0].lower(
+                                    ) in users_selected_games_list:
+                                        total_value -= int(i[-1])
+                                if squad_list[0] == "sq":
+                                    total_value += int(i.squad)
                                 else:
-                                    total_value+=int(i.solo)   
-                applied_internal_discount = True            
+                                    total_value += int(i.solo)
+                applied_internal_discount = True
         # discount code logic
         if request.user.referral_code:
             discount_value = request.user.referral_code.discount_percentage
