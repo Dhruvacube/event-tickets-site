@@ -40,14 +40,12 @@ def view_payments_history(request):
 @verify_entry_for_orders
 def make_order(request):
     if request.method == "POST":
+        #calculating orders amount logic
         order_list, total_value, undiscounted_value = [], 0, False
         for i in request.POST.dict():
             if "mode" in i:
                 a = request.POST.dict()[i]
-                gamename = (a.replace("SelectGame",
-                                      "").replace("SingleGame",
-                                                  "").replace("SquadGame",
-                                                              "").strip(" "))
+                gamename = (a.replace("SelectGame","").replace("SingleGame","").replace("SquadGame","").strip(" "))
                 if "SelectGame" in a:
                     mode, make_req = "SelectGame", False
                 elif "SingleGame" in a:
@@ -55,10 +53,14 @@ def make_order(request):
                 else:
                     mode, make_req, filter_name = "sq", True, "squad_entry"
                 if make_req:
-                    order_value = (Games.objects.filter(
-                        name=gamename).values(filter_name).get()[filter_name])
+                    order_value = (Games.objects.filter(name=gamename).values(filter_name).get()[filter_name])
                     total_value += order_value
                     order_list.append([gamename, mode, order_value])
+        squad_list = list(i[1] for i in order_list)
+        if 'sq' in squad_list and 'so' not in squad_list:
+            total_value = 690
+        elif 'sq' not in squad_list and 'so' in squad_list:
+            total_value = 190
         # discount code logic
         if request.user.referral_code:
             discount_value = request.user.referral_code.discount_percentage
@@ -106,9 +108,6 @@ def create_payment(request):
     allow_repeated_payments = False
     send_email = True
     send_sms = True
-    expires_at = datetime.datetime.now() + datetime.timedelta(days=0,
-                                                              seconds=600)
-
     if settings.LOCAL:
         api = Instamojo(
             api_key=settings.INSTAMOJO_AUTH_KEY,
