@@ -92,14 +92,12 @@ def make_order(request):
                         for i in order_list:
                             if i[0].lower() in users_selected_games_list:
                                 squad_list.append(i[1])
-                        if (
-                            squad_list.count(squad_list[0]) == len(squad_list)
-                            and (squad_list[0] == "sq" and i.if_squad
-                            or squad_list[0] == "so" and i.if_solo)
-                        ):
+                        if squad_list.count(
+                                squad_list[0]) == len(squad_list) and (
+                                    squad_list[0] == "sq" and i.if_squad
+                                    or squad_list[0] == "so" and i.if_solo):
                             for i in order_list:
-                                if i[0].lower(
-                                ) in users_selected_games_list:
+                                if i[0].lower() in users_selected_games_list:
                                     total_value -= int(i[-1])
                             if squad_list[0] == "sq":
                                 total_value += int(i.squad)
