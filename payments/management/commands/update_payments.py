@@ -2,10 +2,11 @@
  It updates the pending payments which have been due for more than 10 mins
 """
 
+import datetime
+
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.timezone import now
-import datetime
 
 from payments.models import Payments
 
