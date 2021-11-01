@@ -1,16 +1,18 @@
-import uuid
 import secrets
 import string
+import uuid
 
 from django.conf import settings
 from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
+
 def generate_combo_code():
     return "".join(
         secrets.choice(string.ascii_letters + string.digits +
                        str(secrets.randbits(7))) for i in range(5)).upper()
+
 
 class Payments(models.Model):
     order_id = models.UUIDField(
@@ -19,9 +21,8 @@ class Payments(models.Model):
         help_text=_("The order ID by which the system refers"),
     )
     request_id_instamojo = models.UUIDField(
-        default=uuid.uuid4, help_text=_(
-            "The Request ID by which the INSTAMOJO refers")
-    )
+        default=uuid.uuid4,
+        help_text=_("The Request ID by which the INSTAMOJO refers"))
     instamojo_order_id = models.CharField(
         help_text=_("The order ID by which the INSTAMOJO refers"),
         null=True,
@@ -43,23 +44,26 @@ class Payments(models.Model):
 
     class Meta:
         verbose_name_plural = "Payments"
-        ordering = ("-created_at",)
+        ordering = ("-created_at", )
+
 
 class ComboOffers(models.Model):
-    combo_id =  models.CharField(
+    combo_id = models.CharField(
         default=generate_combo_code,
         help_text=_("The Combo ID by which the system refers"),
         max_length=250,
-        unique=True
+        unique=True,
     )
-    games = models.ManyToManyField('main.Games')
-    if_squad = models.BooleanField(default=True, help_text=_("If Squad Option is there"))
+    games = models.ManyToManyField("main.Games")
+    if_squad = models.BooleanField(default=True,
+                                   help_text=_("If Squad Option is there"))
     squad = models.IntegerField(default=0)
-    if_solo = models.BooleanField(default=True, help_text=_("If Solo Option is there"))
+    if_solo = models.BooleanField(default=True,
+                                  help_text=_("If Solo Option is there"))
     solo = models.IntegerField(default=0)
-    
+
     def __str__(self):
-        return f'Combo Offer - {self.combo_id}'
-    
+        return f"Combo Offer - {self.combo_id}"
+
     class Meta:
         verbose_name_plural = "Combo Offers"

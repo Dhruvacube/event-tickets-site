@@ -4,6 +4,7 @@
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
+
 from payments.models import Payments
 
 
@@ -18,6 +19,6 @@ class Command(BaseCommand):
                 if i.created_at <= now() - datetime.timedelta(minutes=10):
                     i.payment_status = "F"
                     i.save()
-            self.stdout.write(self.style.SUCCESS('Success'))
+            self.stdout.write(self.style.SUCCESS("Success"))
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f'Error: {e}'))
+            self.stdout.write(self.style.ERROR(f"Error: {e}"))

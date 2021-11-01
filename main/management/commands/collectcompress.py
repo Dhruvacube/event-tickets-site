@@ -14,6 +14,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Running `collectstatic` now :)\n")
         call_command("collectstatic", "--noinput")
-        self.stdout.write(self.style.SUCCESS("Finished running `collectstatic` \n Now running `compress` :)"))
+        self.stdout.write(
+            self.style.SUCCESS(
+                "Finished running `collectstatic` \n Now running `compress` :)"
+            ))
         call_command("compress", "--force")
         self.stdout.write(self.style.SUCCESS("Finished...."))
