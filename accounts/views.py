@@ -227,7 +227,7 @@ def signup(request):
                 "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                 "token": account_activation_token.make_token(user),
                 "username": username,
-                "password": password1,
+                "password": password,
                 "protocol": "https" if request.is_secure() else "http",
             }
             if not EmailTemplate.objects.filter(name="register_mail").exists():

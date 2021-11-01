@@ -4,6 +4,8 @@
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
+from django.timezone import now
+import datetime
 
 from payments.models import Payments
 

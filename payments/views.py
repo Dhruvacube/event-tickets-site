@@ -89,16 +89,16 @@ def make_order(request):
                         if j.lower() in combo_offers_games_list:
                             users_selected_games_list.append(j.lower())
                     if combo_offers_games_list == users_selected_games_list:
-                        for i in order_list:
-                            if i[0].lower() in users_selected_games_list:
-                                squad_list.append(i[1])
+                        for j in order_list:
+                            if j[0].lower() in users_selected_games_list:
+                                squad_list.append(j[1])
                         if squad_list.count(
                                 squad_list[0]) == len(squad_list) and (
                                     squad_list[0] == "sq" and i.if_squad
                                     or squad_list[0] == "so" and i.if_solo):
-                            for i in order_list:
-                                if i[0].lower() in users_selected_games_list:
-                                    total_value -= int(i[-1])
+                            for j in order_list:
+                                if j[0].lower() in users_selected_games_list:
+                                    total_value -= int(j[-1])
                             if squad_list[0] == "sq":
                                 total_value += int(i.squad)
                             else:
@@ -221,7 +221,7 @@ def payment_stats(request):
         except Payments.DoesNotExist:
             messages.error(request, "The transaction does not exists")
             redirect_link = reverse("make_order")
-        except Exception as e:
+        except:
             messages.error(
                 request,
                 "There was some error processing at the backend! Please contact the support",

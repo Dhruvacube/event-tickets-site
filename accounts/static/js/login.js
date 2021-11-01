@@ -1,7 +1,7 @@
 function myFunctions() {
-    var x = document.getElementById("id_password");
-    var y = document.getElementById("hide1");
-    var z = document.getElementById("hide2");
+    let x = document.getElementById("id_password");
+    let y = document.getElementById("hide1");
+    let z = document.getElementById("hide2");
 
     if (x.type === 'password') {
         x.type = "text";
@@ -31,9 +31,9 @@ function login_func1() {
 }
 
 function login_func2() {
-    var x = document.getElementById("id_new_password2");
-    var y = document.getElementById("hide12");
-    var z = document.getElementById("hide22");
+    let x = document.getElementById("id_new_password2");
+    let y = document.getElementById("hide12");
+    let z = document.getElementById("hide22");
 
     if (x.type === 'password') {
         x.type = "text";

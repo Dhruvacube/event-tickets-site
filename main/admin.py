@@ -126,7 +126,7 @@ class SponserAdmin(admin.ModelAdmin):
 @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
     def delete_admin_logs(self, request, queryset):
-        querysetmsg = queryset.delete()
+        queryset.delete()
 
         self.message_user(
             request,
