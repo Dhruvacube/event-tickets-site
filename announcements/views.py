@@ -15,29 +15,22 @@ from .models import *
 @login_required
 def view_annoucements(request):
     groups = list(
-        GameGroup.objects.filter(
-            users__in=[
-                request.user,
-            ]
-        ).iterator()
-    )
+        GameGroup.objects.filter(users__in=[
+            request.user,
+        ]).iterator())
     announcements = GlobalAnnouncements.objects.union(
         GroupsAnnouncements.objects.filter(groups__in=groups).union(
-            UsersAnnouncements.objects.filter(
-                users__in=[
-                    request.user,
-                ]
-            )
-        )
-    )
+            UsersAnnouncements.objects.filter(users__in=[
+                request.user,
+            ])))
 
     if announcements.count() <= 0:
         messages.info(request, r"No announcements there ¯\_(ツ)_/¯")
         return redirect(reverse("home"))
 
     page = request.GET.get("page", 1)
-    paginator = Paginator(announcements.order_by(
-        "announncement_creation_date"), 4)
+    paginator = Paginator(
+        announcements.order_by("announncement_creation_date"), 4)
 
     try:
         announcements = paginator.page(page)
@@ -49,28 +42,25 @@ def view_annoucements(request):
     return render(
         request,
         "all_announcements.html",
-        {"announcements": announcements, "title": "Announcements"},
+        {
+            "announcements": announcements,
+            "title": "Announcements"
+        },
     )
 
 
 @sync_to_async
 @login_required
 def view_annoucements_full(request, announcement_id):
-    all_ = GlobalAnnouncements.objects.filter(
-        announcement_id__in=[
-            announcement_id,
-        ]
-    )
-    groups = GroupsAnnouncements.objects.filter(
-        announcement_id__in=[
-            announcement_id,
-        ]
-    )
-    users = UsersAnnouncements.objects.filter(
-        announcement_id__in=[
-            announcement_id,
-        ]
-    )
+    all_ = GlobalAnnouncements.objects.filter(announcement_id__in=[
+        announcement_id,
+    ])
+    groups = GroupsAnnouncements.objects.filter(announcement_id__in=[
+        announcement_id,
+    ])
+    users = UsersAnnouncements.objects.filter(announcement_id__in=[
+        announcement_id,
+    ])
     if all_.union(groups.union(users)).count() <= 0:
         raise Http404("No annoucement with that ID :)")
 
