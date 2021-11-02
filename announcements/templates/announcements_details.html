@@ -1,11 +1,18 @@
-{% extends 'layout.html' %}{% load static %} {% block body %}
+{% extends 'layout.html' %}{% load static %}{% load compress %}{% block body %} {% compress css %}
+<style>
+    #message_announcement p {
+        font-size: 1.2rem;
+    }
+</style>
+{% endcompress %}
 <section class="games" id="games">
     <div class="container">
-        <center><strong><u><h1>{{announcement.announcement_heading}}</h1></u></strong></center>
+        <center><strong data-aos="fade-down"><u><h1>{{announcement.announcement_heading}}</h1></u></strong></center>
         <hr/>
-        <caption><u>Announcement ID</u>: {{announcement.announcement_id}}</caption><br/>
-        <caption><u>Created On</u>: {{announcement.announncement_creation_date}}</caption><br/>
-        <hr/> {{announcement.announncement_message|safe}}
+        <caption data-aos="fade-right"><u>Announcement ID</u>: {{announcement.announcement_id}}</caption><br/>
+        <caption data-aos="fade-right"><u>Created On</u>: {{announcement.announncement_creation_date}}</caption><br/>
+        <hr/>
+        <span id="message_announcement" data-aos="fade-up">{{announcement.announncement_message|safe}}</span>
     </div>
 </section>
 {% endblock %}

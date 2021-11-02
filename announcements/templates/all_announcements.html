@@ -1,19 +1,24 @@
 {% extends 'layout.html' %}{% load static %} {% block body %}
 <section class="games" id="games">
     <div class="container">
-        {% for i in announcements %}
-        <div class="container">
-            <h3><strong>{{i.announcement_heading}}</strong></h3>
-            <caption><u>Announcement ID</u>: {{i.announcement_id}}</caption><br/>
-            <caption><u>Created On</u>: {{i.announncement_creation_date}}</caption><br/><br/> {{i.announncement_message|striptags|truncatewords:50}}
-            <br/>
-            <a href="{% url 'announcement_detail' i.announcement_id %}"><button type="button" class="btn btn-info">Read Full Announcement</button></a>
-        </div>
-        <hr/> {% endfor %} {% if announcements.has_other_pages %} {% if announcements.has_previous %}
-        <a href="?page={{announcements.previous_page_number}}" class="float-start"><button class="btn btn-primary plr-25 btn-block" ><i class='bx bx-skip-previous' style="font-size: 30px;" ></i></button></a>{% endif %} {% if announcements.has_next %}
-        <a href="?page={{announcements.next_page_number}}" class="float-end"><button class="btn btn-primary plr-25 btn-block" type="submit"><i class='bx bx-skip-next' style="font-size: 30px;"></i></button></a>
+        <ol>
+            {% for i in announcements %}
+            <ol>
+                <div class="container">
+                    <h3 data-aos="fade-down"><strong>{{i.announcement_heading}}</strong></h3>
+                    <caption data-aos="fade-down"><u>Announcement ID</u>: {{i.announcement_id}}</caption><br/>
+                    <caption data-aos="fade-down"><u>Created On</u>: {{i.announncement_creation_date}}</caption><br/><br/> <span style="font-family: Montserrat;">{{i.announncement_message|striptags|truncatewords:50}}</span>
+                    <br/>
+                    <a href="{% url 'announcement_detail' i.announcement_id %}" data-aos="flip-left"><button type="button" class="btn btn-info">Read Full Announcement</button></a>
+                </div>
+                </li>
+                <hr/> {% endfor %}</ol> {% if announcements.has_other_pages %} <span>{% if announcements.has_previous %}
+        <a href="?page={{announcements.previous_page_number}}" data-aos="flip-left" class="float-start"><button class="btn btn-primary plr-25 btn-block" ><i class='bx bx-skip-previous' style="font-size: 30px;" ></i></button></a>{% endif %}</span>
+            <span>
+        {% if announcements.has_next %}
+        <a href="?page={{announcements.next_page_number}}" data-aos="flip-right" class="float-end"><button class="btn btn-primary plr-25 btn-block" type="submit"><i class='bx bx-skip-next' style="font-size: 30px;"></i></button></a>
         <!-- ===Ends== -->
-        {% endif %}{% endif %}
+        {% endif %}</span>{% endif %}
     </div>
 </section>
 {% endblock %}

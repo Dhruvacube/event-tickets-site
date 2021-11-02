@@ -144,8 +144,9 @@ nav ul li a:hover {
 /* start: hero styles */
 
 #hero-image {
-    background: url("../images/valo.webp") top center no-repeat;
+    background: url("../icons/bg.png") top center no-repeat;
     background-attachment: fixed;
+    background-size: cover;
     height: 820px;
 }
 
