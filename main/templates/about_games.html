@@ -1,17 +1,24 @@
 {% extends 'layout.html' %}{% load static %}{% load extra %}{% load compress %}{% block body %}
-<section class="games" id="games">
-    <div class="container">
-        <center>
-            <u><h1>{{game.name}}</h1></u>
-            <hr/>
-            <img src="{% static game.image_url %}" width="50%" height="50%" loading="lazy" data-aos="fade-down">
-        </center>
+<link rel="stylesheet" href="{% static 'css/game_styles.css' %}" />
+<style>
+    #gamemore {
+        background: url("{% static game.image_url %}") center top no-repeat;
+    }
+</style>
+<section id="gamemore" loading="lazy">
+    <div class="gamemore-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <h3 data-aos="fade-right">{{game.name}}</h3>
+                    <hr/>
+                    <h4 class="text-start fw-bold" data-aos="zoom-in-down">{{game.long_description|safe}}</h4>
+                </div>
+                <div class="col d-flex justify-content-center"><img src="{% static game.image_url %}" class="rounded" width="80%" height="100%" loading="lazy" data-aos="fade-down" loading="lazy"></div>
+            </div>
+
+        </div>
     </div>
-    <hr/>
-    <div class="container" data-aos="fade-up">
-        <span>
-            {{game.long_description|safe}}
-        </span>
-    </div>
+
 </section>
-{% endblock %}
+<hr/> {% endblock %}

@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Montserrat:wght@500&family=Poppins:wght@200&family=Stick+No+Bills:wght@300&display=swap');
 @font-face {
+    font-family: Robus;
+    src: url("../font/Robus.ttf");
+}
+
+@font-face {
     font-family: Special Elite;
     src: url("../font/SpecialElite.ttf");
 }
@@ -143,7 +148,7 @@ nav ul li a:hover {
 }
 
 .hero-marketing-text {
-    font-family: 'Architects Daughter', cursive;
+    font-family: 'Architects Daughter', sans-serif;
     max-width: 1200px;
     margin: -30px auto 0;
     position: absolute;
@@ -158,19 +163,18 @@ nav ul li a:hover {
     font-size: 3.5em;
     font-weight: 300;
     margin: 0.5em 0;
+    font-family: 'Robus' !important;
+}
+
+.hero-marketing-text h2 {
+    color: #eee;
+    font-size: 3.5em;
+    font-weight: 300;
+    margin: 0.5em 0;
 }
 
 .hero-marketing-text span {
     color: #FFB320;
-}
-
-.hero-marketing-text h5 {
-    color: #eee;
-    font-size: 0.85em;
-    font-weight: 300;
-    max-width: 500px;
-    line-height: 2;
-    margin-bottom: 2.5em;
 }
 
 

@@ -1,14 +1,12 @@
 {% extends "layout.html" %}{% load static %}{% load compress %}{% block body %}
 <section id="hero-image">
-    <div class="hero-marketing-text">
-        <h1 data-aos="zoom-in-up">The New <span>Era Of Gaming</span> Is Here</h1>
-        <h4 class="text-white" data-aos="zoom-in-down">Playing E-Games help the players to develop complex problem-solving skills, leadership skills, and the ability to deal better with unexpected consequences.
-            <br/>They also enhance a player's skills of observation, intuitive abilities and hone their alertness and concentration.
-            <br/>On the other hand, the basic theme of this tournament is to employ more and more people into something creative rather than spending time idly.
-        </h4>
+    <div class="hero-marketing-text text-center">
+        <img loading="lazy" width="10%" src="{% static 'icons/logo.png' %}" alt="Logo">
+        <h1 data-aos="zoom-in-up">Tanzanite Gaming League - 2.0</h1>
+        <h2 data-aos="zoom-in-up" class="text-white">The New <span>Era Of Gaming</span> Is Here</h2>
         <br/>
-        <a href="{% static 'pdf/tgl_faq.pdf' %}" target="_blank" data-aos="zoom-in-up"><button class="btn btn-warning">Read More</button></a> {% if not user.is_authenticated %}
-        <a href="{% url 'signup' %}" target="_blank" data-aos="zoom-in-up"><button class="btn btn-danger btn-lg">Register Now</button></a> {% endif %}
+        <a href="{% static 'pdf/tgl_faq.pdf' %}" target="_blank" data-aos="zoom-in-up"><button class="btn btn-warning btn-lg">Read More</button></a> {% if not user.is_authenticated %}
+        <a href="{% url 'signup' %}" data-aos="zoom-in-up"><button class="btn btn-danger btn-lg">Register Now</button></a> {% endif %}
     </div>
 </section>
 
@@ -58,7 +56,7 @@
             {% endif %} {% endfor %}
         </div>
         <hr/>
-        <center>{% if not user.is_authenticated %}<a href="{% url 'signup' %}" target="_blank" data-aos="zoom-in-up"><button class="btn btn-danger btn-lg">Register Now</button></a> {% endif %}</center>
+        <center>{% if not user.is_authenticated %}<a href="{% url 'signup' %}" data-aos="zoom-in-up"><button class="btn btn-danger btn-lg">Register Now</button></a> {% endif %}</center>
     </div>
 </section>
 
@@ -71,7 +69,8 @@
                 <div class="card container" data-aos="flip-left" data-aos-duration="1000">
                     <img src="{% static i.image %}" class="card-img-top" loading="lazy" />
                     <div class="box-lower-section card-body">
-                        <strong><h4 class="game-name"><u>{{i.name|capfirst}}</u></h4></strong> To know more visit their <a href="{{i.website}}" target="_blank"><button class="btn btn-outline-info">Website <i class='bx bx-link-external'></i></button></a>
+                        <strong><h4 class="game-name"><u>{{i.name|capfirst}}</u></h4></strong> Show <strong>{{i.name|capfirst}}</strong> some love <i class='bx bxs-heart text-danger'></i> by visiting their
+                        <a href="{{i.website}}" target="_blank"><button class="btn btn-outline-info">Website <i class='bx bx-link-external'></i></button></a>
                     </div>
                 </div>
             </div>
