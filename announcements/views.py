@@ -19,7 +19,7 @@ def view_annoucements(request):
             users__in=[
                 request.user,
             ]
-        ).all()
+        ).iterator()
     )
     announcements = GlobalAnnouncements.objects.union(
         GroupsAnnouncements.objects.filter(groups__in=groups).union(
@@ -27,7 +27,7 @@ def view_annoucements(request):
                 users__in=[
                     request.user,
                 ]
-            ).all()
+            )
         )
     )
 
@@ -60,18 +60,17 @@ def view_annoucements_full(request, announcement_id):
         announcement_id__in=[
             announcement_id,
         ]
-    ).all()
+    )
     groups = GroupsAnnouncements.objects.filter(
         announcement_id__in=[
             announcement_id,
         ]
-    ).all()
+    )
     users = UsersAnnouncements.objects.filter(
         announcement_id__in=[
             announcement_id,
         ]
-    ).all()
-
+    )
     if all_.union(groups.union(users)).count() <= 0:
         raise Http404("No annoucement with that ID :)")
 

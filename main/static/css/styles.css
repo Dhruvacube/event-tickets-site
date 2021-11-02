@@ -1,11 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Montserrat:wght@500&family=Poppins:wght@200&family=Stick+No+Bills:wght@300&display=swap');
 @font-face {
-    font-family: Robus;
-    src: url("../font/Robus.ttf");
-}
-
-@font-face {
     font-family: Special Elite;
     src: url("../font/SpecialElite.ttf");
 }
@@ -13,6 +8,13 @@
 * {
     padding: 0;
     font-family: 'Special Elite';
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: none;
 }
 
 
@@ -160,15 +162,14 @@ nav ul li a:hover {
 
 .hero-marketing-text h1 {
     color: #eee;
-    font-size: 3.5em;
+    font-size: 3.5em !important;
     font-weight: 300;
     margin: 0.5em 0;
-    font-family: 'Robus' !important;
 }
 
 .hero-marketing-text h2 {
     color: #eee;
-    font-size: 3.5em;
+    font-size: 2.5em;
     font-weight: 300;
     margin: 0.5em 0;
 }

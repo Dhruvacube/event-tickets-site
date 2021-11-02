@@ -1,20 +1,21 @@
-{% extends 'layout.html' %}{% load static %}{% load extra %}{% load compress %}{% block body %}
-<link rel="stylesheet" href="{% static 'css/game_styles.css' %}" />
+{% extends 'layout.html' %}{% load static %}{% load extra %}{% load compress %}{% block body %} {% compress css %}
+<link rel="stylesheet" href="{% static 'css/game_styles.css' %}" /> {% endcompress %} {% compress css %}
 <style>
     #gamemore {
         background: url("{% static game.image_url %}") center top no-repeat;
     }
 </style>
+{% endcompress %}
 <section id="gamemore" loading="lazy">
     <div class="gamemore-top">
         <div class="container">
             <div class="row">
                 <div class="col-lg-5">
-                    <h3 data-aos="fade-right">{{game.name}}</h3>
+                    <h1 data-aos="fade-right">{{game.name}}</h1>
                     <hr/>
-                    <h4 class="text-start fw-bold" data-aos="zoom-in-down">{{game.long_description|safe}}</h4>
+                    <h3 class="text-start fw-bold" data-aos="zoom-in-down">{{game.long_description|safe}}</h3>
                 </div>
-                <div class="col d-flex justify-content-center"><img src="{% static game.image_url %}" class="rounded" width="80%" height="100%" loading="lazy" data-aos="fade-down" loading="lazy"></div>
+                <div class="col d-flex justify-content-center"><img src="{% static game.image_url %}" class="rounded" width="100%" height="100%" loading="lazy" data-aos="fade-down" loading="lazy"></div>
             </div>
 
         </div>
