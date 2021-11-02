@@ -1,11 +1,11 @@
 {% extends 'layout.html' %}{% load static %}{% load extra %}{% load compress %}{% block body %} {% compress css %}
-<link rel="stylesheet" href="{% static 'css/game_styles.css' %}" /> {% endcompress %} {% compress css %}
+<link rel="stylesheet" href="{% static 'css/game_styles.css' %}" /> {% endcompress %}
 <style>
     #gamemore {
         background: url("{% static game.image_url %}") center top no-repeat;
+        /* dont apply compress tag here */
     }
 </style>
-{% endcompress %}
 <section id="gamemore" loading="lazy">
     <div class="gamemore-top">
         <div class="container">

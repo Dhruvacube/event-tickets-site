@@ -168,14 +168,29 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 {% compress js %}
-<script src="{% static 'js/bottom_to_top.js' %}"></script>
-{% endcompress %} {% compress js %}
 <script>
+    $(document).ready(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 50) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        $('#back-to-top').click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 400);
+            return false;
+        });
+    });
+
     AOS.init();
 
     /**
      * Disable right-click of mouse, F12 key, and save key combinations on page
-     
+     **/
     window.onload = function() {
         document.addEventListener("contextmenu", function(e) {
             e.preventDefault();
@@ -213,7 +228,7 @@
             e.preventDefault();
             return false;
         }
-    };*/
+    };
 </script>
 {% endcompress %}
 
