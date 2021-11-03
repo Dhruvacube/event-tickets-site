@@ -21,4 +21,4 @@ class StaticViewSitemap(Sitemap):
         if item in ("home", "signin", "signout", "signup"):
             return reverse(item)
         else:
-            return reverse(item.split('/')[0], args=[item.split('/')[-1]])
+            return reverse(item.split("/")[0], args=[item.split("/")[-1]])
