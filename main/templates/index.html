@@ -1,9 +1,9 @@
 {% extends "layout.html" %}{% load static %}{% load compress %}{% block body %}
 <section id="hero-image">
     <div class="hero-marketing-text text-center">
-        <img loading="lazy" width="10%" src="{% static 'icons/logo.png' %}" alt="Logo">
-        <h1 data-aos="zoom-in-up">Tanzanite Gaming League - 2.0</h1>
-        <h2 data-aos="zoom-in-up" class="text-white">The New <span>Era Of Gaming</span> Is Here</h2>
+        <img loading="lazy" width="10%" src="{% static 'icons/logo.png' %}" alt="Logo" loading="lazy"><br/>
+        <h1 data-aos="zoom-in-up">Tanza Gaming League 2.0</h1>
+        <h2 data-aos="zoom-in-up" class="text-white">The New <span class="text-danger">Era Of Gaming</span> Is Here</h2>
         <br/>
         <a href="{% static 'pdf/tgl_faq.pdf' %}" target="_blank" data-aos="zoom-in-up"><button class="btn btn-warning btn-lg">Read More</button></a> {% if not user.is_authenticated %}
         <a href="{% url 'signup' %}" data-aos="zoom-in-up"><button class="btn btn-danger btn-lg">Register Now</button></a> {% endif %}
