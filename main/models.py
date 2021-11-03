@@ -83,7 +83,7 @@ class Games(models.Model):
             os.path.join("main", "static", "images")
         html_string = "".join(
             [
-                f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>{i.strip(' ')}</a></li>"
+                f" <li><a href='{settings.STATIC_URL}images/{i.strip(' ')}' target='_blank'>images/{i.strip(' ')}</a></li>"
                 for i in format_list(os.listdir(file_path))
             ]
         )
@@ -142,7 +142,7 @@ class Sponser(models.Model):
         )
         html_string = "".join(
             [
-                f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>{i.strip(' ')}</a></li>"
+                f" <li><a href='{settings.STATIC_URL}images/sponsers/{i.strip(' ')}' target='_blank'>images/sponsers/{i.strip(' ')}</a></li>"
                 for i in os.listdir(file_path)
             ]
         )
