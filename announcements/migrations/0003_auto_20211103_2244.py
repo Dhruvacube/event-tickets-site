@@ -6,23 +6,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('announcements', '0002_auto_20211008_2244'),
+        ("announcements", "0002_auto_20211008_2244"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='globalannouncements',
-            name='publish',
+            model_name="globalannouncements",
+            name="publish",
             field=models.BooleanField(default=True),
         ),
         migrations.AddField(
-            model_name='groupsannouncements',
-            name='publish',
+            model_name="groupsannouncements",
+            name="publish",
             field=models.BooleanField(default=True),
         ),
         migrations.AddField(
-            model_name='usersannouncements',
-            name='publish',
-            field=models.BooleanField(default=True, help_text='Check this when you want to publish this announcement'),
+            model_name="usersannouncements",
+            name="publish",
+            field=models.BooleanField(
+                default=True,
+                help_text="Check this when you want to publish this announcement",
+            ),
         ),
     ]

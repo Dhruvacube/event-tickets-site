@@ -1,13 +1,13 @@
 from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
-from django_admin_listfilter_dropdown.filters import DropdownFilter
 from django.utils.translation import ngettext
+from django_admin_listfilter_dropdown.filters import DropdownFilter
 
 from .models import *
 
 
 def retrivejsfile():
-    return ("js/richTextEditorAnnouncements.js",)
+    return ("js/richTextEditorAnnouncements.js", )
 
 
 @admin.register(GlobalAnnouncements)
@@ -16,15 +16,17 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
         "announcement_id",
         "announcement_heading",
         "announncement_creation_date",
-        "publish"
+        "publish",
     )
-    list_filter = ("announncement_creation_date","publish")
+    list_filter = ("announncement_creation_date", "publish")
     search_fields = list_display[:-1] + list_filter
     readonly_fields = ("announncement_creation_date", "announcement_id")
     list_per_page = 20
 
     fieldsets = (
-        (_("Id"), {"fields": ("announcement_id",)}),
+        (_("Id"), {
+            "fields": ("announcement_id", )
+        }),
         (
             _("Message"),
             {
@@ -34,9 +36,11 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        (_("Creation"), {"fields": list_filter}),
+        (_("Creation"), {
+            "fields": list_filter
+        }),
     )
-    
+
     def publish_announcement(self, request, queryset):
         updated = queryset.update(publish=True)
         self.message_user(
@@ -45,15 +49,12 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
                 "%d announcement was succesfully published",
                 "%d announcements were succesfully published",
                 updated,
-            )
-            % updated,
+            ) % updated,
             messages.SUCCESS,
         )
 
-    publish_announcement.short_description = (
-        "Publish Announcements"
-    )
-    
+    publish_announcement.short_description = "Publish Announcements"
+
     def unpublish_announcement(self, request, queryset):
         updated = queryset.update(publish=False)
         self.message_user(
@@ -62,14 +63,11 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
                 "%d announcement was succesfully unpublished",
                 "%d announcements were succesfully unpublished",
                 updated,
-            )
-            % updated,
+            ) % updated,
             messages.SUCCESS,
         )
 
-    unpublish_announcement.short_description = (
-        "Unpublish Announcements"
-    )
+    unpublish_announcement.short_description = "Unpublish Announcements"
 
     # Registering the custom actions
     actions = [publish_announcement, unpublish_announcement]
@@ -84,15 +82,17 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
         "announcement_id",
         "announcement_heading",
         "announncement_creation_date",
-        "publish"
+        "publish",
     )
-    list_filter = ("announncement_creation_date","publish")
+    list_filter = ("announncement_creation_date", "publish")
     search_fields = list_display[:-1] + list_filter
     readonly_fields = ("announncement_creation_date", "announcement_id")
     list_per_page = 20
 
     fieldsets = (
-        (_("Id"), {"fields": ("announcement_id",)}),
+        (_("Id"), {
+            "fields": ("announcement_id", )
+        }),
         (
             _("Message"),
             {
@@ -102,10 +102,14 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        (_("Groups"), {"fields": ("groups",)}),
-        (_("Creation"), {"fields": list_filter}),
+        (_("Groups"), {
+            "fields": ("groups", )
+        }),
+        (_("Creation"), {
+            "fields": list_filter
+        }),
     )
-    
+
     def publish_announcement(self, request, queryset):
         updated = queryset.update(publish=True)
         self.message_user(
@@ -114,15 +118,12 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
                 "%d announcement was succesfully published",
                 "%d announcements were succesfully published",
                 updated,
-            )
-            % updated,
+            ) % updated,
             messages.SUCCESS,
         )
 
-    publish_announcement.short_description = (
-        "Publish Announcements"
-    )
-    
+    publish_announcement.short_description = "Publish Announcements"
+
     def unpublish_announcement(self, request, queryset):
         updated = queryset.update(publish=False)
         self.message_user(
@@ -131,14 +132,11 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
                 "%d announcement was succesfully unpublished",
                 "%d announcements were succesfully unpublished",
                 updated,
-            )
-            % updated,
+            ) % updated,
             messages.SUCCESS,
         )
 
-    unpublish_announcement.short_description = (
-        "Unpublish Announcements"
-    )
+    unpublish_announcement.short_description = "Unpublish Announcements"
 
     # Registering the custom actions
     actions = [publish_announcement, unpublish_announcement]
@@ -153,15 +151,17 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
         "announcement_id",
         "announcement_heading",
         "announncement_creation_date",
-        "publish"
+        "publish",
     )
-    list_filter = ("announncement_creation_date","publish")
+    list_filter = ("announncement_creation_date", "publish")
     search_fields = list_display[:-1] + list_filter
     readonly_fields = ("announncement_creation_date", "announcement_id")
     list_per_page = 20
 
     fieldsets = (
-        (_("Id"), {"fields": ("announcement_id",)}),
+        (_("Id"), {
+            "fields": ("announcement_id", )
+        }),
         (
             _("Message"),
             {
@@ -171,10 +171,14 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        (_("Users"), {"fields": ("users",)}),
-        (_("Creation"), {"fields": list_filter}),
+        (_("Users"), {
+            "fields": ("users", )
+        }),
+        (_("Creation"), {
+            "fields": list_filter
+        }),
     )
-    
+
     def publish_announcement(self, request, queryset):
         updated = queryset.update(publish=True)
         self.message_user(
@@ -183,15 +187,12 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
                 "%d announcement was succesfully published",
                 "%d announcements were succesfully published",
                 updated,
-            )
-            % updated,
+            ) % updated,
             messages.SUCCESS,
         )
 
-    publish_announcement.short_description = (
-        "Publish Announcements"
-    )
-    
+    publish_announcement.short_description = "Publish Announcements"
+
     def unpublish_announcement(self, request, queryset):
         updated = queryset.update(publish=False)
         self.message_user(
@@ -200,18 +201,14 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
                 "%d announcement was succesfully unpublished",
                 "%d announcements were succesfully unpublished",
                 updated,
-            )
-            % updated,
+            ) % updated,
             messages.SUCCESS,
         )
 
-    unpublish_announcement.short_description = (
-        "Unpublish Announcements"
-    )
+    unpublish_announcement.short_description = "Unpublish Announcements"
 
     # Registering the custom actions
     actions = [publish_announcement, unpublish_announcement]
 
     class Media:
         js = retrivejsfile()
-
