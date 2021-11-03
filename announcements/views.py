@@ -18,11 +18,11 @@ def view_annoucements(request):
         GameGroup.objects.filter(users__in=[
             request.user,
         ]).iterator())
-    announcements = GlobalAnnouncements.objects.union(
-        GroupsAnnouncements.objects.filter(groups__in=groups).union(
+    announcements = GlobalAnnouncements.objects.filter(publish=True).union(
+        GroupsAnnouncements.objects.filter(groups__in=groups,publish=True).union(
             UsersAnnouncements.objects.filter(users__in=[
                 request.user,
-            ])))
+            ],publish=True)))
 
     if announcements.count() <= 0:
         messages.info(request, r"No announcements there ¯\_(ツ)_/¯")
@@ -54,13 +54,13 @@ def view_annoucements(request):
 def view_annoucements_full(request, announcement_id):
     all_ = GlobalAnnouncements.objects.filter(announcement_id__in=[
         announcement_id,
-    ])
+    ],publish=True)
     groups = GroupsAnnouncements.objects.filter(announcement_id__in=[
         announcement_id,
-    ])
+    ],publish=True)
     users = UsersAnnouncements.objects.filter(announcement_id__in=[
         announcement_id,
-    ])
+    ],publish=True)
     if all_.union(groups.union(users)).count() <= 0:
         raise Http404("No annoucement with that ID :)")
 

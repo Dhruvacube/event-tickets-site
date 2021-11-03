@@ -17,6 +17,7 @@ class GlobalAnnouncements(models.Model):
     announncement_message = models.TextField(
         _("The announcement that you want to give globally")
     )
+    publish = models.BooleanField(default=True)
     announncement_creation_date = models.DateTimeField(default=now)
 
     def __str__(self):
@@ -36,6 +37,7 @@ class GroupsAnnouncements(models.Model):
         _("The announcement that you want to give Group Wise")
     )
     groups = models.ManyToManyField(GameGroup)
+    publish = models.BooleanField(default=True)
     announncement_creation_date = models.DateTimeField(default=now)
 
     def __str__(self):
@@ -55,6 +57,7 @@ class UsersAnnouncements(models.Model):
         _("The announcement that you want to give per or user wise")
     )
     users = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    publish = models.BooleanField(default=True,help_text=_('Check this when you want to publish this announcement'))
     announncement_creation_date = models.DateTimeField(default=now)
 
     def __str__(self):

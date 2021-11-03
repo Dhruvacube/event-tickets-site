@@ -1,20 +1,13 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
 from django_admin_listfilter_dropdown.filters import DropdownFilter
+from django.utils.translation import ngettext
 
 from .models import *
 
 
 def retrivejsfile():
-    # if settings.DEBUG:
-    #     return ("js/richTextEditorAnnouncements.js",)
-    # return (
-    #     "https://tanzanite-lpu.github.io/tgl-2.0.0/announcements/static/js/richTextEditorAnnouncements.js",
-    # )
     return ("js/richTextEditorAnnouncements.js",)
-
-
-# Register your models here.
 
 
 @admin.register(GlobalAnnouncements)
@@ -23,9 +16,10 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
         "announcement_id",
         "announcement_heading",
         "announncement_creation_date",
+        "publish"
     )
-    list_filter = ("announncement_creation_date",)
-    search_fields = list_display + list_filter
+    list_filter = ("announncement_creation_date","publish")
+    search_fields = list_display[:-1] + list_filter
     readonly_fields = ("announncement_creation_date", "announcement_id")
     list_per_page = 20
 
@@ -42,6 +36,43 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
         ),
         (_("Creation"), {"fields": list_filter}),
     )
+    
+    def publish_announcement(self, request, queryset):
+        updated = queryset.update(publish=True)
+        self.message_user(
+            request,
+            ngettext(
+                "%d announcement was succesfully published",
+                "%d announcements were succesfully published",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
+
+    publish_announcement.short_description = (
+        "Publish Announcements"
+    )
+    
+    def unpublish_announcement(self, request, queryset):
+        updated = queryset.update(publish=False)
+        self.message_user(
+            request,
+            ngettext(
+                "%d announcement was succesfully unpublished",
+                "%d announcements were succesfully unpublished",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
+
+    unpublish_announcement.short_description = (
+        "Unpublish Announcements"
+    )
+
+    # Registering the custom actions
+    actions = [publish_announcement, unpublish_announcement]
 
     class Media:
         js = retrivejsfile()
@@ -53,9 +84,10 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
         "announcement_id",
         "announcement_heading",
         "announncement_creation_date",
+        "publish"
     )
-    list_filter = ("announncement_creation_date",)
-    search_fields = list_display + list_filter
+    list_filter = ("announncement_creation_date","publish")
+    search_fields = list_display[:-1] + list_filter
     readonly_fields = ("announncement_creation_date", "announcement_id")
     list_per_page = 20
 
@@ -73,6 +105,43 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
         (_("Groups"), {"fields": ("groups",)}),
         (_("Creation"), {"fields": list_filter}),
     )
+    
+    def publish_announcement(self, request, queryset):
+        updated = queryset.update(publish=True)
+        self.message_user(
+            request,
+            ngettext(
+                "%d announcement was succesfully published",
+                "%d announcements were succesfully published",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
+
+    publish_announcement.short_description = (
+        "Publish Announcements"
+    )
+    
+    def unpublish_announcement(self, request, queryset):
+        updated = queryset.update(publish=False)
+        self.message_user(
+            request,
+            ngettext(
+                "%d announcement was succesfully unpublished",
+                "%d announcements were succesfully unpublished",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
+
+    unpublish_announcement.short_description = (
+        "Unpublish Announcements"
+    )
+
+    # Registering the custom actions
+    actions = [publish_announcement, unpublish_announcement]
 
     class Media:
         js = retrivejsfile()
@@ -84,9 +153,10 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
         "announcement_id",
         "announcement_heading",
         "announncement_creation_date",
+        "publish"
     )
-    list_filter = ("announncement_creation_date",)
-    search_fields = list_display + list_filter
+    list_filter = ("announncement_creation_date","publish")
+    search_fields = list_display[:-1] + list_filter
     readonly_fields = ("announncement_creation_date", "announcement_id")
     list_per_page = 20
 
@@ -104,6 +174,44 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
         (_("Users"), {"fields": ("users",)}),
         (_("Creation"), {"fields": list_filter}),
     )
+    
+    def publish_announcement(self, request, queryset):
+        updated = queryset.update(publish=True)
+        self.message_user(
+            request,
+            ngettext(
+                "%d announcement was succesfully published",
+                "%d announcements were succesfully published",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
+
+    publish_announcement.short_description = (
+        "Publish Announcements"
+    )
+    
+    def unpublish_announcement(self, request, queryset):
+        updated = queryset.update(publish=False)
+        self.message_user(
+            request,
+            ngettext(
+                "%d announcement was succesfully unpublished",
+                "%d announcements were succesfully unpublished",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
+
+    unpublish_announcement.short_description = (
+        "Unpublish Announcements"
+    )
+
+    # Registering the custom actions
+    actions = [publish_announcement, unpublish_announcement]
 
     class Media:
         js = retrivejsfile()
+
