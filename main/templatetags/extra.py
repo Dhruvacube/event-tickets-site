@@ -41,9 +41,11 @@ def check_success(queryset):
 
 @register.filter(name="if_groups")
 def if_groups(user):
-    groups = GameGroup.objects.filter(users__in=[
-        user,
-    ]).count()
+    groups = GameGroup.objects.filter(
+        users__in=[
+            user,
+        ]
+    ).count()
     if groups >= 1:
         return True
     return False
