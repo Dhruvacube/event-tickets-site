@@ -4,7 +4,7 @@
     <center>
         <h2>Mode : <u>Solo</u></h2>
     </center>
-    <div class="container row row-cols-1 row-cols-md-3 g-4">
+    <div class="container row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-end">
         {% for i in game_groups %}{% if i.solo_or_squad == 'so' %}
         <div class="col">
             <div class="card container" data-aos="flip-down">
@@ -36,10 +36,10 @@
                     <img data-aos="fade-down" src=" {% static i.game.image_url %} " class="card-img-top " alt="{{i.game.name}} Image " loading="lazy ">
                     <form method="POST" action="? ">{% csrf_token %}
                         <label data-aos="fade-down ">Unique Group ID</label>
-                        <input data-aos="fade-down " type="text " name="groupid " class="form-control " value="{{i.group_unique_id}} " disabled>
+                        <input data-aos="fade-down " type="text " name="groupid" class="form-control " value="{{i.group_unique_id}} " disabled>
                         <hr/>
-                        <label data-aos="fade-down ">Group Name | {{i.group_name|title}}</label>
-                        <input data-aos="fade-down " type="text " name="groupname " required class="form-control " value="{{i.group_name|title}} " placeholder="The name of group :) ">
+                        <label data-aos="fade-down">Group Name | {{i.group_name|title}}</label>
+                        <input data-aos="fade-down" type="text" name="groupname" required class="form-control " value="{{i.group_name|title}} " placeholder="The name of group :) ">
                         <hr/>{% for j in i.game.squad_entry_members|range %}
                         <label data-aos="fade-down ">Team Mate {{forloop.counter}} User ID {% if i.users.all|filter_users:forloop.counter %}| {{i.users.all|filter_users:forloop.counter}}{% endif %}</label>
                         <input data-aos="fade-down " type="text " name="userid {{i.group_unique_id}} {{forloop.counter}} " value="{% if i.users.all|filter_users:forloop.counter %}{{i.users.all|filter_users_id:forloop.counter}}{% endif %}" {% ifequal i.users.all|filter_users:forloop.counter user %}disabled{% endifequal %} {% if i|if_user_payed:user %}disabled="true" {% endif %} 

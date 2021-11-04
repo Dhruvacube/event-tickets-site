@@ -111,11 +111,12 @@ class GameGroup(models.Model):
         return str(self.group_name)
 
     def save(self, *args, **kwargs):
-        if self.group_name in ("", " ", False, None):
-            if self.solo_or_squad == "so":
-                self.group_name = f"Solo {str(generate_unique_id()).upper()}"
-            else:
-                self.group_name = f"Group {str(generate_unique_id()).upper()}"
+        if self._state.adding:
+            if self.group_name in ("", " ", False, None):
+                if self.solo_or_squad == "so":
+                    self.group_name = f"Solo {str(generate_unique_id()).upper()}"
+                else:
+                    self.group_name = f"Group {str(generate_unique_id()).upper()}"
         return super().save(*args, **kwargs)
 
 

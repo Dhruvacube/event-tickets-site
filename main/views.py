@@ -12,7 +12,6 @@ from accounts.models import User
 
 from .decorators import verify_entry_to_group
 from .models import *
-from .tasks import mail_queue
 from .templatetags import extra
 
 
@@ -37,8 +36,7 @@ def home(request):
 @verify_entry_to_group
 def group_make(request):
     parameters = {
-        "game_groups":
-        GameGroup.objects.filter(users__in=[request.user]).all(),
+        "game_groups": list(GameGroup.objects.filter(users__in=[request.user]).iterator()),
         "title": "Register Groups",
     }
     if request.method == "POST":
@@ -51,9 +49,7 @@ def group_make(request):
                     if not request.POST.dict()[i].isspace() or request.POST.dict()[i] != "" or not len(request.POST.dict()[i]):
                         try:
                             if User.objects.filter(unique_id=request.POST.dict()[i]).exists():
-                                users_list.append(
-                                    User.objects.filter(
-                                        unique_id=request.POST.dict()[i]))
+                                users_list.append(User.objects.filter(unique_id=request.POST.dict()[i]))
                             else:
                                 inavlid_users_list.append(request.POST.dict()[i])
                         except:
@@ -79,15 +75,11 @@ def group_make(request):
                 r"Make sure that they have registered themselves first ¯\_(ツ)_/¯",
             )
             parameters.update({"message_group_id": group_id})
-        if len(inavlid_users_list) == 0 and len(users_list) == 0:
-            messages.success(
-                request,
-                "Successfully saved the group name :)")
         try:
             groups.group_name = request.POST.get("groupname")
             groups.save()
             messages.success(request, "Successfully updated Group Name")
-        except:
+        except Exception as e:
             messages.error(
                 request,
                 r"This is already taken please try some other group name ¯\_(ツ)_/¯",
@@ -98,7 +90,6 @@ def group_make(request):
 
 @sync_to_async
 def view_games(request, game_id: int):
-    mail_queue.delay()
     games = Games.objects.filter(id=game_id).get()
     return render(
         request,
