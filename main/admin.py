@@ -77,7 +77,7 @@ class GameGroupAdmin(admin.ModelAdmin):
     )
     list_filter = (("solo_or_squad", ChoiceDropdownFilter), "game")
     search_fields = list_display + list_filter
-    readonly_fields = ('group_unique_id',)
+    readonly_fields = ("group_unique_id", )
     list_per_page = 30
 
     fieldsets = (

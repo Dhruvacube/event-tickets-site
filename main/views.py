@@ -36,8 +36,10 @@ def home(request):
 @verify_entry_to_group
 def group_make(request):
     parameters = {
-        "game_groups": list(GameGroup.objects.filter(users__in=[request.user]).iterator()),
-        "title": "Register Groups",
+        "game_groups":
+        list(GameGroup.objects.filter(users__in=[request.user]).iterator()),
+        "title":
+        "Register Groups",
     }
     if request.method == "POST":
         group_id, users_list, inavlid_users_list = "", [], []
@@ -46,12 +48,18 @@ def group_make(request):
                 if "userid" in i:
                     tuple_3 = i.split(" ")
                     group_id = tuple_3[1]
-                    if not request.POST.dict()[i].isspace() or request.POST.dict()[i] != "" or not len(request.POST.dict()[i]):
+                    if (not request.POST.dict()[i].isspace()
+                            or request.POST.dict()[i] != ""
+                            or not len(request.POST.dict()[i])):
                         try:
-                            if User.objects.filter(unique_id=request.POST.dict()[i]).exists():
-                                users_list.append(User.objects.filter(unique_id=request.POST.dict()[i]))
+                            if User.objects.filter(
+                                    unique_id=request.POST.dict()[i]).exists():
+                                users_list.append(
+                                    User.objects.filter(
+                                        unique_id=request.POST.dict()[i]))
                             else:
-                                inavlid_users_list.append(request.POST.dict()[i])
+                                inavlid_users_list.append(
+                                    request.POST.dict()[i])
                         except:
                             pass
             except Exception as e:
