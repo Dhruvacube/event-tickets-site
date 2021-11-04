@@ -48,13 +48,16 @@ def group_make(request):
                 if "userid" in i:
                     tuple_3 = i.split(" ")
                     group_id = tuple_3[1]
-                    if User.objects.filter(
-                            unique_id=request.POST.dict()[i]).exists():
-                        users_list.append(
-                            User.objects.filter(
-                                unique_id=request.POST.dict()[i]))
-                    else:
-                        inavlid_users_list.append(request.POST.dict()[i])
+                    if not request.POST.dict()[i].isspace() or request.POST.dict()[i] != "" or not len(request.POST.dict()[i]):
+                        try:
+                            if User.objects.filter(unique_id=request.POST.dict()[i]).exists():
+                                users_list.append(
+                                    User.objects.filter(
+                                        unique_id=request.POST.dict()[i]))
+                            else:
+                                inavlid_users_list.append(request.POST.dict()[i])
+                        except:
+                            pass
             except Exception as e:
                 messages.error(request, e)
                 return redirect(reverse("make_groups"))
@@ -76,6 +79,10 @@ def group_make(request):
                 r"Make sure that they have registered themselves first ¯\_(ツ)_/¯",
             )
             parameters.update({"message_group_id": group_id})
+        if len(inavlid_users_list) == 0 and len(users_list) == 0:
+            messages.success(
+                request,
+                "Successfully saved the group name :)")
         try:
             groups.group_name = request.POST.get("groupname")
             groups.save()
