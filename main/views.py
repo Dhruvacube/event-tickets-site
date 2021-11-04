@@ -13,17 +13,20 @@ from .decorators import verify_entry_to_group
 from .models import *
 from .tasks import mail_queue
 from .templatetags import extra
+import random
 
 
 @sync_to_async
 def home(request):
+    sponser = list(Sponser.objects.iterator())
+    random.shuffle(sponser)
     return render(
         request,
         "index.html",
         {
             "games": Games.objects.all(),
             "title": "Home",
-            "sponsers": Sponser.objects.all(),
+            "sponsers": sponser,
         },
     )
 
