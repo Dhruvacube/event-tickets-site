@@ -45,15 +45,20 @@ def group_make(request):
                 if "userid" in i:
                     tuple_3 = i.split(" ")
                     group_id = tuple_3[1]
-                    group = GameGroup.objects.filter(group_unique_id=group_id).get()
+                    group = GameGroup.objects.filter(
+                        group_unique_id=group_id).get()
                     group.save()
                     group.users.clear()
                     group.users.add(request.user)
-                    if (not request.POST.dict()[i].isspace()
-                            or request.POST.dict()[i] != ""
-                            or not request.POST.dict()[i]):
+                    if (
+                        not request.POST.dict()[i].isspace()
+                        or request.POST.dict()[i] != ""
+                        or not request.POST.dict()[i]
+                    ):
                         try:
-                            user_object = User.objects.filter(unique_id=request.POST.dict()[i])
+                            user_object = User.objects.filter(
+                                unique_id=request.POST.dict()[i]
+                            )
                             if user_object.exists():
                                 users_list.append(user_object)
                         except:
@@ -66,9 +71,7 @@ def group_make(request):
             groups.save()
             for i in users_list:
                 groups.users.add(i[0].id)
-            messages.success(
-                request,
-                "Saved Successfully!")
+            messages.success(request, "Saved Successfully!")
             parameters.update({"message_group_id": group_id})
         try:
             groups.group_name = request.POST.get("groupname")
@@ -79,7 +82,13 @@ def group_make(request):
                 r"This is name already taken please try some other group name ¯\_(ツ)_/¯",
             )
         return redirect(reverse("make_groups"))
-    parameters.update({"game_groups": list(GameGroup.objects.filter(users__in=[request.user]).iterator())})
+    parameters.update(
+        {
+            "game_groups": list(
+                GameGroup.objects.filter(users__in=[request.user]).iterator()
+            )
+        }
+    )
     return render(request, "groups.html", parameters)
 
 
