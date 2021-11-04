@@ -36,30 +36,26 @@ def home(request):
 @verify_entry_to_group
 def group_make(request):
     parameters = {
-        "game_groups":
-        list(GameGroup.objects.filter(users__in=[request.user]).iterator()),
-        "title":
-        "Register Groups",
+        "title": "Register Groups",
     }
     if request.method == "POST":
-        group_id, users_list, inavlid_users_list = "", [], []
+        group_id, users_list = "", []
         for i in request.POST.dict():
             try:
                 if "userid" in i:
                     tuple_3 = i.split(" ")
                     group_id = tuple_3[1]
+                    group = GameGroup.objects.filter(group_unique_id=group_id).get()
+                    group.save()
+                    group.users.clear()
+                    group.users.add(request.user)
                     if (not request.POST.dict()[i].isspace()
                             or request.POST.dict()[i] != ""
                             or not request.POST.dict()[i]):
                         try:
-                            if User.objects.filter(
-                                    unique_id=request.POST.dict()[i]).exists():
-                                users_list.append(
-                                    User.objects.filter(
-                                        unique_id=request.POST.dict()[i]))
-                            else:
-                                inavlid_users_list.append(
-                                    request.POST.dict()[i])
+                            user_object = User.objects.filter(unique_id=request.POST.dict()[i])
+                            if user_object.exists():
+                                users_list.append(user_object)
                         except:
                             pass
             except Exception as e:
@@ -72,27 +68,18 @@ def group_make(request):
                 groups.users.add(i[0].id)
             messages.success(
                 request,
-                f"Successfully added {len(users_list)} user(s) to the group!")
-            parameters.update({"message_group_id": group_id})
-        if len(inavlid_users_list) > 0:
-            messages.error(
-                request,
-                f"Unable to add {len(users_list)} user(s) to the group!")
-            messages.error(
-                request,
-                r"Make sure that they have registered themselves first ¯\_(ツ)_/¯",
-            )
+                "Saved Successfully!")
             parameters.update({"message_group_id": group_id})
         try:
             groups.group_name = request.POST.get("groupname")
             groups.save()
-            messages.success(request, "Successfully updated Group Name")
         except Exception as e:
             messages.error(
                 request,
-                r"This is already taken please try some other group name ¯\_(ツ)_/¯",
+                r"This is name already taken please try some other group name ¯\_(ツ)_/¯",
             )
         return redirect(reverse("make_groups"))
+    parameters.update({"game_groups": list(GameGroup.objects.filter(users__in=[request.user]).iterator())})
     return render(request, "groups.html", parameters)
 
 

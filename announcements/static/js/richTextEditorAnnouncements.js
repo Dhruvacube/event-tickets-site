@@ -1,6 +1,7 @@
 let script = document.createElement('script');
 script.type = 'text/javascript';
-script.src = "https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js";
+script.referrerpolicy = "origin";
+script.src = "https://cdn.tiny.cloud/1/wkonu98q7yoznsn5d3j5ike8ilcconld1jp1v4klmana1ml5/tinymce/5/tinymce.min.js";
 document.head.appendChild(script);
 
 script.onload = function() {

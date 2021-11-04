@@ -75,8 +75,10 @@ def squad_user(user):
     return False
 
 
-@register.filter(name="if_user_payed")
-def if_user_payed(payment_obj, user):
+@register.filter(name="if_user_not_payed")
+def if_user_not_payed(payment_obj, user):
+    if user.is_superuser:
+        return False
     if payment_obj.payment_id in list(user.orders.iterator()):
         return False
     return True

@@ -178,6 +178,8 @@ def loginform(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}")
+                if request.GET.get("next"):
+                    return HttpResponsePermanentRedirect(request.GET.get("next"))
                 return HttpResponsePermanentRedirect(reverse("home"))
             messages.error(request, "Invalid username or password.")
             return redirect(reverse("signin"))
