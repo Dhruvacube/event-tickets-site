@@ -50,7 +50,7 @@ def group_make(request):
                     group_id = tuple_3[1]
                     if (not request.POST.dict()[i].isspace()
                             or request.POST.dict()[i] != ""
-                            or not len(request.POST.dict()[i])):
+                            or not request.POST.dict()[i]):
                         try:
                             if User.objects.filter(
                                     unique_id=request.POST.dict()[i]).exists():
