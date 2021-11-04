@@ -1,3 +1,4 @@
+import random
 from functools import lru_cache
 
 from asgiref.sync import sync_to_async
@@ -13,7 +14,6 @@ from .decorators import verify_entry_to_group
 from .models import *
 from .tasks import mail_queue
 from .templatetags import extra
-import random
 
 
 @sync_to_async
