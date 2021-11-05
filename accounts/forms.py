@@ -41,7 +41,7 @@ class SignupForm(UserCreationForm):
             "username",
             "first_name",
             "last_name",
-            "registration_no",
+            # "registration_no",
             "email",
             "password1",
             "password2",
@@ -85,8 +85,7 @@ class SignupForm(UserCreationForm):
             self.fields["email"].widget.attrs["class"] = "form-control"
             self.fields["email"].widget.attrs["required"] = "true"
 
-            self.fields["registration_no"].widget.attrs[
-                "class"] = "form-control"
+            # self.fields["registration_no"].widget.attrs["class"] = "form-control"
 
             self.fields["phone"].widget.attrs["class"] = "form-control"
             self.fields["phone"].widget.attrs["required"] = "true"
@@ -221,7 +220,7 @@ class EditProfileForm(UserChangeForm):
         self.fields["email"].widget.attrs["class"] = "form-control"
         self.fields["email"].widget.attrs["required"] = "true"
 
-        self.fields["registration_no"].widget.attrs["class"] = "form-control"
+        # self.fields["registration_no"].widget.attrs["class"] = "form-control"
 
         self.fields["phone"].widget.attrs["class"] = "form-control"
         self.fields["phone"].widget.attrs["required"] = "true"
@@ -262,7 +261,7 @@ class EditProfileForm(UserChangeForm):
             "username",
             "first_name",
             "last_name",
-            "registration_no",
+            # "registration_no",
             "email",
             "gender",
             "phone",
