@@ -16,7 +16,7 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for i in games %}{% if i.platform == 'p' or i.platform == 'a' %}
             <div class="col">
-                <div class="card container" data-aos="zoom-out-down" data-aos-duration="1000">
+                <div class="card container" data-aos="zoom-out-down" data-aos-duration="1500">
                     <img src="{% static i.image_url %}" class="card-img-top" loading="lazy" />
                     <div class="box-lower-section card-body">
                         <h4 class="game-name">{{i.name|capfirst}}</h4>
@@ -44,7 +44,7 @@
         <div class="container row row-cols-1 row-cols-md-4 g-4">
             {% for i in games %} {% if i.platform == 'm' or i.platform == 'a' or i.platform == 'ps' %}
             <div class="col">
-                <div class="card container" data-aos="zoom-out-down" data-aos-duration="1000">
+                <div class="card container" data-aos="zoom-out-down" data-aos-duration="1500">
                     <img src="{% static i.image_url %}" class="card-img-top" loading="lazy" />
                     <div class="box-lower-section card-body">
                         <h4 class="game-name">{{i.name|capfirst}}</h4>
@@ -66,7 +66,7 @@
         <div class="row row-cols-1 row-cols-md-4 g-4">
             {% for i in sponsers %}
             <div class="col">
-                <div class="card container" data-aos="flip-left" data-aos-duration="1000">
+                <div class="card container" data-aos="flip-left" data-aos-duration="1500">
                     <img src="{% static i.image %}" class="card-img-top" loading="lazy" />
                     <div class="box-lower-section card-body">
                         <strong><h4 class="game-name"><u>{{i.name|capfirst}}</u></h4></strong> Show <strong>{{i.name|capfirst}}</strong> some love <i class='bx bxs-heart text-danger'></i> by visiting their
