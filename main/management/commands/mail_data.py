@@ -2,11 +2,12 @@
  Command for mailing all the data
 """
 
+import csv
+
 from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from post_office import mail
-import csv
 
 from accounts.models import *
 from announcements.models import *
