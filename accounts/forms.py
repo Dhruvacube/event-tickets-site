@@ -227,11 +227,9 @@ class EditProfileForm(UserChangeForm):
 
         self.fields["address1"].widget.attrs["class"] = "form-control"
         self.fields["address1"].widget.attrs["required"] = "true"
-        self.fields["address1"].widget.attrs["rows"] = "50"
 
         self.fields["address2"].widget.attrs["class"] = "form-control"
         self.fields["address2"].widget.attrs["required"] = "true"
-        self.fields["address2"].widget.attrs["rows"] = "50"
 
         self.fields["city"].widget.attrs["class"] = "form-control"
         self.fields["city"].widget.attrs["required"] = "true"

@@ -12,11 +12,27 @@ body {
     height: 100vh;
 }
 
+label {
+    color: white;
+}
+
+textarea {
+    border-radius: 5px;
+    border-top: none !important;
+    border-left: none !important;
+    border-bottom: solid !important;
+    border-color: #FFA500 !important;
+    color: white;
+    height: 10em !important;
+    width: 50em !important;
+}
+
 input {
     height: 100%;
     width: 100%;
     border-radius: 5px;
-    border: none;
+    border-bottom: solid !important;
+    border-color: #FFA500 !important;
     color: white;
     font-size: 18px;
     font-weight: 500;
@@ -82,7 +98,7 @@ input:hover {
 
 .textbox input,
 textarea {
-    border: none !important;
+    border: none;
     outline: none !important;
     background: none !important;
     color: white !important;

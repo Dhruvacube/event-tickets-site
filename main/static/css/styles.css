@@ -10,6 +10,10 @@
     src: url("../font/Road_Rage.otf");
 }
 
+.navLogo:hover {
+    color: none;
+}
+
 * {
     padding: 0;
     font-family: 'Special Elite';
