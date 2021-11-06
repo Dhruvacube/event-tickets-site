@@ -424,10 +424,6 @@ nav ul li a:hover {
         display: block;
         margin-top: 2px;
     }
-    #hero-image {
-        height: 650px;
-        background-size: cover;
-    }
     .hero-marketing-text {
         margin-top: -85px;
     }
