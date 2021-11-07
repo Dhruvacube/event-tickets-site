@@ -6,7 +6,7 @@ import datetime
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from django.timezone import now
+from django.utils.timezone import now
 
 from payments.models import Payments
 

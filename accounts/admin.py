@@ -14,6 +14,7 @@ from .models import User
 class CustomUserAdmin(UserAdmin):
     add_form = SignupForm
     model = User
+    list_display = UserAdmin.list_display + ('university_name',)
     fieldsets = (
         (UserAdmin.fieldsets[0],)
         + (
@@ -52,6 +53,7 @@ class CustomUserAdmin(UserAdmin):
         "amount",
         "orders",
         "referral_code",
+        "university_name"
     )
     verbose_name_plural = "Profile"
     readonly_fields = ("unique_id",)
