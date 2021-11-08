@@ -14,28 +14,33 @@ from .models import User
 class CustomUserAdmin(UserAdmin):
     add_form = SignupForm
     model = User
-    list_display = UserAdmin.list_display + ("university_name", )
-    fieldsets = ((UserAdmin.fieldsets[0], ) + ((
-        _("Personal info"),
-        {
-            "fields":
-            UserAdmin.fieldsets[1][1]["fields"] + (
-                "unique_id",
-                "university_name",
-                "registration_no",
-                "phone",
-                "address1",
-                "address2",
-                "state",
-                "city",
-                "zip_code",
-                "gender",
-                "referral_code",
-            )
-        },
-    ), ) + (UserAdmin.fieldsets[2], UserAdmin.fieldsets[3]) + ((_("Orders"), {
-        "fields": ("orders", )
-    }), ))
+    list_display = UserAdmin.list_display + ("university_name",)
+    fieldsets = (
+        (UserAdmin.fieldsets[0],)
+        + (
+            (
+                _("Personal info"),
+                {
+                    "fields": UserAdmin.fieldsets[1][1]["fields"]
+                    + (
+                        "unique_id",
+                        "university_name",
+                        "registration_no",
+                        "phone",
+                        "address1",
+                        "address2",
+                        "state",
+                        "city",
+                        "zip_code",
+                        "gender",
+                        "referral_code",
+                    )
+                },
+            ),
+        )
+        + (UserAdmin.fieldsets[2], UserAdmin.fieldsets[3])
+        + ((_("Orders"), {"fields": ("orders",)}),)
+    )
     search_fields = UserAdmin.search_fields + (
         "phone",
         "address1",
@@ -47,4 +52,4 @@ class CustomUserAdmin(UserAdmin):
         "university_name",
     )
     verbose_name_plural = "Profile"
-    readonly_fields = ("unique_id", )
+    readonly_fields = ("unique_id",)
