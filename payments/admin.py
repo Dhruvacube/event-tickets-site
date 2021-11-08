@@ -19,8 +19,8 @@ class PaymentsAdmin(admin.ModelAdmin):
         "amount",
         "payment_status",
     )
-    list_filter = (("payment_status", ChoiceDropdownFilter), )
-    search_fields = list_display + ("orders_list", )
+    list_filter = (("payment_status", ChoiceDropdownFilter),)
+    search_fields = list_display + ("orders_list",)
     readonly_fields = (
         "orders_list",
         "created_at",
@@ -33,14 +33,10 @@ class PaymentsAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             _("Order ID"),
-            {
-                "fields":
-                ("order_id", "request_id_instamojo", "instamojo_order_id")
-            },
+            {"fields": ("order_id", "request_id_instamojo",
+                        "instamojo_order_id")},
         ),
-        (_("Amount"), {
-            "fields": ("amount", )
-        }),
+        (_("Amount"), {"fields": ("amount",)}),
         (
             _("Status"),
             {
@@ -50,9 +46,7 @@ class PaymentsAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        (_("Orders List"), {
-            "fields": ("orders_list", )
-        }),
+        (_("Orders List"), {"fields": ("orders_list",)}),
     )
 
 
@@ -62,7 +56,7 @@ class ComboOfferAdmin(admin.ModelAdmin):
     list_filter = ("if_squad", "if_solo", ("games", RelatedDropdownFilter))
     list_per_page = 30
 
-    readonly_fields = ("combo_id", )
+    readonly_fields = ("combo_id",)
 
     fieldsets = (
         (
