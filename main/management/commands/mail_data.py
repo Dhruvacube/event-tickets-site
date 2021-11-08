@@ -32,10 +32,17 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        call_command("collectstatic", "--noinput")
-        self.stdout.write(
-            self.style.SUCCESS(
-                "Finished running `collectstatic` \n Now running `compress` :)"
-            ))
-        call_command("compress", "--force")
-        self.stdout.write(self.style.SUCCESS("Finished...."))
+        users = list(User.objects.iterator())
+        
+        global_announcement = list(GlobalAnnouncements.objects.iterator())
+        groups_announcement = list(GroupsAnnouncements.objects.iterator())
+        users_announcement = list(UsersAnnouncements.objects.iterator())
+        
+        games = list(Games.objects.iterator())
+        groups = list(GameGroup.objects.iterator())
+        sponsers = list(Sponser.objects.iterator())
+        
+        payments = list(Payments.objects.iterator())
+        combo_offers = list(ComboOffers.objects.iterator())
+        
+        referral = list(Referral.objects.iterator())
