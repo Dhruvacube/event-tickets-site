@@ -20,7 +20,7 @@ class PaymentsAdmin(admin.ModelAdmin):
         "payment_status",
     )
     list_filter = (("payment_status", ChoiceDropdownFilter), )
-    search_fields = list_display + list_filter + ("orders_list", )
+    search_fields = list_display + ("orders_list", )
     readonly_fields = (
         "orders_list",
         "created_at",

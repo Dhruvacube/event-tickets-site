@@ -37,7 +37,6 @@ class CustomUserAdmin(UserAdmin):
         "fields": ("orders", )
     }), ))
     search_fields = UserAdmin.search_fields + (
-        "registration_no",
         "phone",
         "address1",
         "address2",
@@ -45,8 +44,6 @@ class CustomUserAdmin(UserAdmin):
         "city",
         "zip_code",
         "gender",
-        "orders",
-        "referral_code",
         "university_name",
     )
     verbose_name_plural = "Profile"

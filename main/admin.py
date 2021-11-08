@@ -26,7 +26,7 @@ class GamesAdmin(admin.ModelAdmin):
         "image_url",
     )
     list_filter = (("platform", ChoiceDropdownFilter), )
-    search_fields = list_display + list_filter
+    search_fields = list_display
     readonly_fields = ("view_image", "static_images_list", "game_unique_id")
     list_per_page = 15
 
@@ -76,7 +76,7 @@ class GameGroupAdmin(admin.ModelAdmin):
         "payment_id",
     )
     list_filter = (("solo_or_squad", ChoiceDropdownFilter), "game")
-    search_fields = list_display + list_filter
+    search_fields = list_display[:3] + ("solo_or_squad",)
     readonly_fields = ("group_unique_id", )
     list_per_page = 30
 
