@@ -45,7 +45,6 @@ class CustomUserAdmin(UserAdmin):
         "city",
         "zip_code",
         "gender",
-        "amount",
         "orders",
         "referral_code",
         "university_name",
