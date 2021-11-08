@@ -150,6 +150,9 @@ def make_order(request):
 @login_required
 @verify_entry_for_orders
 def create_payment(request):
+    if request:
+        messages.info(request, "Please read this announcement message!")
+        return HttpResponsePermanentRedirect('/announcements/23b3bce7-c7cb-45a9-9947-2af628791902')
     amount = str(request.session.get("total_value"))
     purpose = str(uuid.uuid4())
     buyers_name = f"{request.user.first_name} {request.user.last_name}"
