@@ -95,8 +95,9 @@ else:
 if os.getenv("DATABASE_URL"):
     import dj_database_url
 
-    DATABASES = {"default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL"))}
+    DATABASES = {
+        "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    }
 else:
     DATABASES = {
         "default": {
@@ -116,21 +117,15 @@ sentry_sdk.init(
 )
 
 if not os.getenv("WHITENOISE"):
-    MIDDLEWARE = (
-        [MIDDLEWARE[0]]
-        + ["whitenoise.middleware.WhiteNoiseMiddleware"]
-        + MIDDLEWARE[1:]
-    )
-    INSTALLED_APPS = (
-        INSTALLED_APPS[0:-1]
-        + [
-            "whitenoise.runserver_nostatic",
-        ]
-        + [INSTALLED_APPS[-1]]
-    )
+    MIDDLEWARE = ([MIDDLEWARE[0]] +
+                  ["whitenoise.middleware.WhiteNoiseMiddleware"] +
+                  MIDDLEWARE[1:])
+    INSTALLED_APPS = (INSTALLED_APPS[0:-1] + [
+        "whitenoise.runserver_nostatic",
+    ] + [INSTALLED_APPS[-1]])
 
-RAZOR_KEY_ID  = os.environ.get("RAZOR_KEY_ID")
-RAZOR_KEY_SECRET  = os.environ.get("RAZOR_KEY_SECRET")
+RAZOR_KEY_ID = os.environ.get("RAZOR_KEY_ID")
+RAZOR_KEY_SECRET = os.environ.get("RAZOR_KEY_SECRET")
 
 EMAIL_PORT = 587
 EMAIL_HOST = "smtp.gmail.com"
@@ -150,16 +145,20 @@ ADMINS = [("dhruva", os.environ["EMAIL_HOST_USER"])]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -195,7 +194,7 @@ WHITENOISE_SKIP_COMPRESS_EXTENSIONS = []
 
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_IMPORTS = ("tasks",)
+CELERY_IMPORTS = ("tasks", )
 BROKER_URL = os.environ.get("CLOUDAMQP_URL", "amqp://localhost")
 CELERY_ACCEPT_CONTENT = [
     "application/json",
