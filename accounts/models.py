@@ -71,7 +71,10 @@ class User(AbstractUser):
         help_text=_("It should be +91 67xxx"),
     )
     address1 = models.TextField(_("address 1"), validators=[validate_address])
-    address2 = models.TextField(_("address 2"), validators=[validate_address],blank=True,null=True)
+    address2 = models.TextField(_("address 2"),
+                                validators=[validate_address],
+                                blank=True,
+                                null=True)
     city = models.CharField(_("city"),
                             max_length=500,
                             validators=[validate_city])

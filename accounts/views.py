@@ -1,5 +1,8 @@
+import ast
 import functools
 import os
+import secrets
+import string
 from datetime import datetime
 
 import requests
@@ -8,8 +11,6 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-import secrets
-import string
 from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetDoneView,
@@ -29,7 +30,6 @@ from post_office.models import EmailTemplate
 
 from main.tasks import mail_queue
 from referral.models import Referral
-import ast
 
 from .forms import (
     EditProfileForm,
@@ -84,8 +84,9 @@ class PasswordResetDoneViews(PasswordResetDoneView):
 @login_required
 def view_profile(request):
     if request.method == "POST":
-        form = EditProfileForm(
-            request.POST, instance=request.user, admin=False)
+        form = EditProfileForm(request.POST,
+                               instance=request.user,
+                               admin=False)
 
         if form.is_valid():
             user = form.save(commit=False)
@@ -95,8 +96,7 @@ def view_profile(request):
             else:
                 if Referral.objects.filter(referral_code=referral).exists():
                     request.user.referral_code = Referral.objects.filter(
-                        referral_code=referral
-                    ).get()
+                        referral_code=referral).get()
                 else:
                     messages.warning(
                         request,
@@ -104,13 +104,13 @@ def view_profile(request):
                     )
 
             messages.success(
-                request, "Your <strong>Profile</strong> has been update successfully !"
-            )
+                request,
+                "Your <strong>Profile</strong> has been update successfully !")
             form.save(commit=True)
             return redirect(reverse("view_profile"))
         if not form.errors:
-            messages.error(
-                request, "Please correct the errors mentioned below!")
+            messages.error(request,
+                           "Please correct the errors mentioned below!")
 
     else:
         form = EditProfileForm(instance=request.user, admin=False)
@@ -136,7 +136,8 @@ def change_password(request):
 
         if form.is_valid():
             messages.success(
-                request, "Your <strong>password</strong> has been update successfully !"
+                request,
+                "Your <strong>password</strong> has been update successfully !"
             )
             form.save()
             update_session_auth_hash(request, form.user)
@@ -212,13 +213,21 @@ def signup(request):
         form = SignupForm(request.POST)
 
         if form.is_valid():
+
             def generate_code(n: int = 7):
-                return "".join(secrets.choice(string.ascii_letters + string.digits + str(secrets.randbits(7))) for i in range(n)).upper()
+                return "".join(
+                    secrets.choice(string.ascii_letters + string.digits +
+                                   str(secrets.randbits(7)))
+                    for i in range(n)).upper()
 
             username = generate_code()
             password = generate_code(10)
             data = form.cleaned_data
-            data.update({'username': username, 'password': password, 'is_active': True})
+            data.update({
+                "username": username,
+                "password": password,
+                "is_active": True
+            })
             user = User.objects.create_user(**data)
             referral = request.POST.get("referral_code")
             if len(referral) == 0 or referral in [None, ""]:
@@ -258,7 +267,10 @@ def signup(request):
                 context=ctx,
             )
             mail_queue.delay()
-            messages.success(request, f"Account created, please see your mail {to_email} for the instructions on how to proceed further!, <br/> Check {to_email} , To get your <strong>username</username> and <strong>password</password>")
+            messages.success(
+                request,
+                f"Account created, please see your mail {to_email} for the instructions on how to proceed further!, <br/> Check {to_email} , To get your <strong>username</username> and <strong>password</password>",
+            )
             return redirect(reverse("make_order"))
         message_error_list = []
         if form.errors.as_data():
