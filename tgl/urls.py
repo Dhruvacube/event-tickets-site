@@ -51,7 +51,7 @@ urlpatterns = [
     url(
         "refunds/",
         RedirectView.as_view(
-            url="https://github.com/Tanzanite-lpu/tgl-2.0/wiki/Cancellation-Refund-Policy"
+            url="https://github.com/Tanzanite-lpu/tgl-2.0/wiki/Cancellation--&-Refund-Policy"
         ),
         name="refunds",
     ),
