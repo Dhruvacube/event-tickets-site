@@ -2,6 +2,7 @@ import datetime
 import uuid
 from functools import lru_cache
 
+import razorpay
 from asgiref.sync import sync_to_async
 from django.conf import settings
 from django.contrib import messages
@@ -13,7 +14,6 @@ from django.urls import reverse
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
-import razorpay
 
 from main.models import GameGroup, Games
 
@@ -21,7 +21,9 @@ from .decorators import verify_entry_for_orders, verify_entry_for_payments_histo
 from .models import ComboOffers, Payments
 from .templatetags import payments_extras
 
-razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID,
+                                        settings.RAZOR_KEY_SECRET))
+
 
 @sync_to_async
 @login_required
@@ -30,7 +32,10 @@ def view_payments_history(request):
     return render(
         request,
         "payments.html",
-        {"payments": request.user.orders.all(), "title": "Payments History"},
+        {
+            "payments": request.user.orders.all(),
+            "title": "Payments History"
+        },
     )
 
 
@@ -45,12 +50,10 @@ def make_order(request):
         for i in request.POST.dict():
             if "mode" in i:
                 a = request.POST.dict()[i]
-                gamename = (
-                    a.replace("SelectGame", "")
-                    .replace("SingleGame", "")
-                    .replace("SquadGame", "")
-                    .strip(" ")
-                )
+                gamename = (a.replace("SelectGame",
+                                      "").replace("SingleGame",
+                                                  "").replace("SquadGame",
+                                                              "").strip(" "))
                 if "SelectGame" in a:
                     mode, make_req = "SelectGame", False
                 elif "SingleGame" in a:
@@ -58,30 +61,23 @@ def make_order(request):
                 else:
                     mode, make_req, filter_name = "sq", True, "squad_entry"
                 if make_req:
-                    order_value = (
-                        Games.objects.filter(game_unique_id=gamename)
-                        .values(filter_name)
-                        .get()[filter_name]
-                    )
+                    order_value = (Games.objects.filter(
+                        game_unique_id=gamename).values(filter_name).get()
+                        [filter_name])
                     total_value += order_value
                     order_list.append([gamename, mode, order_value])
         squad_list = [i[1] for i in order_list]
         applied_internal_discount = False
-        if (
-            "sq" in squad_list
-            and "so" not in squad_list
-            and settings.ALL_SQUAD_PRICE is not None
-            and Games.objects.filter(has_squad_entry=True).count()
-            == squad_list.count("sq")
-        ):
+        if ("sq" in squad_list and "so" not in squad_list
+                and settings.ALL_SQUAD_PRICE is not None
+                and Games.objects.filter(has_squad_entry=True).count()
+                == squad_list.count("sq")):
             total_value = int(settings.ALL_SQUAD_PRICE)
             applied_internal_discount = True
-        elif (
-            "sq" not in squad_list
-            and "so" in squad_list
-            and settings.ALL_SOLO_PRICE is not None
-            and Games.objects.filter(has_solo_entry=True).count() == squad_list.count("so")
-        ):
+        elif ("sq" not in squad_list and "so" in squad_list
+              and settings.ALL_SOLO_PRICE is not None
+              and Games.objects.filter(has_solo_entry=True).count()
+              == squad_list.count("so")):
             total_value = int(settings.ALL_SOLO_PRICE)
             applied_internal_discount = True
         else:
@@ -100,12 +96,10 @@ def make_order(request):
                         for j in order_list:
                             if j[0].lower() in users_selected_games_list:
                                 squad_list.append(j[1])
-                        if squad_list.count(squad_list[0]) == len(squad_list) and (
-                            squad_list[0] == "sq"
-                            and i.if_squad
-                            or squad_list[0] == "so"
-                            and i.if_solo
-                        ):
+                        if squad_list.count(
+                                squad_list[0]) == len(squad_list) and (
+                                    squad_list[0] == "sq" and i.if_squad
+                                    or squad_list[0] == "so" and i.if_solo):
                             for j in order_list:
                                 if j[0].lower() in users_selected_games_list:
                                     total_value -= int(j[-1])
@@ -119,40 +113,51 @@ def make_order(request):
             discount_value = request.user.referral_code.discount_percentage
             undiscounted_value = int(total_value)
             total_value = total_value * (1 - (discount_value / 100))
-        #Towards Payments
+        # Towards Payments
         if total_value > 0:
             request.session["order_list"] = order_list
             request.session["total_value"] = total_value
-            currency = 'INR'
+            currency = "INR"
             purpose = str(uuid.uuid4())
             request.session["purpose"] = purpose
             current_site = get_current_site(request)
             razorpay_order = razorpay_client.order.create(
                 dict(
-                    amount=total_value*100,
+                    amount=total_value * 100,
                     currency=currency,
                     receipt=purpose,
-                    notes={'order_list': str(order_list)},
-                    payment_capture='0'
-                )
-            )
+                    notes={"order_list": str(order_list)},
+                    payment_capture="0",
+                ))
             return render(
                 request,
                 "checkout.html",
                 {
-                    "total_value": total_value,
-                    "action_url": '?',
-                    "title": "Pay for the Games that you want to participate",
-                    "undiscounted_value": undiscounted_value,
-                    "applied_internal_discount": applied_internal_discount,
-                    "purpose": purpose,
-                    #Razorpay
-                    "razorpay_order_id": razorpay_order['id'],
-                    "razorpay_merchant_key": settings.RAZOR_KEY_ID,
-                    "razorpay_amount": total_value*100,
-                    "currency": currency,
-                    "callback_url": reverse("payment_stats"),
-                    "image_url": f'{request.scheme}://{current_site.domain}{settings.STATIC_URL}icons/logo.png'
+                    "total_value":
+                    total_value,
+                    "action_url":
+                    "?",
+                    "title":
+                    "Pay for the Games that you want to participate",
+                    "undiscounted_value":
+                    undiscounted_value,
+                    "applied_internal_discount":
+                    applied_internal_discount,
+                    "purpose":
+                    purpose,
+                    # Razorpay
+                    "razorpay_order_id":
+                    razorpay_order["id"],
+                    "razorpay_merchant_key":
+                    settings.RAZOR_KEY_ID,
+                    "razorpay_amount":
+                    total_value * 100,
+                    "currency":
+                    currency,
+                    "callback_url":
+                    reverse("payment_stats"),
+                    "image_url":
+                    f"{request.scheme}://{current_site.domain}{settings.STATIC_URL}icons/logo.png",
                 },
             )
         messages.error(request, "Please select something in order to pay!")
@@ -226,20 +231,25 @@ def make_order(request):
 @login_required
 @verify_entry_for_payments_history
 def payment_stats(request):
-    payment_id = request.POST.get('razorpay_payment_id', '')
-    razorpay_order_id = request.POST.get('razorpay_order_id', '')
-    signature = request.POST.get('razorpay_signature', '')
+    payment_id = request.POST.get("razorpay_payment_id", "")
+    razorpay_order_id = request.POST.get("razorpay_order_id", "")
+    signature = request.POST.get("razorpay_signature", "")
     try:
         # verify the payment signature.
         result = razorpay_client.utility.verify_payment_signature({
-            'razorpay_order_id': razorpay_order_id,
-            'razorpay_payment_id': payment_id,
-            'razorpay_signature': signature
+            "razorpay_order_id":
+            razorpay_order_id,
+            "razorpay_payment_id":
+            payment_id,
+            "razorpay_signature":
+            signature,
         })
         if result is None:
             try:
                 # capture the payemt
-                razorpay_client.payment.capture(payment_id, int(request.session["total_value"])*100)
+                razorpay_client.payment.capture(
+                    payment_id,
+                    int(request.session["total_value"]) * 100)
             except:
                 messages.error(
                     request,
@@ -259,21 +269,21 @@ def payment_stats(request):
                 order_id=request.session["purpose"],
                 order_id_merchant=razorpay_order_id,
                 amount=int(request.session["total_value"]),
-                payment_status = "S",
+                payment_status="S",
                 orders_list=str(order_list),
-                payment_id_merchant = payment_id
+                payment_id_merchant=payment_id,
             )
             pay.save()
             request.user.orders.add(pay)
             messages.success(
-                    request, "You have successfully paid the amount! Please wait for 2secs"
-                )
+                request,
+                "You have successfully paid the amount! Please wait for 2secs")
             order_list = request.session.get("order_list")
             for i in order_list:
                 game = Games.objects.filter(game_unique_id=i[0]).get()
-                game_group = GameGroup(
-                        game=game, payment_id=payment_obj, solo_or_squad=i[1]
-                    )
+                game_group = GameGroup(game=game,
+                                       payment_id=payment_obj,
+                                       solo_or_squad=i[1])
                 game_group.save()
                 game_group.users.add(request.user)
             redirect_link = reverse("make_groups")
@@ -282,9 +292,9 @@ def payment_stats(request):
         redirect_link = reverse("make_order")
     except:
         messages.error(
-                request,
-                "There was some error processing your payment! Please contact the support",
-            )
+            request,
+            "There was some error processing your payment! Please contact the support",
+        )
         redirect_link = reverse("make_order")
     try:
         del request.session["order_list"]
