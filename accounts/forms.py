@@ -1,8 +1,5 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.utils.translation import gettext_lazy as _
-from django.core.validators import MaxLengthValidator, MinLengthValidator
-
 from django.contrib.auth.forms import (
     AuthenticationForm,
     PasswordChangeForm,
@@ -12,6 +9,7 @@ from django.contrib.auth.forms import (
 )
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.template import loader
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
@@ -30,6 +28,7 @@ def validate_email(email):
             _("%(email)s is already in use! Please use a different email."),
             params={"email": email},
         )
+
 
 def validate_zip(value):
     if not value.isdigit():
@@ -77,25 +76,26 @@ def validate_phone(value):
 
 
 class SignupForm(forms.Form):
-    first_name = forms.CharField(max_length=250, help_text=_('Your First Name'))
-    last_name = forms.CharField(max_length=250, help_text=_('Your Last Name'))
-    email = forms.EmailField(max_length=200,help_text="Required",validators=[validate_email])
-    gender = forms.ChoiceField(
-        choices=(("M", "Male"), ("F", "Female"), ("O", "Others")),
-    )
+    first_name = forms.CharField(max_length=250,
+                                 help_text=_("Your First Name"))
+    last_name = forms.CharField(max_length=250, help_text=_("Your Last Name"))
+    email = forms.EmailField(max_length=200,
+                             help_text="Required",
+                             validators=[validate_email])
+    gender = forms.ChoiceField(choices=(("M", "Male"), ("F", "Female"),
+                                        ("O", "Others")), )
     phone = forms.CharField(
         max_length=15,
         validators=[MinLengthValidator(13), validate_phone],
         help_text=_("It should be +91 67xxx"),
     )
-    address1 = forms.CharField(validators=[validate_address], widget=forms.Textarea)
-    city = forms.CharField(max_length=500,
-                            validators=[validate_city])
+    address1 = forms.CharField(validators=[validate_address],
+                               widget=forms.Textarea)
+    city = forms.CharField(max_length=500, validators=[validate_city])
     state = forms.CharField(max_length=250)
     country = forms.CharField(max_length=250)
-    zip_code = forms.CharField(max_length=6,
-                                validators=[validate_zip])
-    university_name = forms.CharField( max_length=250)
+    zip_code = forms.CharField(max_length=6, validators=[validate_zip])
+    university_name = forms.CharField(max_length=250)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -109,7 +109,7 @@ class SignupForm(forms.Form):
         self.fields["email"].widget.attrs["required"] = "true"
 
         # self.fields["registration_no"].widget.attrs["class"] = "form-control"
-        
+
         self.fields["phone"].widget.attrs["class"] = "form-control"
         self.fields["phone"].widget.attrs["required"] = "true"
 

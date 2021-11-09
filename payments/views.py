@@ -10,18 +10,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse, HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.timezone import now
-from post_office import mail
 from django.views.decorators.csrf import csrf_exempt
-from main.tasks import mail_queue
-from post_office.models import EmailTemplate
-from django.template.loader import render_to_string
-
-
 from django.views.decorators.http import require_GET, require_POST
+from post_office import mail
+from post_office.models import EmailTemplate
 
 from main.models import GameGroup, Games
+from main.tasks import mail_queue
 
 from .decorators import verify_entry_for_orders, verify_entry_for_payments_history
 from .models import ComboOffers, Payments
@@ -299,7 +297,7 @@ def payment_stats(request):
                 "username": request.user.username,
                 "protocol": "https" if request.is_secure() else "http",
                 "receipt_id": request.session.get("purpose"),
-                "amount": request.session.get("total_value")
+                "amount": request.session.get("total_value"),
             }
             if not EmailTemplate.objects.filter(name="payment_mail").exists():
                 message = render_to_string("pay_mail.html")
