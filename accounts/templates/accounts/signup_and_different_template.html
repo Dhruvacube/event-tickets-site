@@ -49,14 +49,18 @@
                     <span style="font-size: 15px;">(Optional | Case Sensitive)</span> <br/><br/>
                 </div>
                 {% endif %}{% if view_profile %}
-                <div data-aos="zoom-in" class="textbox form-floating col-md-10"><input class="form-control" disabled="true" id="id_unique_id" name="unique_id" type="text" value="{{user.unique_id}}" /><label for="id_unique_id">Unique id:</label></div>{% endif %}
+                <div data-aos="zoom-in" class="textbox form-floating col-md-10"><input class="form-control" disabled="true" id="id_unique_id" name="unique_id" type="text" value="{{user.unique_id}}" /><label for="id_unique_id">Unique id:</label></div>{% endif %} {% if display %}
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="aggrement" required>
+                    <label class="form-check-label" for="aggrement">By registering yourself in TGL 2.0, you agree to our <a href="{% url 'tos' %}" target="_blank" title="Terms & Condition">Terms & Condition</a> and our <a href="{% url 'privacy_policy' %}" target="_blank" title="Privacy Policy">Privacy Policy</a></label>
+                </div>
+                {% endif %}
                 <button data-aos="zoom-in-up" type="submit" class="sign_in_btn">{{heading}}</button>
             </form>
         </div>
         {% if display %}
         <a data-aos="zoom-in-up" href="{% url 'signin' %}"><button data-aos="zoom-in-up" type="submit" class="sign_up_btn">Login</button> </a>
-        <a data-aos="zoom-in-up" href="{% url 'home' %}"><button data-aos="zoom-in-up" type="submit" class="back_btn">Home</button> </a>
-        {% endif %}
+        <a data-aos="zoom-in-up" href="{% url 'home' %}"><button data-aos="zoom-in-up" type="submit" class="back_btn">Home</button> </a> {% endif %}
     </div>
 </div>
 {% endblock %}

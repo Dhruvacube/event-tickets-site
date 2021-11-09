@@ -82,6 +82,15 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{% url 'home' %}#footer">Contact Us</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><b>Policies</b> <i class='bx bx-arrow-back bx-tada'></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'tos' %}" target="_blank"><i class='bx bx-badge-check'></i> TOS</a></li>
+                            <li><a class="dropdown-item" href="{% url 'privacy_policy' %}" target="_blank"><i class='bx bxs-shield'></i> Privacy Policy</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cookie_policy' %}" target="_blank"><i class='bx bx-cookie'></i> Cookie Policy</a></li>
+                            <li><a class="dropdown-item" href="{% url 'refunds' %}" target="_blank"><i class='bx bx-money'></i>  Refunds Policy</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link text-danger" href="{% url 'home' %}#sponsers" tabindex="-1" aria-disabled="true">Our Sponsers</a>
                     </li>
@@ -154,6 +163,12 @@
                             <a href="https://www.youtube.com/channel/UCQdfgyUIe9l-uAkZRhGa1Mw?sub_confirmation=1" title="YouTube" target="_blank"><i style="color: #FF0000;" class='bx bxl-youtube' ></i></a>
                             <a href="mailto:tanzanite.lpu@gmail.com" title="Gmail" target="_blank"><i style="color: #EA4335;" class='bx bx-mail-send'></i></a>
                         </h2>
+                        <h5 class="text-white">
+                            <a class="text-white" href="{% url 'tos' %}" target="_blank" title="Terms & Condition"><i class='bx bx-badge-check'></i></a>
+                            <a class="text-white" href="{% url 'privacy_policy' %}" target="_blank" title="Privacy Policy"><i class='bx bxs-shield'></i></a>
+                            <a class="text-white" href="{% url 'cookie_policy' %}" target="_blank" title="Cookie Policy"><i class='bx bx-cookie'></i></a>
+                            <a class="text-white" href="{% url 'refunds' %}" target="_blank" title="Refunds Policy"><i class='bx bx-money'></i></a>
+                        </h5>
                         <br/>
                         <h6 class="text-success">Querries relating to the gaming activity be directed at :</h6>
                         <hr/>
