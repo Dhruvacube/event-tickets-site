@@ -14,8 +14,8 @@ from .models import *
 class PaymentsAdmin(admin.ModelAdmin):
     list_display = (
         "order_id",
-        "request_id_instamojo",
-        "instamojo_order_id",
+        "payment_id_merchant",
+        "order_id_merchant",
         "amount",
         "payment_status",
     )
@@ -24,8 +24,8 @@ class PaymentsAdmin(admin.ModelAdmin):
     readonly_fields = (
         "orders_list",
         "created_at",
-        "request_id_instamojo",
-        "instamojo_order_id",
+        "payment_id_merchant",
+        "order_id_merchant",
         "order_id",
     )
     list_per_page = 30
@@ -33,8 +33,8 @@ class PaymentsAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             _("Order ID"),
-            {"fields": ("order_id", "request_id_instamojo",
-                        "instamojo_order_id")},
+            {"fields": ("order_id", "payment_id_merchant",
+                        "order_id_merchant")},
         ),
         (_("Amount"), {"fields": ("amount",)}),
         (

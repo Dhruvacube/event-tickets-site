@@ -20,11 +20,15 @@ class Payments(models.Model):
         default=uuid.uuid4,
         help_text=_("The order ID by which the system refers"),
     )
-    request_id_instamojo = models.UUIDField(
+    payment_id_merchant = models.CharField(
         default=uuid.uuid4,
-        help_text=_("The Request ID by which the INSTAMOJO refers"))
-    instamojo_order_id = models.CharField(
-        help_text=_("The order ID by which the INSTAMOJO refers"),
+        help_text=_("The Payment ID by which the Razorpay refers"),
+        null=True,
+        blank=True,
+        max_length=250,
+    )
+    order_id_merchant = models.CharField(
+        help_text=_("The Order ID by which the Razorpay refers"),
         null=True,
         blank=True,
         max_length=250,

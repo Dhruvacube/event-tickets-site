@@ -38,8 +38,9 @@
         {% else %}
         <div class="games">
             <div class="container1">
-                <h3 data-aos="fade-down">You have to pay a {% if user.referral_code %}dicounted price{% else %}total{% endif %} of</h3>
+                <h2 data-aos="fade-down">You have to pay a {% if user.referral_code %}dicounted price{% else %}total{% endif %} of</h2>
                 <h1 data-aos="flip-down">₹{{total_value}}</h1>
+                <h4 data-aos="fade-up">Receipt ID: {{purpose}}</h4>
                 {% if user.referral_code %}
                 <h4>Undiscounted Price was ₹{{undiscounted_value}}</h4>
                 <h4>You got a discount of {{user.referral_code.discount_percentage}}% using the {{user.referral_code}} referral code</h4>
@@ -51,8 +52,26 @@
                 {% endif %}
             </div>
             <div class="container2">
-                <button data-aos="zoom-in" type="submit" class="button btn btn-outline-warning">Checkout</button>
+                <button data-aos="zoom-in" type="submit" class="button btn btn-outline-warning" id="rzp-button1">Checkout</button>
             </div>
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            <script>
+                var options = {
+                    "key": "{{ razorpay_merchant_key }}",
+                    "amount": "{{ razorpay_amount }}",
+                    "currency": "{{ currency }}",
+                    "name": "Student Organization Tanzanite",
+                    "order_id": "{{ razorpay_order_id }}",
+                    "image": "{{ image_url }}",
+                    "callback_url": "{{ callback_url }}",
+                    "description": "Payment for the Tanza Gaming League 2.0",
+                };
+                var rzp1 = new Razorpay(options);
+                document.getElementById('rzp-button1').onclick = function(e) {
+                    rzp1.open();
+                    e.preventDefault();
+                }
+            </script>
         </div>
         {% endif %}
     </form>

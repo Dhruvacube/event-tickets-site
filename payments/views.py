@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
-from instamojo_wrapper import Instamojo
+import razorpay
 
 from main.models import GameGroup, Games
 
@@ -21,6 +21,7 @@ from .decorators import verify_entry_for_orders, verify_entry_for_payments_histo
 from .models import ComboOffers, Payments
 from .templatetags import payments_extras
 
+razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
 
 @sync_to_async
 @login_required
@@ -79,8 +80,7 @@ def make_order(request):
             "sq" not in squad_list
             and "so" in squad_list
             and settings.ALL_SOLO_PRICE is not None
-            and Games.objects.filter(has_solo_entry=True).count()
-            == squad_list.count("so")
+            and Games.objects.filter(has_solo_entry=True).count() == squad_list.count("so")
         ):
             total_value = int(settings.ALL_SOLO_PRICE)
             applied_internal_discount = True
@@ -113,24 +113,46 @@ def make_order(request):
                                 total_value += int(i.squad)
                             else:
                                 total_value += int(i.solo)
-                applied_internal_discount = True
+                        applied_internal_discount = True
         # discount code logic
         if request.user.referral_code:
             discount_value = request.user.referral_code.discount_percentage
             undiscounted_value = int(total_value)
             total_value = total_value * (1 - (discount_value / 100))
+        #Towards Payments
         if total_value > 0:
             request.session["order_list"] = order_list
             request.session["total_value"] = total_value
+            currency = 'INR'
+            purpose = str(uuid.uuid4())
+            request.session["purpose"] = purpose
+            current_site = get_current_site(request)
+            razorpay_order = razorpay_client.order.create(
+                dict(
+                    amount=total_value*100,
+                    currency=currency,
+                    receipt=purpose,
+                    notes={'order_list': str(order_list)},
+                    payment_capture='0'
+                )
+            )
             return render(
                 request,
                 "checkout.html",
                 {
                     "total_value": total_value,
-                    "action_url": reverse("create_payment"),
+                    "action_url": '?',
                     "title": "Pay for the Games that you want to participate",
                     "undiscounted_value": undiscounted_value,
                     "applied_internal_discount": applied_internal_discount,
+                    "purpose": purpose,
+                    #Razorpay
+                    "razorpay_order_id": razorpay_order['id'],
+                    "razorpay_merchant_key": settings.RAZOR_KEY_ID,
+                    "razorpay_amount": total_value*100,
+                    "currency": currency,
+                    "callback_url": reverse("payment_stats"),
+                    "image_url": f'{request.scheme}://{current_site.domain}{settings.STATIC_URL}icons/logo.png'
                 },
             )
         messages.error(request, "Please select something in order to pay!")
@@ -146,105 +168,130 @@ def make_order(request):
     )
 
 
-@sync_to_async
-@login_required
-@verify_entry_for_orders
-def create_payment(request):
-    if request:
-        messages.info(request, "Please read this announcement message!")
-        return HttpResponsePermanentRedirect('/announcements/23b3bce7-c7cb-45a9-9947-2af628791902')
-    amount = str(request.session.get("total_value"))
-    purpose = str(uuid.uuid4())
-    buyers_name = f"{request.user.first_name} {request.user.last_name}"
-    email = request.user.email
-    phone = request.user.phone
+# @sync_to_async
+# @login_required
+# @verify_entry_for_orders
+# def create_payment(request):
+#     amount = str(request.session.get("total_value"))
+#     purpose = str(uuid.uuid4())
+#     buyers_name = f"{request.user.first_name} {request.user.last_name}"
+#     email = request.user.email
+#     phone = request.user.phone
 
-    current_site = get_current_site(request)
-    redirect_url = f'{request.scheme}://{current_site.domain}{reverse("payment_stats")}'
+#     current_site = get_current_site(request)
+#     redirect_url = f'{request.scheme}://{current_site.domain}{reverse("payment_stats")}'
 
-    allow_repeated_payments = False
-    send_email = True
-    send_sms = True
-    if settings.LOCAL:
-        api = Instamojo(
-            api_key=settings.INSTAMOJO_AUTH_KEY,
-            auth_token=settings.INSTAMOJO_PRIVATE_TOKEN,
-            endpoint="https://test.instamojo.com/api/1.1/",
-        )
-    else:
-        api = Instamojo(
-            api_key=settings.INSTAMOJO_AUTH_KEY,
-            auth_token=settings.INSTAMOJO_PRIVATE_TOKEN,
-        )
+#     allow_repeated_payments = False
+#     send_email = True
+#     send_sms = True
+#     if settings.LOCAL:
+#         api = Instamojo(
+#             api_key=settings.INSTAMOJO_AUTH_KEY,
+#             auth_token=settings.INSTAMOJO_PRIVATE_TOKEN,
+#             endpoint="https://test.instamojo.com/api/1.1/",
+#         )
+#     else:
+#         api = Instamojo(
+#             api_key=settings.INSTAMOJO_AUTH_KEY,
+#             auth_token=settings.INSTAMOJO_PRIVATE_TOKEN,
+#         )
 
-    # Create a new Payment Request
-    response = api.payment_request_create(
-        amount=amount,
-        purpose=purpose,
-        buyer_name=buyers_name,
-        email=email,
-        phone=phone,
-        redirect_url=redirect_url,
-        allow_repeated_payments=allow_repeated_payments,
-        send_email=send_email,
-        send_sms=send_sms,
-    )
-    pay = Payments(
-        order_id=purpose,
-        request_id_instamojo=response.get("payment_request")["id"],
-        amount=int(request.session["total_value"]),
-        payment_status="P",
-        orders_list=str(request.session["order_list"]),
-    )
-    pay.save()
-    request.user.orders.add(pay)
-    return HttpResponsePermanentRedirect(response.get("payment_request")["longurl"])
+#     # Create a new Payment Request
+#     response = api.payment_request_create(
+#         amount=amount,
+#         purpose=purpose,
+#         buyer_name=buyers_name,
+#         email=email,
+#         phone=phone,
+#         redirect_url=redirect_url,
+#         allow_repeated_payments=allow_repeated_payments,
+#         send_email=send_email,
+#         send_sms=send_sms,
+#     )
+#     pay = Payments(
+#         order_id=purpose,
+#         request_id_instamojo=response.get("payment_request")["id"],
+#         amount=int(request.session["total_value"]),
+#         payment_status="P",
+#         orders_list=str(request.session["order_list"]),
+#     )
+#     pay.save()
+#     request.user.orders.add(pay)
+#     return HttpResponsePermanentRedirect(response.get("payment_request")["longurl"])
 
 
 @sync_to_async
+@require_POST
+@csrf_exempt
 @login_required
 @verify_entry_for_payments_history
 def payment_stats(request):
-    payment_id = request.GET["payment_id"]
-    payment_request_id = request.GET["payment_request_id"]
-    payment_status = request.GET["payment_status"]
-    if "credit" in payment_status.lower():
-        try:
-            payment_obj = Payments.objects.filter(
-                request_id_instamojo=payment_request_id
-            ).get()
-            payment_obj.payment_status = "S"
-            payment_obj.instamojo_order_id = payment_id
-            payment_obj.save()
-            messages.success(
-                request, "You have successfully paid the amount! Please wait for 2secs"
+    payment_id = request.POST.get('razorpay_payment_id', '')
+    razorpay_order_id = request.POST.get('razorpay_order_id', '')
+    signature = request.POST.get('razorpay_signature', '')
+    try:
+        # verify the payment signature.
+        result = razorpay_client.utility.verify_payment_signature({
+            'razorpay_order_id': razorpay_order_id,
+            'razorpay_payment_id': payment_id,
+            'razorpay_signature': signature
+        })
+        if result is None:
+            try:
+                # capture the payemt
+                razorpay_client.payment.capture(payment_id, int(request.session["total_value"])*100)
+            except:
+                messages.error(
+                    request,
+                    "Couldn't verify the payment signature!",
+                )
+                redirect_link = reverse("make_order")
+                return render(
+                    request,
+                    "checkout.html",
+                    {
+                        "payafter": True,
+                        "redirect_link": redirect_link,
+                        "title": "Payment Status check or verifier",
+                    },
+                )
+            pay = Payments(
+                order_id=request.session["purpose"],
+                order_id_merchant=razorpay_order_id,
+                amount=int(request.session["total_value"]),
+                payment_status = "S",
+                orders_list=str(order_list),
+                payment_id_merchant = payment_id
             )
-
+            pay.save()
+            request.user.orders.add(pay)
+            messages.success(
+                    request, "You have successfully paid the amount! Please wait for 2secs"
+                )
             order_list = request.session.get("order_list")
-
             for i in order_list:
                 game = Games.objects.filter(game_unique_id=i[0]).get()
                 game_group = GameGroup(
-                    game=game, payment_id=payment_obj, solo_or_squad=i[1]
-                )
+                        game=game, payment_id=payment_obj, solo_or_squad=i[1]
+                    )
                 game_group.save()
                 game_group.users.add(request.user)
-
             redirect_link = reverse("make_groups")
-        except Payments.DoesNotExist:
-            messages.error(request, "The transaction does not exists")
-            redirect_link = reverse("make_order")
-        except:
-            messages.error(
+    except Payments.DoesNotExist:
+        messages.error(request, "The transaction does not exists")
+        redirect_link = reverse("make_order")
+    except:
+        messages.error(
                 request,
-                "There was some error processing at the backend! Please contact the support",
+                "There was some error processing your payment! Please contact the support",
             )
-            redirect_link = reverse("make_order")
-    else:
-        messages.error(request, "The payment failed")
         redirect_link = reverse("make_order")
     try:
         del request.session["order_list"]
+    except:
+        pass
+    try:
+        del request.session["purpose"]
     except:
         pass
     try:

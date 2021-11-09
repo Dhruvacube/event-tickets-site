@@ -7,7 +7,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Order ID</th>
-                        <th scope="col">Instamojo Request ID</th>
+                        <th scope="col">Razorpay Payment ID</th>
+                        <th scope="col">Razorpay Order ID</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Status</th>
                         <th scope="col">Request Date and Time</th>
@@ -18,7 +19,8 @@
                     <tr data-aos="fade-down">
                         <th scope="row">{{forloop.counter}}</th>
                         <td>{{i.order_id}}</td>
-                        <td>{{i.request_id_instamojo}}</td>
+                        <td>{{i.payment_id_merchant}}</td>
+                        <td>{{i.order_id_merchant}}</td>
                         <td>₹{{i.amount}}</td>
                         <td>{{i.payment_status|payment_stats|safe}}</td>
                         <td>{{i.created_at}}</td>

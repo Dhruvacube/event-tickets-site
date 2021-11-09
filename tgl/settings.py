@@ -129,8 +129,8 @@ if not os.getenv("WHITENOISE"):
         + [INSTALLED_APPS[-1]]
     )
 
-INSTAMOJO_AUTH_KEY = os.environ.get("INSTAMOJO_AUTH_KEY")
-INSTAMOJO_PRIVATE_TOKEN = os.environ.get("INSTAMOJO_PRIVATE_TOKEN")
+RAZOR_KEY_ID  = os.environ.get("RAZOR_KEY_ID")
+RAZOR_KEY_SECRET  = os.environ.get("RAZOR_KEY_SECRET")
 
 EMAIL_PORT = 587
 EMAIL_HOST = "smtp.gmail.com"
