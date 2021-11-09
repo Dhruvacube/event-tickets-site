@@ -38,6 +38,7 @@
                 </span>
                 </div>
                 {% endif %} {% endfor %}
+                <input type="hidden" name="next" value="{{ next_url }}" />
                 <button type="submit" class="sign_in_btn">Sign in</button>
             </form>
             <a href="{% url 'signup' %}"><input type="button" class="sign_up_btn" value="Sign up"></a>

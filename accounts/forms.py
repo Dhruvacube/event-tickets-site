@@ -1,12 +1,14 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
+from django.core.validators import MaxLengthValidator, MinLengthValidator
+
 from django.contrib.auth.forms import (
     AuthenticationForm,
     PasswordChangeForm,
     PasswordResetForm,
     SetPasswordForm,
     UserChangeForm,
-    UserCreationForm,
 )
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -29,94 +31,109 @@ def validate_email(email):
             params={"email": email},
         )
 
+def validate_zip(value):
+    if not value.isdigit():
+        raise ValidationError(
+            _("%(value)s is not a valid zip code"),
+            params={"value": value},
+        )
+    list_value = value.split(" ")
+    str_value = "".join(list_value)
+    return str_value
 
-class SignupForm(UserCreationForm):
-    email = forms.EmailField(max_length=200,
-                             help_text="Required",
-                             validators=[validate_email])
 
-    class Meta(UserCreationForm):
-        model = User
-        fields = (
-            "username",
-            "first_name",
-            "last_name",
-            # "registration_no",
-            "email",
-            "password1",
-            "password2",
-            "gender",
-            "phone",
-            "address1",
-            "address2",
-            "city",
-            "state",
-            "country",
-            "zip_code",
-            "university_name",
+def validate_city(value):
+    if len(value) < 2:
+        raise ValidationError(
+            _("%(value)s is not a valid city name"),
+            params={"value": value},
         )
 
-    def save(self, commit=True):
-        user = super(SignupForm, self).save(commit=False)
-        user.email = self.cleaned_data["email"]
 
-        if commit:
-            user.save()
-        return user
+def validate_address(value):
+    if len(value) <= 1 or value.isnumeric():
+        raise ValidationError(
+            _("%(value)s is not a valid address"),
+            params={"value": value},
+        )
+
+
+def validate_phone(value):
+    for i in str(value[1:]):
+        if i.isspace():
+            pass
+
+        elif not i.strip(" ").isdigit():
+            raise ValidationError(
+                _(f"{value} is not a valid phone number"),
+                params={"value": i},
+            )
+    if not value.strip(" ")[0] in "+":
+        raise ValidationError(
+            _(f"{value} is not a phone number, Please enter a no like +91 67xxxxxxxx"
+              ),
+            params={"value": value},
+        )
+
+
+class SignupForm(forms.Form):
+    first_name = forms.CharField(max_length=250, help_text=_('Your First Name'))
+    last_name = forms.CharField(max_length=250, help_text=_('Your Last Name'))
+    email = forms.EmailField(max_length=200,help_text="Required",validators=[validate_email])
+    gender = forms.ChoiceField(
+        choices=(("M", "Male"), ("F", "Female"), ("O", "Others")),
+    )
+    phone = forms.CharField(
+        max_length=15,
+        validators=[MinLengthValidator(13), validate_phone],
+        help_text=_("It should be +91 67xxx"),
+    )
+    address1 = forms.CharField(validators=[validate_address], widget=forms.Textarea)
+    city = forms.CharField(max_length=500,
+                            validators=[validate_city])
+    state = forms.CharField(max_length=250)
+    country = forms.CharField(max_length=250)
+    zip_code = forms.CharField(max_length=6,
+                                validators=[validate_zip])
+    university_name = forms.CharField( max_length=250)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["username"].widget.attrs["class"] = "form-control"
-        self.fields["username"].widget.attrs["required"] = "true"
+        self.fields["first_name"].widget.attrs["class"] = "form-control"
+        self.fields["first_name"].widget.attrs["required"] = "true"
 
-        self.fields["password1"].widget.attrs["class"] = "form-control"
-        self.fields["password1"].widget.attrs["required"] = "true"
+        self.fields["last_name"].widget.attrs["class"] = "form-control"
+        self.fields["last_name"].widget.attrs["required"] = "true"
 
-        self.fields["password2"].widget.attrs["class"] = "form-control"
-        self.fields["password2"].widget.attrs["required"] = "true"
+        self.fields["email"].widget.attrs["class"] = "form-control"
+        self.fields["email"].widget.attrs["required"] = "true"
 
-        try:
-            self.fields["first_name"].widget.attrs["class"] = "form-control"
-            self.fields["first_name"].widget.attrs["required"] = "true"
+        # self.fields["registration_no"].widget.attrs["class"] = "form-control"
+        
+        self.fields["phone"].widget.attrs["class"] = "form-control"
+        self.fields["phone"].widget.attrs["required"] = "true"
 
-            self.fields["last_name"].widget.attrs["class"] = "form-control"
-            self.fields["last_name"].widget.attrs["required"] = "true"
+        self.fields["address1"].widget.attrs["class"] = "form-control"
+        self.fields["address1"].widget.attrs["required"] = "true"
+        self.fields["address1"].widget.attrs["rows"] = "50"
 
-            self.fields["email"].widget.attrs["class"] = "form-control"
-            self.fields["email"].widget.attrs["required"] = "true"
+        self.fields["city"].widget.attrs["class"] = "form-control"
+        self.fields["city"].widget.attrs["required"] = "true"
 
-            # self.fields["registration_no"].widget.attrs["class"] = "form-control"
+        self.fields["state"].widget.attrs["class"] = "form-control"
+        self.fields["state"].widget.attrs["required"] = "true"
 
-            self.fields["phone"].widget.attrs["class"] = "form-control"
-            self.fields["phone"].widget.attrs["required"] = "true"
+        self.fields["country"].widget.attrs["class"] = "form-control"
+        self.fields["country"].widget.attrs["required"] = "true"
+        self.fields["country"].widget.attrs["value"] = "India"
 
-            self.fields["address1"].widget.attrs["class"] = "form-control"
-            self.fields["address1"].widget.attrs["required"] = "true"
-            self.fields["address1"].widget.attrs["rows"] = "50"
+        self.fields["zip_code"].widget.attrs["class"] = "form-control"
+        self.fields["zip_code"].widget.attrs["required"] = "true"
 
-            self.fields["address2"].widget.attrs["class"] = "form-control"
-            self.fields["address2"].widget.attrs["required"] = "false"
-            self.fields["address2"].widget.attrs["rows"] = "50"
+        self.fields["gender"].widget.attrs["class"] = "form-control"
 
-            self.fields["city"].widget.attrs["class"] = "form-control"
-            self.fields["city"].widget.attrs["required"] = "true"
-
-            self.fields["state"].widget.attrs["class"] = "form-control"
-            self.fields["state"].widget.attrs["required"] = "true"
-
-            self.fields["country"].widget.attrs["class"] = "form-control"
-            self.fields["country"].widget.attrs["required"] = "true"
-
-            self.fields["zip_code"].widget.attrs["class"] = "form-control"
-            self.fields["zip_code"].widget.attrs["required"] = "true"
-
-            self.fields["gender"].widget.attrs["class"] = "form-control"
-
-            self.fields["university_name"].widget.attrs[
-                "class"] = "form-control"
-            self.fields["university_name"].widget.attrs["required"] = "true"
-        except:
-            pass
+        self.fields["university_name"].widget.attrs["class"] = "form-control"
+        self.fields["university_name"].widget.attrs["required"] = "true"
 
         # self.fields["gender"].widget.attrs["style"] = "color: black !important; background-color: white !important;"
 
@@ -229,7 +246,6 @@ class EditProfileForm(UserChangeForm):
         self.fields["address1"].widget.attrs["required"] = "true"
 
         self.fields["address2"].widget.attrs["class"] = "form-control"
-        self.fields["address2"].widget.attrs["required"] = "true"
 
         self.fields["city"].widget.attrs["class"] = "form-control"
         self.fields["city"].widget.attrs["required"] = "true"

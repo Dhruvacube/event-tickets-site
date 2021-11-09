@@ -8,6 +8,8 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+import secrets
+import string
 from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetDoneView,
@@ -27,6 +29,7 @@ from post_office.models import EmailTemplate
 
 from main.tasks import mail_queue
 from referral.models import Referral
+import ast
 
 from .forms import (
     EditProfileForm,
@@ -173,25 +176,31 @@ def loginform(request):
         if form.is_valid():
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
+            try:
+                next_url = ast.literal_eval(str(request.POST.get("next")))
+            except:
+                next_url = request.POST.get("next")
 
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}")
-                if request.GET.get("next"):
-                    return HttpResponsePermanentRedirect(request.GET.get("next"))
+                if bool(next_url):
+                    return HttpResponsePermanentRedirect(next_url)
                 return HttpResponsePermanentRedirect(reverse("home"))
             messages.error(request, "Invalid username or password.")
             return redirect(reverse("signin"))
         messages.error(request, "Details Invalid")
         return redirect(reverse("signin"))
     form = LoginForm()
+    mail_queue.delay()
     return render(
         request,
         "login.html",
         {
             "title": "Login",
             "form": form,
+            "next_url": request.GET.get("next")
         },
     )
 
@@ -203,9 +212,14 @@ def signup(request):
         form = SignupForm(request.POST)
 
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = True
+            def generate_code(n: int = 7):
+                return "".join(secrets.choice(string.ascii_letters + string.digits + str(secrets.randbits(7))) for i in range(n)).upper()
 
+            username = generate_code()
+            password = generate_code(10)
+            data = form.cleaned_data
+            data.update({'username': username, 'password': password, 'is_active': True})
+            user = User.objects.create_user(**data)
             referral = request.POST.get("referral_code")
             if len(referral) == 0 or referral in [None, ""]:
                 user.referral_code = None
@@ -219,9 +233,6 @@ def signup(request):
                 )
             user.save()
             to_email = form.cleaned_data.get("email")
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password1")
-
             ctx = {
                 "user": user,
                 "domain": current_site.domain,
@@ -247,10 +258,7 @@ def signup(request):
                 context=ctx,
             )
             mail_queue.delay()
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-            messages.success(request, "Account created")
+            messages.success(request, f"Account created, please see your mail {to_email} for the instructions on how to proceed further!, <br/> Check {to_email} , To get your <strong>username</username> and <strong>password</password>")
             return redirect(reverse("make_order"))
         message_error_list = []
         if form.errors.as_data():

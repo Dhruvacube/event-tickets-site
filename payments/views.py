@@ -12,7 +12,13 @@ from django.http import HttpResponse, HttpResponsePermanentRedirect, JsonRespons
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.timezone import now
+from post_office import mail
 from django.views.decorators.csrf import csrf_exempt
+from main.tasks import mail_queue
+from post_office.models import EmailTemplate
+from django.template.loader import render_to_string
+
+
 from django.views.decorators.http import require_GET, require_POST
 
 from main.models import GameGroup, Games
@@ -229,7 +235,6 @@ def make_order(request):
 @require_POST
 @csrf_exempt
 @login_required
-@verify_entry_for_payments_history
 def payment_stats(request):
     payment_id = request.POST.get("razorpay_payment_id", "")
     razorpay_order_id = request.POST.get("razorpay_order_id", "")
@@ -265,6 +270,7 @@ def payment_stats(request):
                         "title": "Payment Status check or verifier",
                     },
                 )
+            order_list = request.session.get("order_list")
             pay = Payments(
                 order_id=request.session["purpose"],
                 order_id_merchant=razorpay_order_id,
@@ -278,15 +284,38 @@ def payment_stats(request):
             messages.success(
                 request,
                 "You have successfully paid the amount! Please wait for 2secs")
-            order_list = request.session.get("order_list")
             for i in order_list:
                 game = Games.objects.filter(game_unique_id=i[0]).get()
                 game_group = GameGroup(game=game,
-                                       payment_id=payment_obj,
+                                       payment_id=pay,
                                        solo_or_squad=i[1])
                 game_group.save()
                 game_group.users.add(request.user)
             redirect_link = reverse("make_groups")
+            current_site = get_current_site(request)
+            ctx = {
+                "user": request.user,
+                "domain": current_site.domain,
+                "username": request.user.username,
+                "protocol": "https" if request.is_secure() else "http",
+                "receipt_id": request.session.get("purpose"),
+                "amount": request.session.get("total_value")
+            }
+            if not EmailTemplate.objects.filter(name="payment_mail").exists():
+                message = render_to_string("pay_mail.html")
+                EmailTemplate.objects.create(
+                    name="payment_mail",
+                    description="Mail to send after payment",
+                    subject="You have successfully made the payment for TGL - 2.0",
+                    html_content=message,
+                )
+            mail.send(
+                request.user.email,
+                settings.EMAIL_HOST_USER,
+                template="payment_mail",
+                context=ctx,
+            )
+            mail_queue.delay()
     except Payments.DoesNotExist:
         messages.error(request, "The transaction does not exists")
         redirect_link = reverse("make_order")

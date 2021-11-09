@@ -34,7 +34,7 @@
         {% endfor %}
         <!-- ==Ends== -->
         <div class="container">
-            <form action="?" class="form-floating row needs-validation" method="POST">{% csrf_token %} {% for field in form %}
+            <form action="?" autocomplete="off" class="form-floating row needs-validation" method="POST">{% csrf_token %} {% for field in form %}
                 <div data-aos="fade-down" class="textbox form-floating col-md-{% if forloop.counter == 1 or forloop.counter == 4 %}12{% else %}6{% endif %}">
                     {{ field }}{{ field.label_tag }}{% if field.help_text %}<br/><br/><span style="font-size: 15px;" class="help_text{{forloop.counter}}">{{ field.help_text }}</span> {% endif %} <br/><br/> {% for error in field.errors %}
                     <span style="font-size: 15px;" class="text-danger">
