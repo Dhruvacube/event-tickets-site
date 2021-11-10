@@ -58,9 +58,8 @@ def validate_address(value):
 
 
 class SignupForm(forms.Form):
-    first_name = forms.CharField(max_length=250,
-                                 help_text=_("Your First Name"))
-    last_name = forms.CharField(max_length=250, help_text=_("Your Last Name"))
+    first_name = forms.CharField(max_length=250)
+    last_name = forms.CharField(max_length=250)
     email = forms.EmailField(max_length=200,
                              help_text="Required",
                              validators=[validate_email])
@@ -96,7 +95,6 @@ class SignupForm(forms.Form):
         self.fields["phone"].widget.attrs["required"] = "true"
 
         self.fields["address1"].widget.attrs["class"] = "form-control"
-        self.fields["address1"].widget.attrs["required"] = "true"
         self.fields["address1"].widget.attrs["rows"] = "50"
 
         self.fields["city"].widget.attrs["class"] = "form-control"
@@ -110,7 +108,6 @@ class SignupForm(forms.Form):
         self.fields["country"].widget.attrs["value"] = "India"
 
         self.fields["zip_code"].widget.attrs["class"] = "form-control"
-        self.fields["zip_code"].widget.attrs["required"] = "true"
 
         self.fields["gender"].widget.attrs["class"] = "form-control"
 

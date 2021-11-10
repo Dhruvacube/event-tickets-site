@@ -21,7 +21,7 @@ textarea {
     border-top: none !important;
     border-left: none !important;
     border-bottom: solid !important;
-    border-color: #FFA500 !important;
+    border-color: red !important;
     color: white;
     height: 10em !important;
     width: 50em !important;
@@ -32,7 +32,7 @@ input {
     width: 100%;
     border-radius: 5px;
     border-bottom: solid !important;
-    border-color: #FFA500 !important;
+    border-color: red !important;
     color: white;
     font-size: 18px;
     font-weight: 500;
@@ -74,7 +74,7 @@ input:hover {
     font-size: 20px;
     padding: 8px 0;
     margin: 5% 0;
-    border-bottom: 1px solid #af2b2b;
+    border-bottom: 1px solid black;
 }
 
 .textbox i {
