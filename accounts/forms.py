@@ -57,24 +57,6 @@ def validate_address(value):
         )
 
 
-def validate_phone(value):
-    for i in str(value[1:]):
-        if i.isspace():
-            pass
-
-        elif not i.strip(" ").isdigit():
-            raise ValidationError(
-                _(f"{value} is not a valid phone number"),
-                params={"value": i},
-            )
-    if not value.strip(" ")[0] in "+":
-        raise ValidationError(
-            _(f"{value} is not a phone number, Please enter a no like +91 67xxxxxxxx"
-              ),
-            params={"value": value},
-        )
-
-
 class SignupForm(forms.Form):
     first_name = forms.CharField(max_length=250,
                                  help_text=_("Your First Name"))
@@ -86,7 +68,7 @@ class SignupForm(forms.Form):
                                         ("O", "Others")), )
     phone = forms.CharField(
         max_length=15,
-        validators=[MinLengthValidator(13), validate_phone],
+        validators=[MinLengthValidator(10)],
         help_text=_("It should be +91 67xxx"),
     )
     address1 = forms.CharField(validators=[validate_address],

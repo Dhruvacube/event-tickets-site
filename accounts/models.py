@@ -67,7 +67,7 @@ class User(AbstractUser):
     phone = models.CharField(
         _("phone"),
         max_length=15,
-        validators=[MinLengthValidator(13), validate_phone],
+        validators=[MinLengthValidator(10)],
         help_text=_("It should be +91 67xxx"),
     )
     address1 = models.TextField(_("address 1"), validators=[validate_address])
@@ -88,7 +88,7 @@ class User(AbstractUser):
                                        max_length=250)
     registration_no = models.CharField(
         _("Registration No"),
-        validators=[MinLengthValidator(3)],
+        validators=[MinLengthValidator(2)],
         null=True,
         blank=True,
         max_length=250,
