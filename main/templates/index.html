@@ -11,8 +11,37 @@
     </div>
 </section>
 
+<section class="games" id="mgames">
+    <h1>TGL Mobile Games Event</h1>
+    <div class="container">
+        <div class="container row row-cols-1 row-cols-md-4 g-4">
+            {% for i in games %} {% if i.platform == 'm' or i.platform == 'a' or i.platform == 'ps' %}
+            <div class="col">
+                <div class="card container" data-aos="zoom-out-down" data-aos-duration="1500">
+                    <img src="{% static i.image_url %}" class="card-img-top" loading="lazy" />
+                    <div class="box-lower-section card-body">
+                        <h4 class="game-name">{{i.name|capfirst}}</h4>
+                        <p>{{i.short_description}}</p>
+                        <a href="{% url 'about_game' i.id %}"><button class="btn btn-warning">Know More</button></a>
+                    </div>
+                </div>
+            </div>
+            {% endif %} {% endfor %}
+        </div>
+        <hr/>
+        <center><a href="https://drive.google.com/file/d/1ocPPuVOReZkUMMwMf-77RjpqZZhErqGG/view?usp=sharing" target="_blank" data-aos="zoom-in-up"><button class="btn btn-info btn-lg">How to Register Completely</button></a>{% if not user.is_authenticated %}
+            <a href="{% url 'signup' %}" data-aos="zoom-in-up"><button class="btn btn-danger btn-lg">Register Now</button></a> {% endif %}</center>
+    </div>
+</section>
+
+<section id="tournaments">
+    <div class="credits bg-dark py-2 rounded-pill">
+        <h1>PC Gamer ?? Then check these events out !!</h1>
+    </div>
+</section>
+
 <section class="games" id="games">
-    <h1>PC Games Event</h1>
+    <h1>TGL PC Games Event</h1>
     <div class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for i in games %}{% if i.platform == 'p' or i.platform == 'a' %}
@@ -34,34 +63,7 @@
     </div>
 </section>
 
-<section id="tournaments">
-    <div class="credits bg-dark py-2 rounded-pill">
-        <h1>Mobile Gamer ?? Then check these events out !!</h1>
-    </div>
-</section>
 
-<section class="games" id="mgames">
-    <h1>Mobile Games Event</h1>
-    <div class="container">
-        <div class="container row row-cols-1 row-cols-md-4 g-4">
-            {% for i in games %} {% if i.platform == 'm' or i.platform == 'a' or i.platform == 'ps' %}
-            <div class="col">
-                <div class="card container" data-aos="zoom-out-down" data-aos-duration="1500">
-                    <img src="{% static i.image_url %}" class="card-img-top" loading="lazy" />
-                    <div class="box-lower-section card-body">
-                        <h4 class="game-name">{{i.name|capfirst}}</h4>
-                        <p>{{i.short_description}}</p>
-                        <a href="{% url 'about_game' i.id %}"><button class="btn btn-warning">Know More</button></a>
-                    </div>
-                </div>
-            </div>
-            {% endif %} {% endfor %}
-        </div>
-        <hr/>
-        <center><a href="https://drive.google.com/file/d/1ocPPuVOReZkUMMwMf-77RjpqZZhErqGG/view?usp=sharing" target="_blank" data-aos="zoom-in-up"><button class="btn btn-info btn-lg">How to Register Completely</button></a>{% if not user.is_authenticated %}
-            <a href="{% url 'signup' %}" data-aos="zoom-in-up"><button class="btn btn-danger btn-lg">Register Now</button></a> {% endif %}</center>
-    </div>
-</section>
 
 <section class="games" id="sponsers">
     <h1>Our Partners</h1>
