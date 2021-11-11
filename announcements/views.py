@@ -26,7 +26,7 @@ def view_annoucements(request):
                         request.user,
                     ],
                     publish=True,
-                )))
+                ))).reverse()
 
     if announcements.count() <= 0:
         messages.info(request, r"No announcements there ¯\_(ツ)_/¯")
