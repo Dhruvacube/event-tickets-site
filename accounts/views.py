@@ -226,8 +226,13 @@ def signup(request):
             data.update({
                 "username": username,
                 "password": password,
-                "is_active": True
+                "is_active": True,
+                "address1": data.get("address")
             })
+            try:
+                del data["address"]
+            except:
+                pass
             user = User.objects.create_user(**data)
             referral = request.POST.get("referral_code")
             if len(referral) == 0 or referral in [None, ""]:

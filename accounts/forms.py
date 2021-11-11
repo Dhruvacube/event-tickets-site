@@ -70,7 +70,7 @@ class SignupForm(forms.Form):
         validators=[MinLengthValidator(10)],
         help_text=_("It should be +91 67xxx"),
     )
-    address1 = forms.CharField(validators=[validate_address],
+    address = forms.CharField(validators=[validate_address],
                                widget=forms.Textarea)
     city = forms.CharField(max_length=500, validators=[validate_city])
     state = forms.CharField(max_length=250)
@@ -94,8 +94,8 @@ class SignupForm(forms.Form):
         self.fields["phone"].widget.attrs["class"] = "form-control"
         self.fields["phone"].widget.attrs["required"] = "true"
 
-        self.fields["address1"].widget.attrs["class"] = "form-control"
-        self.fields["address1"].widget.attrs["rows"] = "50"
+        self.fields["address"].widget.attrs["class"] = "form-control"
+        self.fields["address"].widget.attrs["rows"] = "50"
 
         self.fields["city"].widget.attrs["class"] = "form-control"
         self.fields["city"].widget.attrs["required"] = "true"
