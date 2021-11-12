@@ -18,7 +18,7 @@ def view_annoucements(request):
         GameGroup.objects.filter(users__in=[
             request.user,
         ]).iterator())
-    announcements = GlobalAnnouncements.objects.filter(publish=True).union(
+    announcements = (GlobalAnnouncements.objects.filter(publish=True).union(
         GroupsAnnouncements.objects.filter(
             groups__in=groups, publish=True).union(
                 UsersAnnouncements.objects.filter(
@@ -26,7 +26,7 @@ def view_annoucements(request):
                         request.user,
                     ],
                     publish=True,
-                ))).reverse()
+                ))).reverse())
 
     if announcements.count() <= 0:
         messages.info(request, r"No announcements there ¯\_(ツ)_/¯")
