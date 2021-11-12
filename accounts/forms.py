@@ -71,7 +71,7 @@ class SignupForm(forms.Form):
         help_text=_("It should be +91 67xxx"),
     )
     address = forms.CharField(validators=[validate_address],
-                               widget=forms.Textarea)
+                              widget=forms.Textarea)
     city = forms.CharField(max_length=500, validators=[validate_city])
     state = forms.CharField(max_length=250)
     country = forms.CharField(max_length=250)
