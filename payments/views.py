@@ -276,9 +276,13 @@ def payment_stats(request):
                     },
                 )
             order_list = request.session.get("order_list")
-            pay = Payments.objects.filter(order_id=request.session["purpose"],order_id_merchant=razorpay_order_id,amount=int(request.session["total_value"]),).get()
-            pay.payment_id_merchant=payment_id
-            pay.payment_status="S"
+            pay = Payments.objects.filter(
+                order_id=request.session["purpose"],
+                order_id_merchant=razorpay_order_id,
+                amount=int(request.session["total_value"]),
+            ).get()
+            pay.payment_id_merchant = payment_id
+            pay.payment_status = "S"
             pay.save()
             request.user.orders.add(pay)
             messages.success(
