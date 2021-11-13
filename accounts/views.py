@@ -227,7 +227,7 @@ def signup(request):
                 "username": username,
                 "password": password,
                 "is_active": True,
-                "address1": data.get("address")
+                "address1": data.get("address"),
             })
             try:
                 del data["address"]
