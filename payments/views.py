@@ -133,6 +133,13 @@ def make_order(request):
                     notes={"order_list": str(order_list)},
                     payment_capture="0",
                 ))
+            pay = Payments(
+                order_id=purpose,
+                order_id_merchant=razorpay_order["id"],
+                amount=int(total_value),
+                orders_list=str(order_list),
+            )
+            pay.save()
             return render(
                 request,
                 "checkout.html",
@@ -269,14 +276,9 @@ def payment_stats(request):
                     },
                 )
             order_list = request.session.get("order_list")
-            pay = Payments(
-                order_id=request.session["purpose"],
-                order_id_merchant=razorpay_order_id,
-                amount=int(request.session["total_value"]),
-                payment_status="S",
-                orders_list=str(order_list),
-                payment_id_merchant=payment_id,
-            )
+            pay = Payments.objects.filter(order_id=request.session["purpose"],order_id_merchant=razorpay_order_id,amount=int(request.session["total_value"]),).get()
+            pay.payment_id_merchant=payment_id
+            pay.payment_status="S"
             pay.save()
             request.user.orders.add(pay)
             messages.success(
