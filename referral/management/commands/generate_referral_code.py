@@ -1,5 +1,12 @@
 """
- Command for mailing all the data
+ Command making referral code using the data from a csv file
+ 
+ The csv should be there in 'main/static' and the filename should be 'data.csv'
+ 
+ The csv data should be in the format of:
+ email-id, name
+ 
+ and the referral ode will be mailled to them by the mail server and a csv file will be generated in 'main/static' under the name of 'new_data_generated.csv'
 """
 
 import csv
@@ -15,7 +22,7 @@ from referral.models import *
 
 
 class Command(BaseCommand):
-    help = " Command for mailing all the data"
+    help = "Command making referral code using the data from a csv file"
     requires_system_checks = output_transaction = requires_migrations_checks = True
 
     def handle(self, *args, **options):
