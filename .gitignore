@@ -2,6 +2,7 @@ env
 staticfiles
 staticfiles/*
 celerybeat*
+*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -238,7 +238,7 @@ def signup(request):
             if len(referral) == 0 or referral in [None, ""]:
                 user.referral_code = None
             elif Referral.objects.filter(referral_code=referral).exists():
-                user.referral_code = Referral.filter(
+                user.referral_code = Referral.objects.filter(
                     referral_code=referral).get()
             else:
                 messages.warning(
