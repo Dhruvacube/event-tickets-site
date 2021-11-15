@@ -140,6 +140,7 @@ def make_order(request):
                 orders_list=str(order_list),
             )
             pay.save()
+            request.user.orders.add(pay)
             return render(
                 request,
                 "checkout.html",
@@ -284,7 +285,6 @@ def payment_stats(request):
             pay.payment_id_merchant = payment_id
             pay.payment_status = "S"
             pay.save()
-            request.user.orders.add(pay)
             messages.success(
                 request,
                 "You have successfully paid the amount! Please wait for 2secs")
