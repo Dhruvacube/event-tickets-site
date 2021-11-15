@@ -31,7 +31,7 @@ kombu==5.2.1
 packaging==21.2
 prompt-toolkit==3.0.22
 psycopg2==2.9.2
-pyparsing==2.4.7
+pyparsing==3.0.6
 python-binary-memcached==0.30.1
 python-dotenv==0.19.2
 python-stdnum==1.16
@@ -40,7 +40,7 @@ razorpay==1.2.0
 rcssmin==1.0.6
 redis==3.5.3
 requests==2.26.0
-rjsmin==1.1.0
+rjsmin==1.2.0
 sentry-sdk==1.4.3
 six==1.16.0
 soupsieve==2.3.1
