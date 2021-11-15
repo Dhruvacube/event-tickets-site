@@ -5,7 +5,6 @@ import secrets
 import string
 from datetime import datetime
 
-import requests
 from asgiref.sync import sync_to_async
 from django.conf import settings
 from django.contrib import messages
@@ -18,7 +17,7 @@ from django.contrib.auth.views import (
 )
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse

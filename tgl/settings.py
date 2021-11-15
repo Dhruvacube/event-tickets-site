@@ -52,6 +52,7 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
+    "main.middleware.redirect_middleware",
     "htmlmin.middleware.MarkRequestMiddleware",
 ]
 
