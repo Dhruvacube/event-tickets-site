@@ -14,9 +14,8 @@ def redirect_middleware(get_response):
             full_url = await request.build_absolute_uri()
             if await request.user.is_superuser:
                 return response
-            if "tgl2.herokuapp.com" in full_url:
-                return HttpResponsePermanentRedirect(
-                    full_url.replace("tgl2.herokuapp.com", "tanzanitelpu.com"))
+            if 'tgl2.herokuapp.com'.lower() in full_url.lower():
+                return HttpResponsePermanentRedirect(full_url.replace('tgl2.herokuapp.com', 'tanzanitelpu.com'))
             return response
 
     else:
@@ -26,9 +25,8 @@ def redirect_middleware(get_response):
             full_url = request.build_absolute_uri()
             if request.user.is_superuser:
                 return response
-            if "tgl2.herokuapp.com" in full_url:
-                return HttpResponsePermanentRedirect(
-                    full_url.replace("tgl2.herokuapp.com", "tanzanitelpu.com"))
+            if 'tgl2.herokuapp.com'.lower() in full_url.lower():
+                return HttpResponsePermanentRedirect(full_url.replace('tgl2.herokuapp.com', 'tanzanitelpu.com'))
             return response
 
     return middleware
