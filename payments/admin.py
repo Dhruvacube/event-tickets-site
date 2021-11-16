@@ -54,6 +54,14 @@ class PaymentsAdmin(admin.ModelAdmin):
             "fields": ("orders_list", )
         }),
     )
+    def has_add_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+    
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
 
 
 @admin.register(ComboOffers)
@@ -93,3 +101,11 @@ class ComboOfferAdmin(admin.ModelAdmin):
             },
         ),
     )
+    def has_add_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+    
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser

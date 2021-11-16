@@ -47,6 +47,15 @@ class GamesAdmin(admin.ModelAdmin):
             {"classes": ("collapse",), "fields": ("static_images_list",)},
         ),
     )
+    
+    def has_add_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+    
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
 
     class Media:
         js = retrivejsfile()
@@ -73,6 +82,15 @@ class GameGroupAdmin(admin.ModelAdmin):
         (_("Users"), {"fields": ("users",)}),
         (_("Payment ID"), {"fields": ("payment_id",)}),
     )
+    
+    def has_add_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+    
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
 
 
 @admin.register(Sponser)
@@ -89,6 +107,15 @@ class SponserAdmin(admin.ModelAdmin):
             {"classes": ("collapse",), "fields": ("static_images_list",)},
         ),
     )
+    
+    def has_add_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+    
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
 
 
 @admin.register(LogEntry)
@@ -112,6 +139,15 @@ class LogEntryAdmin(admin.ModelAdmin):
     )
 
     actions = [delete_admin_logs]
+    
+    def has_add_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+    
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
 
 
 admin.site.unregister(Group)

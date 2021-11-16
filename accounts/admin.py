@@ -53,3 +53,12 @@ class CustomUserAdmin(UserAdmin):
     )
     verbose_name_plural = "Profile"
     readonly_fields = ("unique_id",)
+    
+    def has_add_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+    
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
