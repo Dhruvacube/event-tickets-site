@@ -6,7 +6,7 @@
  The csv data should be in the format of:
  email-id, name
  
- and the referral ode will be mailled to them by the mail server and a csv file will be generated in 'main/static' under the name of 'new_data_generated.csv'
+ and the referral code will be mailled to them by the mail server and a csv file will be generated in 'main/static' under the name of 'new_data_generated.csv'
 """
 
 import csv
