@@ -71,13 +71,13 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
 
     # Registering the custom actions
     actions = [publish_announcement, unpublish_announcement]
-    
+
     def has_add_permission(self, request, obj=None):
         return request.user.is_superuser
 
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
-    
+
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
 
@@ -149,13 +149,13 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
 
     # Registering the custom actions
     actions = [publish_announcement, unpublish_announcement]
-    
+
     def has_add_permission(self, request, obj=None):
         return request.user.is_superuser
 
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
-    
+
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
 
@@ -227,13 +227,13 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
 
     # Registering the custom actions
     actions = [publish_announcement, unpublish_announcement]
-    
+
     def has_add_permission(self, request, obj=None):
         return request.user.is_superuser
 
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
-    
+
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
 
