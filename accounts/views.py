@@ -284,8 +284,8 @@ def signup(request):
             for i in message_error_list:
                 messages.error(request, i)
     referral_code = False
-    if bool(request.GET.get('referral')):
-        referral_code = request.GET.get('referral')
+    if bool(request.GET.get("referral")):
+        referral_code = request.GET.get("referral")
     form = SignupForm()
     return render(
         request,
@@ -300,6 +300,6 @@ def signup(request):
             "display": True,
             "referral": True,
             "no_display_messages": True,
-            "referral_code": referral_code
+            "referral_code": referral_code,
         },
     )
