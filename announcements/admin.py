@@ -80,6 +80,9 @@ class GlobalAnnouncementsAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
+    
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_staff
 
     class Media:
         js = retrivejsfile()
@@ -158,6 +161,9 @@ class GroupsAnnouncementsAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
+    
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_staff
 
     class Media:
         js = retrivejsfile()
@@ -236,6 +242,9 @@ class UsersAnnouncementsAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
+    
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_staff
 
     class Media:
         js = retrivejsfile()

@@ -63,6 +63,9 @@ class PaymentsAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
+    
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_staff
 
 
 @admin.register(ComboOffers)
@@ -111,3 +114,6 @@ class ComboOfferAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
+    
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_staff

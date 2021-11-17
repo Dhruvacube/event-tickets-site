@@ -70,6 +70,9 @@ class GamesAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
+    
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_staff
 
     class Media:
         js = retrivejsfile()
@@ -115,6 +118,9 @@ class GameGroupAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
+    
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_staff
 
 
 @admin.register(Sponser)
@@ -147,6 +153,9 @@ class SponserAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
+    
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_staff
 
 
 @admin.register(LogEntry)
@@ -177,6 +186,9 @@ class LogEntryAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
+    
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_staff
 
 
 admin.site.unregister(Group)

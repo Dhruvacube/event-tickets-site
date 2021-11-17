@@ -57,3 +57,6 @@ class CustomUserAdmin(UserAdmin):
 
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser
+
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_staff
