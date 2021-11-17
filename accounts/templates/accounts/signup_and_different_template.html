@@ -43,7 +43,7 @@
                 </div>
                 {% endfor %}{% if referral %}
                 <div class="textbox form-floating col-md-12" data-aos="zoom-in">
-                    <input class="form-control" id="id_referral_code" maxlength="6" name="referral_code" {% if user.referral_code %}value={{user.referral_code}}{% endif %} type="text" />
+                    <input class="form-control" id="id_referral_code" maxlength="6" name="referral_code" value="{% if user.referral_code %}{{user.referral_code}}{% endif %}{% if referral_code %}{{referral_code}}{% endif %}" type="text" />
                     <label for="id_registration_no">Referral Code:</label>
                     <br/><br/>
                     <span style="font-size: 15px;">(Optional | Case Sensitive)</span> <br/><br/>
