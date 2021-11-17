@@ -25,7 +25,8 @@ from .decorators import verify_entry_for_orders, verify_entry_for_payments_histo
 from .models import ComboOffers, Payments
 from .templatetags import payments_extras
 
-razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID,
+                                        settings.RAZOR_KEY_SECRET))
 
 
 @sync_to_async
