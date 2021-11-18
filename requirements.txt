@@ -43,7 +43,7 @@ rcssmin==1.0.6
 redis==4.0.1
 requests==2.26.0
 rjsmin==1.1.0
-sentry-sdk==1.4.3
+sentry-sdk==1.5.0
 six==1.16.0
 soupsieve==2.3.1
 sqlparse==0.4.2
