@@ -20,10 +20,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             users_iterator1 = User.objects.filter(
-                orders__payment_status__in=["P", "F"],is_staff=False).values(
-                    "first_name", "last_name", "university_name", "phone")
-            users_iterator2 = User.objects.filter(orders=None,is_staff=False).values(
-                "first_name", "last_name", "university_name", "phone")
+                orders__payment_status__in=["P", "F"],
+                is_staff=False).values("first_name", "last_name",
+                                       "university_name", "phone")
+            users_iterator2 = User.objects.filter(
+                orders=None, is_staff=False).values("first_name", "last_name",
+                                                    "university_name", "phone")
             dump_data = [{
                 "First Name": i.get("first_name"),
                 "Last Name": i.get("last_name"),
