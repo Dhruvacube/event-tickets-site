@@ -49,7 +49,7 @@ class Command(BaseCommand):
                         i[0],
                         settings.EMAIL_HOST_USER,
                         subject="Your Unique Referral Code for Tanza Gaming League 2.0!",
-                        message=f'Hey {i[1].title()},\n Here is your unique "Referral Code" below:\n{referral.referral_code}',
+                        message=f'Hey {i[1].title()},\n Here is your unique "Referral Code" below:\n{referral.referral_code}\n Your Unique Referral Link: https://tanzanitelpu.com/accounts/signup/?referral={referral.referral_code}',
                     )
         new_data_csv_file_path = settings.BASE_DIR / os.path.join(
             "main", "static", "new_data_generated.csv")
