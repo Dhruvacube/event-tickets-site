@@ -1,3 +1,12 @@
+import os
+
+from django.conf import settings
+from django.core.management.base import BaseCommand
+from post_office import mail
+
+from accounts.models import User
+from main.tasks import mail_queue
+
 msg = """
 Hey {first_name}, seems like you still haven't bought the tournament tickets for the Tanza Gaming League 2.0
 
@@ -12,16 +21,6 @@ Regards,
 Team Tanzanite
 """
 
-import os
-
-from django.conf import settings
-from django.core.management.base import BaseCommand
-from post_office import mail
-
-from main.tasks import mail_queue
-
-from accounts.models import User
-
 
 class Command(BaseCommand):
     help = (
@@ -33,16 +32,17 @@ class Command(BaseCommand):
         try:
             users_iterator1 = User.objects.filter(
                 orders__payment_status__in=["P", "F"],
-                is_staff=False).values("first_name","email")
-            users_iterator2 = User.objects.filter(
-                orders=None, is_staff=False).values("first_name","email")
+                is_staff=False).values("first_name", "email")
+            users_iterator2 = User.objects.filter(orders=None,
+                                                  is_staff=False).values(
+                                                      "first_name", "email")
             for i in users_iterator1.union(users_iterator2).iterator():
                 mail.send(
-                        i['email'],
-                        settings.EMAIL_HOST_USER,
-                        subject="Hey you still haven't bought the tickets for TGL-2.0!!!",
-                        message=msg.format(first_name=i["first_name"]),
-                    )
+                    i["email"],
+                    settings.EMAIL_HOST_USER,
+                    subject="Hey you still haven't bought the tickets for TGL-2.0!!!",
+                    message=msg.format(first_name=i["first_name"]),
+                )
             self.stdout.write(self.style.SUCCESS("Success"))
             mail_queue.delay()
         except Exception as e:
