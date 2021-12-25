@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="games",
             name="image_url",
-            field=models.CharField(
-                help_text="Url of the game image", max_length=250),
+            field=models.CharField(help_text="Url of the game image",
+                                   max_length=250),
         ),
     ]

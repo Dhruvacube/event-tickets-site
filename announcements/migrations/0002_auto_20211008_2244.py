@@ -13,19 +13,19 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="globalannouncements",
             name="announcement_heading",
-            field=models.CharField(
-                default="New Announcement Here", max_length=250),
+            field=models.CharField(default="New Announcement Here",
+                                   max_length=250),
         ),
         migrations.AddField(
             model_name="groupsannouncements",
             name="announcement_heading",
-            field=models.CharField(
-                default="New Announcement Here", max_length=250),
+            field=models.CharField(default="New Announcement Here",
+                                   max_length=250),
         ),
         migrations.AddField(
             model_name="usersannouncements",
             name="announcement_heading",
-            field=models.CharField(
-                default="New Announcement Here", max_length=250),
+            field=models.CharField(default="New Announcement Here",
+                                   max_length=250),
         ),
     ]

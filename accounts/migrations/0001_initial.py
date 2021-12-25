@@ -33,13 +33,13 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("password", models.CharField(
-                    max_length=128, verbose_name="password")),
+                ("password",
+                 models.CharField(max_length=128, verbose_name="password")),
                 (
                     "last_login",
-                    models.DateTimeField(
-                        blank=True, null=True, verbose_name="last login"
-                    ),
+                    models.DateTimeField(blank=True,
+                                         null=True,
+                                         verbose_name="last login"),
                 ),
                 (
                     "is_superuser",
@@ -53,34 +53,36 @@ class Migration(migrations.Migration):
                     "username",
                     models.CharField(
                         error_messages={
-                            "unique": "A user with that username already exists."
+                            "unique":
+                            "A user with that username already exists."
                         },
                         help_text="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
                         max_length=150,
                         unique=True,
                         validators=[
-                            django.contrib.auth.validators.UnicodeUsernameValidator()
+                            django.contrib.auth.validators.
+                            UnicodeUsernameValidator()
                         ],
                         verbose_name="username",
                     ),
                 ),
                 (
                     "first_name",
-                    models.CharField(
-                        blank=True, max_length=150, verbose_name="first name"
-                    ),
+                    models.CharField(blank=True,
+                                     max_length=150,
+                                     verbose_name="first name"),
                 ),
                 (
                     "last_name",
-                    models.CharField(
-                        blank=True, max_length=150, verbose_name="last name"
-                    ),
+                    models.CharField(blank=True,
+                                     max_length=150,
+                                     verbose_name="last name"),
                 ),
                 (
                     "email",
-                    models.EmailField(
-                        blank=True, max_length=254, verbose_name="email address"
-                    ),
+                    models.EmailField(blank=True,
+                                      max_length=254,
+                                      verbose_name="email address"),
                 ),
                 (
                     "is_staff",
@@ -100,9 +102,8 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "date_joined",
-                    models.DateTimeField(
-                        default=django.utils.timezone.now, verbose_name="date joined"
-                    ),
+                    models.DateTimeField(default=django.utils.timezone.now,
+                                         verbose_name="date joined"),
                 ),
                 (
                     "gender",
@@ -146,10 +147,12 @@ class Migration(migrations.Migration):
                         verbose_name="city",
                     ),
                 ),
-                ("state", models.CharField(max_length=250, verbose_name="state")),
+                ("state", models.CharField(max_length=250,
+                                           verbose_name="state")),
                 (
                     "country",
-                    models.CharField(max_length=250, null=True,
+                    models.CharField(max_length=250,
+                                     null=True,
                                      verbose_name="country"),
                 ),
                 ("unique_id", models.UUIDField(default=uuid.uuid4)),
@@ -164,8 +167,8 @@ class Migration(migrations.Migration):
                 (
                     "university_name",
                     models.CharField(
-                        max_length=250, verbose_name="University or College Name"
-                    ),
+                        max_length=250,
+                        verbose_name="University or College Name"),
                 ),
                 (
                     "registration_no",
@@ -174,7 +177,8 @@ class Migration(migrations.Migration):
                         max_length=250,
                         null=True,
                         validators=[
-                            django.core.validators.MinLengthValidator(3)],
+                            django.core.validators.MinLengthValidator(3)
+                        ],
                         verbose_name="Registration No",
                     ),
                 ),

@@ -22,15 +22,14 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "announcement_id",
-                    models.UUIDField(
-                        default=uuid.uuid4, primary_key=True, serialize=False
-                    ),
+                    models.UUIDField(default=uuid.uuid4,
+                                     primary_key=True,
+                                     serialize=False),
                 ),
                 (
                     "announncement_message",
                     models.TextField(
-                        verbose_name="The announcement that you want to give globally"
-                    ),
+                        verbose_name="The announcement that you want to give globally"),
                 ),
                 (
                     "announncement_creation_date",
@@ -39,7 +38,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "verbose_name_plural": "Global Announcements",
-                "ordering": ("-announncement_creation_date",),
+                "ordering": ("-announncement_creation_date", ),
             },
         ),
         migrations.CreateModel(
@@ -47,9 +46,9 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "announcement_id",
-                    models.UUIDField(
-                        default=uuid.uuid4, primary_key=True, serialize=False
-                    ),
+                    models.UUIDField(default=uuid.uuid4,
+                                     primary_key=True,
+                                     serialize=False),
                 ),
                 (
                     "announncement_message",
@@ -65,7 +64,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "verbose_name_plural": "User Announcements",
-                "ordering": ("-announncement_creation_date",),
+                "ordering": ("-announncement_creation_date", ),
             },
         ),
         migrations.CreateModel(
@@ -73,15 +72,14 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "announcement_id",
-                    models.UUIDField(
-                        default=uuid.uuid4, primary_key=True, serialize=False
-                    ),
+                    models.UUIDField(default=uuid.uuid4,
+                                     primary_key=True,
+                                     serialize=False),
                 ),
                 (
                     "announncement_message",
                     models.TextField(
-                        verbose_name="The announcement that you want to give Group Wise"
-                    ),
+                        verbose_name="The announcement that you want to give Group Wise"),
                 ),
                 (
                     "announncement_creation_date",
@@ -91,7 +89,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "verbose_name_plural": "Groups Announcements",
-                "ordering": ("-announncement_creation_date",),
+                "ordering": ("-announncement_creation_date", ),
             },
         ),
     ]

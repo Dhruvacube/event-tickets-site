@@ -16,8 +16,7 @@ def check_recaptcha(view_func):
                 "response": recaptcha_response,
             }
             r = requests.post(
-                "https://www.google.com/recaptcha/api/siteverify", data=data
-            )
+                "https://www.google.com/recaptcha/api/siteverify", data=data)
             result = r.json()
             if result["success"]:
                 request.recaptcha_is_valid = True
