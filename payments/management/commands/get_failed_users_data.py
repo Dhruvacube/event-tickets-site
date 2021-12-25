@@ -39,7 +39,7 @@ class Command(BaseCommand):
                     csvfile,
                     fieldnames=[
                         "First Name", "Last Name", "University", "Phone"
-                    ],
+                    ]
                 )
                 writer.writeheader()
                 writer.writerows(dump_data)
