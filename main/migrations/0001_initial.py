@@ -32,8 +32,8 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "name",
-                    models.CharField(
-                        help_text="The name of the game", max_length=200),
+                    models.CharField(help_text="The name of the game",
+                                     max_length=200),
                 ),
                 (
                     "short_description",
@@ -49,7 +49,8 @@ class Migration(migrations.Migration):
                     "long_description",
                     models.TextField(help_text="Here explain everything"),
                 ),
-                ("image_url", models.URLField(help_text="Url of the game image")),
+                ("image_url",
+                 models.URLField(help_text="Url of the game image")),
                 (
                     "platform",
                     models.CharField(
@@ -96,9 +97,10 @@ class Migration(migrations.Migration):
                 ("group_unique_id", models.UUIDField(default=uuid.uuid4)),
                 (
                     "group_name",
-                    models.CharField(
-                        blank=True, max_length=250, null=True, unique=True
-                    ),
+                    models.CharField(blank=True,
+                                     max_length=250,
+                                     null=True,
+                                     unique=True),
                 ),
                 (
                     "solo_or_squad",
@@ -111,8 +113,8 @@ class Migration(migrations.Migration):
                 (
                     "game",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="main.games"
-                    ),
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="main.games"),
                 ),
                 (
                     "payment_id",

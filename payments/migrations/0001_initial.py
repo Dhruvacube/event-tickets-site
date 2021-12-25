@@ -52,14 +52,14 @@ class Migration(migrations.Migration):
                         max_length=250,
                     ),
                 ),
-                ("orders_list", models.TextField(
-                    help_text="The orders list value")),
-                ("created_at", models.DateTimeField(
-                    default=django.utils.timezone.now)),
+                ("orders_list",
+                 models.TextField(help_text="The orders list value")),
+                ("created_at",
+                 models.DateTimeField(default=django.utils.timezone.now)),
             ],
             options={
                 "verbose_name_plural": "Payments",
-                "ordering": ("-created_at",),
+                "ordering": ("-created_at", ),
             },
         ),
     ]
