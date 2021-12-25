@@ -1,0 +1,24 @@
+FROM alpine:latest
+FROM redis:apline
+FROM postgres:alpine
+FROM python:3-alpine
+FROM rabbitmq:3.8-alpine
+
+ENV POSTGRES_PASSWORD docker
+ENV POSTGRES_DB search_engine
+ENV DATABASE_URL postgres://postgres:docker@localhost:5432/tgl
+ENV LOGGING False
+
+RUN apk add --no-cache --update redis:apline
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+
+RUN rabbitmq-plugins enable --offline rabbitmq_mqtt rabbitmq_federation_management rabbitmq_stomp
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
+RUN python manage.py migrate
+RUN python manage.py collectcompress
+RUN celery -A tgl worker -B -Q celery -l info -E
+
+CMD ["uvicorn",  "manage.py", "tgl.asgi:application", "--reload", "--lifespan", "off"]

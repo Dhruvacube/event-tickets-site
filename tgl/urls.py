@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
@@ -28,27 +27,27 @@ urlpatterns = [
         view_annoucements_full,
         name="announcement_detail",
     ),
-    url(
+    path(
         "privacy_policy/",
         RedirectView.as_view(
             url="https://github.com/Tanzanite-lpu/tgl-2.0/wiki/Privacy-Policy"
         ),
         name="privacy_policy",
     ),
-    url(
+    path(
         "cookie_policy/",
         RedirectView.as_view(
             url="https://github.com/Tanzanite-lpu/tgl-2.0/wiki/Cookie-Policy"),
         name="cookie_policy",
     ),
-    url(
+    path(
         "tos/",
         RedirectView.as_view(
             url="https://github.com/Tanzanite-lpu/tgl-2.0/wiki/Terms-&-Conditions"
         ),
         name="tos",
     ),
-    url(
+    path(
         "refunds/",
         RedirectView.as_view(
             url="https://github.com/Tanzanite-lpu/tgl-2.0/wiki/Cancellation--&-Refund-Policy"

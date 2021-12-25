@@ -3,7 +3,7 @@
     <div class="container">
         <ol>
             {% for i in announcements %}
-            <ol>
+            <li>
                 <div class="container">
                     <h3 data-aos="fade-down"><strong>{{i.announcement_heading}}</strong></h3>
                     <caption data-aos="fade-down"><u>Announcement ID</u>: {{i.announcement_id}}</caption><br/>
@@ -11,10 +11,10 @@
                     <br/>
                     <a href="{% url 'announcement_detail' i.announcement_id %}" data-aos="flip-left"><button type="button" class="btn btn-info">Read Full Announcement</button></a>
                 </div>
-                </li>
-                <hr/> {% endfor %}</ol> {% if announcements.has_other_pages %} <span>{% if announcements.has_previous %}
+            </li>
+            <hr/> {% endfor %}</ol> {% if announcements.has_other_pages %} <span>{% if announcements.has_previous %}
         <a href="?page={{announcements.previous_page_number}}" data-aos="flip-left" class="float-start"><button class="btn btn-primary plr-25 btn-block" ><i class='bx bx-skip-previous' style="font-size: 30px;" ></i></button></a>{% endif %}</span>
-            <span>
+        <span>
         {% if announcements.has_next %}
         <a href="?page={{announcements.next_page_number}}" data-aos="flip-right" class="float-end"><button class="btn btn-primary plr-25 btn-block" type="submit"><i class='bx bx-skip-next' style="font-size: 30px;"></i></button></a>
         <!-- ===Ends== -->
