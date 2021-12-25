@@ -21,7 +21,7 @@ django-bmemcached==0.3.0
 django-compressor @ git+https://github.com/Dhruvacube/django-compressor.git@master
 django-htmlmin==0.11.0
 django-localflavor==3.1
-django-post-office==3.5.3
+django-post-office==3.6.0
 django-redis==5.2.0
 gunicorn==20.1.0
 h11==0.12.0
