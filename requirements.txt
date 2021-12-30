@@ -32,7 +32,7 @@ jsonfield==3.1.0
 kombu==5.2.2
 packaging==21.3
 prompt-toolkit==3.0.24
-psycopg2==2.9.2
+psycopg2==2.9.3
 pyparsing==3.0.6
 python-binary-memcached==0.31.1
 python-dotenv==0.19.2
