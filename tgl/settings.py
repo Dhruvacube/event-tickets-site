@@ -28,10 +28,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    "django.contrib.sites",
     "localflavor",
     "compressor",
 ]
 
+SITE_ID=1
 ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = "accounts.User"

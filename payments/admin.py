@@ -8,7 +8,6 @@ from django_admin_listfilter_dropdown.filters import (
     RelatedDropdownFilter,
 )
 
-from accounts.models import User
 from main.models import GameGroup
 
 from .models import *
@@ -69,12 +68,13 @@ class PaymentsAdmin(admin.ModelAdmin):
                 try:
                     a = razorpay_client.payment.refund(i.payment_id_merchant,
                                                        i.amount * 100)
-                    print(a)
-                    user_model = User.objects.filter(orders=i).get()
-                    game_grup_model = GameGroup.objects.filter()
+                    game_grup_model = GameGroup.objects.filter(payment_id=i)
+                    game_grup_model.delete()
+                    i.payment_status = 'R'
+                    i.save()
+                    print('Done')
                 except Exception as e:
                     print("Exception occurred:", e)
-                    print("Razorpay request object", a)
                     print("Payment request object", i)
         self.message_user(
             request,
