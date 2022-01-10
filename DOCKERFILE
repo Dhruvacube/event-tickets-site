@@ -21,4 +21,4 @@ RUN python manage.py migrate
 RUN python manage.py collectcompress
 RUN celery -A tgl worker -B -Q celery -l info -E
 
-CMD ["uvicorn",  "manage.py", "tgl.asgi:application", "--reload", "--lifespan", "off"]
+CMD ["uvicorn",  "tgl.asgi:application", "--reload", "--lifespan", "off"]

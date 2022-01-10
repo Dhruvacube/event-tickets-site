@@ -45,6 +45,7 @@ class CustomUserAdmin(UserAdmin):
         "zip_code",
         "gender",
         "university_name",
+        "unique_id",
     )
     verbose_name_plural = "Profile"
     readonly_fields = ("unique_id", )

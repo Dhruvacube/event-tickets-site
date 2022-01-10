@@ -184,59 +184,6 @@ def make_order(request):
         },
     )
 
-
-# @sync_to_async
-# @login_required
-# @verify_entry_for_orders
-# def create_payment(request):
-#     amount = str(request.session.get("total_value"))
-#     purpose = str(uuid.uuid4())
-#     buyers_name = f"{request.user.first_name} {request.user.last_name}"
-#     email = request.user.email
-#     phone = request.user.phone
-
-#     current_site = get_current_site(request)
-#     redirect_url = f'{request.scheme}://{current_site.domain}{reverse("payment_stats")}'
-
-#     allow_repeated_payments = False
-#     send_email = True
-#     send_sms = True
-#     if settings.LOCAL:
-#         api = Instamojo(
-#             api_key=settings.INSTAMOJO_AUTH_KEY,
-#             auth_token=settings.INSTAMOJO_PRIVATE_TOKEN,
-#             endpoint="https://test.instamojo.com/api/1.1/",
-#         )
-#     else:
-#         api = Instamojo(
-#             api_key=settings.INSTAMOJO_AUTH_KEY,
-#             auth_token=settings.INSTAMOJO_PRIVATE_TOKEN,
-#         )
-
-#     # Create a new Payment Request
-#     response = api.payment_request_create(
-#         amount=amount,
-#         purpose=purpose,
-#         buyer_name=buyers_name,
-#         email=email,
-#         phone=phone,
-#         redirect_url=redirect_url,
-#         allow_repeated_payments=allow_repeated_payments,
-#         send_email=send_email,
-#         send_sms=send_sms,
-#     )
-#     pay = Payments(
-#         order_id=purpose,
-#         request_id_instamojo=response.get("payment_request")["id"],
-#         amount=int(request.session["total_value"]),
-#         payment_status="P",
-#         orders_list=str(request.session["order_list"]),
-#     )
-#     pay.save()
-#     request.user.orders.add(pay)
-#     return HttpResponsePermanentRedirect(response.get("payment_request")["longurl"])
-
-
 @sync_to_async
 @require_POST
 @csrf_exempt
