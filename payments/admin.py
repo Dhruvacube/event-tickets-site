@@ -24,9 +24,9 @@ class PaymentsAdmin(admin.ModelAdmin):
         "order_id_merchant",
         "amount",
         "payment_status",
-        'created_at'
+        "created_at",
     )
-    list_filter = (("payment_status", ChoiceDropdownFilter), 'created_at')
+    list_filter = (("payment_status", ChoiceDropdownFilter), "created_at")
     search_fields = list_display + ("orders_list", )
     readonly_fields = (
         "orders_list",
