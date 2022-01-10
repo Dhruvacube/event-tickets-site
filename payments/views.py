@@ -184,6 +184,7 @@ def make_order(request):
         },
     )
 
+
 @sync_to_async
 @require_POST
 @csrf_exempt

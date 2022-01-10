@@ -1,19 +1,20 @@
 import razorpay
+from django.conf import settings
 from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext
 from django_admin_listfilter_dropdown.filters import (
     ChoiceDropdownFilter,
     RelatedDropdownFilter,
 )
 
-from .models import *
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import ngettext
-from django.conf import settings
 from accounts.models import User
 from main.models import GameGroup
 
-razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID,settings.RAZOR_KEY_SECRET))
+from .models import *
+
+razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID,
+                                        settings.RAZOR_KEY_SECRET))
 
 
 @admin.register(Payments)
@@ -64,16 +65,17 @@ class PaymentsAdmin(admin.ModelAdmin):
 
     def refund_the_payment(self, request, queryset):
         for i in queryset:
-            if i.payment_status == 'S':
+            if i.payment_status == "S":
                 try:
-                    a = razorpay_client.payment.refund(i.payment_id_merchant, i.amount * 100)
+                    a = razorpay_client.payment.refund(i.payment_id_merchant,
+                                                       i.amount * 100)
                     print(a)
                     user_model = User.objects.filter(orders=i).get()
                     game_grup_model = GameGroup.objects.filter()
                 except Exception as e:
                     print("Exception occurred:", e)
-                    print('Razorpay request object',a)
-                    print('Payment request object',i)
+                    print("Razorpay request object", a)
+                    print("Payment request object", i)
         self.message_user(
             request,
             ngettext(
@@ -84,8 +86,7 @@ class PaymentsAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-    refund_the_payment.short_description = (
-        "Initiate the refund process")
+    refund_the_payment.short_description = "Initiate the refund process"
 
     actions = [refund_the_payment]
 
