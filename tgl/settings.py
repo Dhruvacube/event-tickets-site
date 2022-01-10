@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     "compressor",
 ]
 
-SITE_ID=1
+SITE_ID = 1
 ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = "accounts.User"

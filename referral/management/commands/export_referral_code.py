@@ -15,14 +15,15 @@ class Command(BaseCommand):
         new_data_csv_file_path = settings.BASE_DIR / os.path.join(
             "main", "static", "new_data_exported.csv")
         with open(new_data_csv_file_path, "w") as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=["Name", "Referral Code"])
+            writer = csv.DictWriter(csvfile,
+                                    fieldnames=["Name", "Referral Code"])
             writer.writeheader()
-            data_to_write=[]
+            data_to_write = []
             for i in Referral.objects.iterator():
                 data_to_write.append({
-                        "Name": i.referral_code,
-                        "Referral Code": i.referral_code,
-                    })
+                    "Name": i.referral_code,
+                    "Referral Code": i.referral_code,
+                })
             writer.writerows(data_to_write)
         self.stdout.write(
             self.style.SUCCESS(

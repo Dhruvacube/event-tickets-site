@@ -70,9 +70,9 @@ class PaymentsAdmin(admin.ModelAdmin):
                                                        i.amount * 100)
                     game_grup_model = GameGroup.objects.filter(payment_id=i)
                     game_grup_model.delete()
-                    i.payment_status = 'R'
+                    i.payment_status = "R"
                     i.save()
-                    print('Done')
+                    print("Done")
                 except Exception as e:
                     print("Exception occurred:", e)
                     print("Payment request object", i)
