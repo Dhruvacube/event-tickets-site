@@ -37,7 +37,12 @@ class Payments(models.Model):
     payment_status = models.CharField(
         max_length=250,
         help_text=_("The status of payment"),
-        choices=(("P", "Pending"), ("F", "Failed"), ("S", "Success"), ("R", "Refund Done")),
+        choices=(
+            ("P", "Pending"),
+            ("F", "Failed"),
+            ("S", "Success"),
+            ("R", "Refund Done"),
+        ),
         default="P",
     )
     orders_list = models.TextField(help_text=_("The orders list value"))
