@@ -21,7 +21,7 @@ class Command(BaseCommand):
             data_to_write = []
             for i in Referral.objects.iterator():
                 data_to_write.append({
-                    "Name": i.referral_code,
+                    "Name": i.name,
                     "Referral Code": i.referral_code,
                 })
             writer.writerows(data_to_write)
