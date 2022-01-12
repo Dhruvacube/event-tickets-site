@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}{% load static %}{% load payments_extras %}{% load compress %}{% block body %}
+<section class="games" id="games">
+    <div class="container">
+        <h4>Detailed invoice for <b>{{order_id}}</b></h4>
+        <h6>Payment Status: {{payment_object.payment_status|payment_stats|safe}}</h6>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Game Name</th>
+                        <th scope="col">Mode of Game Choosen</th>
+                        <th scope="col">Amount payed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in order_list|generate_invoice %}
+                    <tr data-aos="fade-down">
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td><a href="{% url 'about_game' i.game_class.id %}" target="_blank">{{i.game_class.name}}</a></td>
+                        <td>{{i.mode}}</td>
+                        <td>₹{{i.amount}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr data-aos="fade-down">
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>
+                            <h3>Total Amount Payed</h3>
+                        </td>
+                        <td></td>
+                        <td>
+                            <h3>₹{{payment_object.amount}}</h3>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

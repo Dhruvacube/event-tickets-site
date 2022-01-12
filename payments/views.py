@@ -1,10 +1,10 @@
 import datetime
 import uuid
-from functools import lru_cache
 
 import razorpay
 from asgiref.sync import sync_to_async
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
@@ -16,10 +16,12 @@ from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from post_office import mail
+import ast
 from post_office.models import EmailTemplate
 
 from main.models import GameGroup, Games
 from main.tasks import mail_queue
+from django.views.decorators.cache import cache_page
 
 from .decorators import verify_entry_for_orders, verify_entry_for_payments_history
 from .models import ComboOffers, Payments
@@ -32,6 +34,7 @@ razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID,
 @sync_to_async
 @login_required
 @verify_entry_for_payments_history
+@cache_page(60 * 15)
 def view_payments_history(request):
     return render(
         request,
@@ -43,10 +46,10 @@ def view_payments_history(request):
     )
 
 
-@lru_cache(maxsize=5)
 @sync_to_async
 @login_required
 @verify_entry_for_orders
+@cache_page(60 * 15)
 def make_order(request):
     if request.method == "POST":
         # calculating orders amount logic
@@ -189,6 +192,7 @@ def make_order(request):
 @require_POST
 @csrf_exempt
 @login_required
+@cache_page(60 * 15)
 def payment_stats(request):
     payment_id = request.POST.get("razorpay_payment_id", "")
     razorpay_order_id = request.POST.get("razorpay_order_id", "")
@@ -303,6 +307,7 @@ def payment_stats(request):
 @sync_to_async
 @csrf_exempt
 @require_POST
+@cache_page(60 * 15)
 def update_payments(request):
     try:
         payments = Payments.objects.filter(payment_status="P").iterator()
@@ -313,3 +318,23 @@ def update_payments(request):
         return JsonResponse({"success": True})
     except Exception as e:
         return JsonResponse({"success": False, "error": e})
+
+
+
+@sync_to_async
+@login_required
+def get_detailed_invoice(request, order_id):
+    try:
+        payment_object = Payments.objects.filter(order_id=order_id).get()
+        return render(
+            request,
+            'detailed_invoice.html',
+            {
+                'order_list': ast.literal_eval(payment_object.orders_list),
+                'order_id': order_id,
+                'payment_object': payment_object
+            }
+        )
+    except:
+        raise PermissionDenied
+    

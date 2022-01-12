@@ -12,6 +12,7 @@
                         <th scope="col">Amount</th>
                         <th scope="col">Status</th>
                         <th scope="col">Request Date and Time</th>
+                        <th scope="col">Detailed Invoice</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,6 +25,7 @@
                         <td>₹{{i.amount}}</td>
                         <td>{{i.payment_status|payment_stats|safe}}</td>
                         <td>{{i.created_at}}</td>
+                        <td><a href="{% url 'get_detailed_invoice' order_id=i.order_id %}" target="_blank">Click Here</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

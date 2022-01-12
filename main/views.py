@@ -11,11 +11,14 @@ from django.urls import reverse
 from accounts.models import User
 
 from .decorators import verify_entry_to_group
+from django.views.decorators.cache import cache_page
+
 from .models import *
 from .templatetags import extra
 
 
 @sync_to_async
+@cache_page(60 * 15)
 def home(request):
     sponser = list(Sponser.objects.iterator())
     random.shuffle(sponser)
@@ -30,10 +33,10 @@ def home(request):
     )
 
 
-@lru_cache(maxsize=5)
 @sync_to_async
 @login_required
 @verify_entry_to_group
+@cache_page(60 * 15)
 def group_make(request):
     parameters = {
         "title": "Register Groups",
@@ -87,6 +90,7 @@ def group_make(request):
 
 
 @sync_to_async
+@cache_page(60 * 15)
 def view_games(request, game_id: int):
     games = Games.objects.filter(id=game_id).get()
     return render(

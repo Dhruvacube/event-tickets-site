@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import Http404
 from django.shortcuts import redirect, render
+from django.views.decorators.cache import cache_page
+
 from django.urls import reverse
 
 from main.models import GameGroup
@@ -13,6 +15,7 @@ from .models import *
 
 @sync_to_async
 @login_required
+@cache_page(60 * 15)
 def view_annoucements(request):
     groups = list(
         GameGroup.objects.filter(users__in=[
@@ -55,6 +58,7 @@ def view_annoucements(request):
 
 @sync_to_async
 @login_required
+@cache_page(60 * 15)
 def view_annoucements_full(request, announcement_id):
     all_ = GlobalAnnouncements.objects.filter(
         announcement_id__in=[
