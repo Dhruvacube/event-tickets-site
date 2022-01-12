@@ -322,6 +322,7 @@ def update_payments(request):
 
 @sync_to_async
 @login_required
+@cache_page(60 * 15)
 def get_detailed_invoice(request, order_id):
     try:
         payment_object = Payments.objects.filter(order_id=order_id).get()
