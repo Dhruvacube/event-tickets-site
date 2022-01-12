@@ -9,14 +9,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse, HttpResponsePermanentRedirect, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.timezone import now
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_POST
 from post_office import mail
 from post_office.models import EmailTemplate
 
@@ -25,7 +25,6 @@ from main.tasks import mail_queue
 
 from .decorators import verify_entry_for_orders, verify_entry_for_payments_history
 from .models import ComboOffers, Payments
-from .templatetags import payments_extras
 
 razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID,
                                         settings.RAZOR_KEY_SECRET))

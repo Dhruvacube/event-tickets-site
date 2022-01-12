@@ -1,8 +1,6 @@
 import random
-from functools import lru_cache
 
 from asgiref.sync import sync_to_async
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
@@ -13,7 +11,6 @@ from accounts.models import User
 
 from .decorators import verify_entry_to_group
 from .models import *
-from .templatetags import extra
 
 
 @sync_to_async
