@@ -7,12 +7,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views.decorators.cache import cache_page
 
 from accounts.models import User
 
 from .decorators import verify_entry_to_group
-from django.views.decorators.cache import cache_page
-
 from .models import *
 from .templatetags import extra
 

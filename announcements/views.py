@@ -4,9 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import Http404
 from django.shortcuts import redirect, render
-from django.views.decorators.cache import cache_page
-
 from django.urls import reverse
+from django.views.decorators.cache import cache_page
 
 from main.models import GameGroup
 
