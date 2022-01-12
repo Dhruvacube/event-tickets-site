@@ -34,7 +34,8 @@ from .forms import (
     PasswordChangeForms,
     PasswordReset,
     PasswordResetConfirmForm,
-    SignupForm)
+    SignupForm,
+)
 from .models import User
 from .tokens import account_activation_token
 
