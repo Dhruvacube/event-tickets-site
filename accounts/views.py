@@ -9,8 +9,6 @@ from asgiref.sync import sync_to_async
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.views.decorators.cache import cache_page
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (
     PasswordResetConfirmView,
@@ -26,6 +24,7 @@ from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.cache import cache_page
 from post_office import mail
 from post_office.models import EmailTemplate
 
