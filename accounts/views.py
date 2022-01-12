@@ -1,9 +1,7 @@
 import ast
 import functools
-import os
 import secrets
 import string
-from datetime import datetime
 
 from asgiref.sync import sync_to_async
 from django.conf import settings
@@ -16,13 +14,12 @@ from django.contrib.auth.views import (
     PasswordResetView,
 )
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponsePermanentRedirect
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_page
 from post_office import mail
@@ -37,11 +34,8 @@ from .forms import (
     PasswordChangeForms,
     PasswordReset,
     PasswordResetConfirmForm,
-    SignupForm,
-    request_verification_mail,
-)
+    SignupForm)
 from .models import User
-from .templatetags import getfunc
 from .tokens import account_activation_token
 
 
