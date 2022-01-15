@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "localflavor",
     "compressor",
-    'django_csv_exports',
+    "django_csv_exports",
 ]
 
 SITE_ID = 1
