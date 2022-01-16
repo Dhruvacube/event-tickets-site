@@ -4,13 +4,13 @@ import string
 import uuid
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from payments.models import *
-from django.contrib.auth import get_user_model
 
 
 def generate_unique_id():
@@ -112,7 +112,10 @@ class GameGroup(models.Model):
         return str(self.group_name)
 
     def payer_details(self):
-        user = get_user_model().objects.filter(orders__order_id=self.payment_id.order_id).values("first_name", "last_name","university_name", "phone", "email").get()
+        user = (get_user_model().objects.filter(
+            orders__order_id=self.payment_id.order_id).values(
+                "first_name", "last_name", "university_name", "phone",
+                "email").get())
         return f"Name: {user['first_name']} {user['last_name']}\n University Name: {user['university_name']} \n Phone: {user['phone']} \n Email: {user['email']}"
 
     def save(self, *args, **kwargs):

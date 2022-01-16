@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.admin.models import LogEntry
@@ -107,7 +106,9 @@ class GameGroupAdmin(admin.ModelAdmin):
         (_("Payment ID"), {
             "fields": ("payment_id", )
         }),
-        (_('Details'), {"fields": ("payer_details",)})
+        (_("Details"), {
+            "fields": ("payer_details", )
+        }),
     )
 
     def has_add_permission(self, request, obj=None):
