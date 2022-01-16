@@ -1,4 +1,3 @@
-import os
 
 from django.conf import settings
 from django.contrib import admin, messages
@@ -89,7 +88,7 @@ class GameGroupAdmin(admin.ModelAdmin):
     )
     list_filter = (("solo_or_squad", ChoiceDropdownFilter), "game")
     search_fields = list_display[:3] + ("solo_or_squad", )
-    readonly_fields = ("group_unique_id", )
+    readonly_fields = ("group_unique_id", "payer_details")
     list_per_page = 30
 
     fieldsets = (
@@ -108,6 +107,7 @@ class GameGroupAdmin(admin.ModelAdmin):
         (_("Payment ID"), {
             "fields": ("payment_id", )
         }),
+        (_('Details'), {"fields": ("payer_details",)})
     )
 
     def has_add_permission(self, request, obj=None):
