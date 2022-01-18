@@ -1,6 +1,5 @@
 import asyncio
 
-from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponsePermanentRedirect
 from django.utils.decorators import sync_and_async_middleware
 
