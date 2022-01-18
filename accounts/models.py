@@ -1,14 +1,9 @@
 import uuid
-
-from django.conf import settings
-from django.contrib.auth.models import AbstractUser, User
+from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxLengthValidator, MinLengthValidator
+from django.core.validators import MinLengthValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from localflavor.in_.models import INStateField
-
-from main.models import GameGroup, Games
 from payments.models import Payments
 from referral.models import Referral
 

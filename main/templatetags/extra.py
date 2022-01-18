@@ -1,8 +1,5 @@
-import uuid
 
 from django import template
-
-from accounts.models import User
 
 from ..models import GameGroup
 

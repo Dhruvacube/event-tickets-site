@@ -21,7 +21,6 @@ from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
-from django.views.decorators.cache import cache_page
 from post_office import mail
 from post_office.models import EmailTemplate
 
