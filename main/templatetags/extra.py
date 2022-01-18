@@ -37,9 +37,11 @@ def check_success(queryset):
 
 @register.filter(name="if_groups")
 def if_groups(user):
-    groups = GameGroup.objects.filter(users__in=[
-        user,
-    ]).count()
+    groups = GameGroup.objects.filter(
+        users__in=[
+            user,
+        ]
+    ).count()
     if groups >= 1:
         return True
     return False
@@ -85,8 +87,8 @@ def if_user_not_payed_without_obj(user):
     if user.is_superuser:
         return False
     for i in user.orders.iterator():
-        if i.payment_status == 'S':
+        if i.payment_status == "S":
             return False
-        if i.payment_status in ('F', 'P','R'):
+        if i.payment_status in ("F", "P", "R"):
             return True
     return True
