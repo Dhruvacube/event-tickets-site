@@ -32,7 +32,6 @@ def home(request):
 @sync_to_async
 @login_required
 @verify_entry_to_group
-@cache_page(60 * 15)
 def group_make(request):
     parameters = {
         "title": "Register Groups",

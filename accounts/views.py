@@ -77,7 +77,6 @@ class PasswordResetDoneViews(PasswordResetDoneView):
 
 @sync_to_async
 @login_required
-@cache_page(60 * 15)
 def view_profile(request):
     if request.method == "POST":
         form = EditProfileForm(request.POST,
@@ -126,7 +125,6 @@ def view_profile(request):
 
 @sync_to_async
 @login_required
-@cache_page(60 * 15)
 def change_password(request):
     if request.method == "POST":
         form = PasswordChangeForms(data=request.POST, user=request.user)
@@ -156,7 +154,6 @@ def change_password(request):
 
 @sync_to_async
 @login_required
-@cache_page(60 * 15)
 def user_logout(request):
     logout(request)
     messages.success(request, "You have been successfully logged out!")
@@ -164,7 +161,6 @@ def user_logout(request):
 
 
 @sync_to_async
-@cache_page(60 * 15)
 def loginform(request):
     if request.method == "POST":
         form = LoginForm(request=request, data=request.POST)
@@ -206,7 +202,6 @@ def loginform(request):
 
 
 @sync_to_async
-@cache_page(60 * 15)
 def signup(request):
     current_site = get_current_site(request)
     if request.method == "POST":
