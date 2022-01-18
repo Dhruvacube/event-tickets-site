@@ -78,3 +78,15 @@ def if_user_not_payed(payment_obj, user):
     if payment_obj.payment_id in list(user.orders.iterator()):
         return False
     return True
+
+
+@register.filter(name="if_user_not_payed_without_obj")
+def if_user_not_payed_without_obj(user):
+    if user.is_superuser:
+        return False
+    for i in user.orders.iterator():
+        if i.payment_status == 'S':
+            return False
+        if i.payment_status in ('F', 'P','R'):
+            return True
+    return True
