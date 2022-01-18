@@ -60,18 +60,19 @@ def validate_address(value):
 class SignupForm(forms.Form):
     first_name = forms.CharField(max_length=250)
     last_name = forms.CharField(max_length=250)
-    email = forms.EmailField(max_length=200,
-                             help_text="Required",
-                             validators=[validate_email])
-    gender = forms.ChoiceField(choices=(("M", "Male"), ("F", "Female"),
-                                        ("O", "Others")), )
+    email = forms.EmailField(
+        max_length=200, help_text="Required", validators=[validate_email]
+    )
+    gender = forms.ChoiceField(
+        choices=(("M", "Male"), ("F", "Female"), ("O", "Others")),
+    )
     phone = forms.CharField(
         max_length=15,
         validators=[MinLengthValidator(10)],
         help_text=_("It should be +91 67xxx"),
     )
-    address = forms.CharField(validators=[validate_address],
-                              widget=forms.Textarea)
+    address = forms.CharField(
+        validators=[validate_address], widget=forms.Textarea)
     city = forms.CharField(max_length=500, validators=[validate_city])
     state = forms.CharField(max_length=250)
     country = forms.CharField(max_length=250)
@@ -118,7 +119,8 @@ class SignupForm(forms.Form):
 
 
 class LoginForm(AuthenticationForm):
-    username_email = forms.CharField(label='Email or Username', max_length=250)
+    username_email = forms.CharField(label="Email or Username", max_length=250)
+
     class Meta:
         model = User
         fields = ("username_email", "password")
@@ -127,11 +129,12 @@ class LoginForm(AuthenticationForm):
         super().__init__(*args, **kwargs)
         self.fields = dict(reversed(list(self.fields.items())))
         self.fields.pop("username")
-        self.fields["username_email"].widget.attrs["placeholder"] = "Type in email or username"
+        self.fields["username_email"].widget.attrs[
+            "placeholder"
+        ] = "Type in email or username"
         self.fields["username_email"].widget.attrs["class"] = "form-control"
 
-        self.fields["password"].widget.attrs[
-            "placeholder"] = "Type in your password"
+        self.fields["password"].widget.attrs["placeholder"] = "Type in your password"
         self.fields["password"].widget.attrs["class"] = "form-control"
 
 
@@ -141,7 +144,8 @@ class request_verification_mail(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["email"].widget.attrs[
-            "placeholder"] = "Your registered email address"
+            "placeholder"
+        ] = "Your registered email address"
         self.fields["email"].widget.attrs["class"] = "form-control"
 
 
@@ -151,15 +155,13 @@ UserModel = get_user_model()
 class PasswordResetConfirmForm(SetPasswordForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["new_password1"].widget.attrs[
-            "placeholder"] = "New Password"
-        self.fields["new_password1"].widget.attrs[
-            "class"] = "form-control mb-20"
+        self.fields["new_password1"].widget.attrs["placeholder"] = "New Password"
+        self.fields["new_password1"].widget.attrs["class"] = "form-control mb-20"
 
         self.fields["new_password2"].widget.attrs[
-            "placeholder"] = "Retype the new password"
-        self.fields["new_password2"].widget.attrs[
-            "class"] = "form-control mb-20"
+            "placeholder"
+        ] = "Retype the new password"
+        self.fields["new_password2"].widget.attrs["class"] = "form-control mb-20"
 
 
 class PasswordReset(PasswordResetForm):
@@ -241,8 +243,7 @@ class EditProfileForm(UserChangeForm):
         self.fields["zip_code"].widget.attrs["required"] = "true"
 
         self.fields["gender"].widget.attrs["class"] = "form-control"
-        self.fields["gender"].widget.attrs[
-            "style"] = "color: black !important;"
+        self.fields["gender"].widget.attrs["style"] = "color: black !important;"
 
         self.fields["university_name"].widget.attrs["class"] = "form-control"
         self.fields["university_name"].widget.attrs["required"] = "true"
@@ -274,18 +275,14 @@ class PasswordChangeForms(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields["old_password"].widget.attrs[
-            "placeholder"] = "Current Password"
-        self.fields["old_password"].widget.attrs[
-            "class"] = "form-control mb-20"
+        self.fields["old_password"].widget.attrs["placeholder"] = "Current Password"
+        self.fields["old_password"].widget.attrs["class"] = "form-control mb-20"
         self.fields["old_password"].label = "Current Password"
 
-        self.fields["new_password1"].widget.attrs[
-            "placeholder"] = "New Password"
-        self.fields["new_password1"].widget.attrs[
-            "class"] = "form-control mb-10 "
+        self.fields["new_password1"].widget.attrs["placeholder"] = "New Password"
+        self.fields["new_password1"].widget.attrs["class"] = "form-control mb-10 "
 
         self.fields["new_password2"].widget.attrs[
-            "placeholder"] = "Retype the new password"
-        self.fields["new_password2"].widget.attrs[
-            "class"] = "form-control mb-10 "
+            "placeholder"
+        ] = "Retype the new password"
+        self.fields["new_password2"].widget.attrs["class"] = "form-control mb-10 "
