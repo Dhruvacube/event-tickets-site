@@ -22,6 +22,8 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from post_office import mail
+from django.db.models import Q
+
 from post_office.models import EmailTemplate
 
 from main.tasks import mail_queue
@@ -164,12 +166,13 @@ def loginform(request):
     if request.method == "POST":
         form = LoginForm(request=request, data=request.POST)
 
-        username = request.POST.get("username")
-        if not User.objects.filter(username=username).exists():
+        username_email = request.POST.get("username_email")
+        user_obj = User.objects.filter(Q(username=username_email) | Q(email=username_email))
+        if not user_obj.exists():
             messages.warning(request, "Please create an new account !")
             return redirect(reverse("signin"))
         if form.is_valid():
-            username = form.cleaned_data.get("username")
+            username = user_obj.all()[0].username
             password = form.cleaned_data.get("password")
             try:
                 next_url = ast.literal_eval(str(request.POST.get("next")))

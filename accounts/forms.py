@@ -118,15 +118,17 @@ class SignupForm(forms.Form):
 
 
 class LoginForm(AuthenticationForm):
+    username_email = forms.CharField(label='Email or Username', max_length=250)
     class Meta:
         model = User
-        fields = ("username", "password")
+        fields = ("username_email", "password")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["username"].widget.attrs[
-            "placeholder"] = "Type in username"
-        self.fields["username"].widget.attrs["class"] = "form-control"
+        self.fields = dict(reversed(list(self.fields.items())))
+        self.fields.pop("username")
+        self.fields["username_email"].widget.attrs["placeholder"] = "Type in email or username"
+        self.fields["username_email"].widget.attrs["class"] = "form-control"
 
         self.fields["password"].widget.attrs[
             "placeholder"] = "Type in your password"
