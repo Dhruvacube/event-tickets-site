@@ -49,7 +49,6 @@ def view_payments_history(request):
 @sync_to_async
 @login_required
 @verify_entry_for_orders
-@cache_page(60 * 15)
 def make_order(request):
     if request.method == "POST":
         # calculating orders amount logic
@@ -192,7 +191,6 @@ def make_order(request):
 @require_POST
 @csrf_exempt
 @login_required
-@cache_page(60 * 15)
 def payment_stats(request):
     payment_id = request.POST.get("razorpay_payment_id", "")
     razorpay_order_id = request.POST.get("razorpay_order_id", "")
@@ -307,7 +305,6 @@ def payment_stats(request):
 @sync_to_async
 @csrf_exempt
 @require_POST
-@cache_page(60 * 15)
 def update_payments(request):
     try:
         payments = Payments.objects.filter(payment_status="P").iterator()
