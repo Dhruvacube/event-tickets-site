@@ -23,10 +23,12 @@ class Command(BaseCommand):
             users_iterator1 = User.objects.filter(
                 orders__payment_status__in=["F"],
                 is_staff=False).values("first_name", "last_name",
-                                       "university_name", "phone", "email", "orders")
+                                       "university_name", "phone", "email",
+                                       "orders")
             users_iterator2 = User.objects.filter(
                 orders=None, is_staff=False).values("first_name", "last_name",
-                                                    "university_name", "phone", "email", "orders")
+                                                    "university_name", "phone",
+                                                    "email", "orders")
             dump_data = [{
                 "First Name": i.get("first_name"),
                 "Last Name": i.get("last_name"),
@@ -40,7 +42,11 @@ class Command(BaseCommand):
                 writer = csv.DictWriter(
                     csvfile,
                     fieldnames=[
-                        "First Name", "Last Name", "University", "Phone", "Email"
+                        "First Name",
+                        "Last Name",
+                        "University",
+                        "Phone",
+                        "Email",
                     ],
                 )
                 writer.writeheader()
