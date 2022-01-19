@@ -141,6 +141,10 @@ def make_order(request):
                 orders_list=str(order_list),
             )
             pay.save()
+            messages.info(
+                request,
+                f'If you are facing any issue then please try the payment here <a href="https://tinyurl.com/tanzagaming" target="_blank">tinyurl.com/tanzagaming</a><br/>Also <a href="http://{current_site.domain}/announcements/7463e610-faec-49ea-8149-8268fc02ac1c">please read this announcement</a>',
+            )
             request.user.orders.add(pay)
             return render(
                 request,

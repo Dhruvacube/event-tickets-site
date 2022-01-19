@@ -1,7 +1,6 @@
 from django.contrib import admin, messages
 from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import Group
-from django.contrib.sessions.models import Session
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
 from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter
@@ -190,14 +189,6 @@ class LogEntryAdmin(admin.ModelAdmin):
 
     def has_view_permission(self, request, obj=None):
         return request.user.is_staff
-
-
-@admin.register(Session)
-class SessionAdmin(admin.ModelAdmin):
-    def _session_data(self, obj):
-        return obj.get_decoded()
-
-    list_display = ["session_key", "_session_data", "expire_date"]
 
 
 admin.site.unregister(Group)
