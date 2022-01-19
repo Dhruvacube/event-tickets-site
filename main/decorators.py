@@ -27,7 +27,7 @@ def new_session_message(function):
             current_site = get_current_site(request)
             messages.info(
                 request,
-                f'If you are facing any issue then please try the payment here <a href="https://tinyurl.com/tanzagaming">tinyurl.com/tanzagaming</a><br/>Also <a href="http://{current_site.domain}/announcements/7463e610-faec-49ea-8149-8268fc02ac1c">please read this announcement</a>',
+                f'If you are facing any issue then please try the payment here <a href="https://tinyurl.com/tanzagaming" target="_blank">tinyurl.com/tanzagaming</a><br/>Also <a href="http://{current_site.domain}/announcements/7463e610-faec-49ea-8149-8268fc02ac1c">please read this announcement</a>',
             )
             request.session["first_session"] = True
         return function(request, *args, **kwargs)
