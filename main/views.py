@@ -9,7 +9,7 @@ from django.views.decorators.cache import cache_page
 
 from accounts.models import User
 
-from .decorators import verify_entry_to_group, new_session_message
+from .decorators import new_session_message, verify_entry_to_group
 from .models import *
 
 
