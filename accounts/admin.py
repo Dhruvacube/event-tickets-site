@@ -27,7 +27,7 @@ class CustomUserAdmin(UserAdmin):
                 "zip_code",
                 "gender",
                 "referral_code",
-                "group_unique_id"
+                "group_unique_id",
             )
         },
     ), ) + (UserAdmin.fieldsets[2], UserAdmin.fieldsets[3]) + ((_("Orders"), {

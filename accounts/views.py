@@ -25,8 +25,8 @@ from django.utils.translation import gettext_lazy as _
 from post_office import mail
 from post_office.models import EmailTemplate
 
-from main.tasks import mail_queue
 from main.decorators import new_session_message
+from main.tasks import mail_queue
 from referral.models import Referral
 
 from .forms import (
@@ -80,8 +80,9 @@ class PasswordResetDoneViews(PasswordResetDoneView):
 @login_required
 def view_profile(request):
     if request.method == "POST":
-        form = EditProfileForm(
-            request.POST, instance=request.user, admin=False)
+        form = EditProfileForm(request.POST,
+                               instance=request.user,
+                               admin=False)
 
         if form.is_valid():
             user = form.save(commit=False)
@@ -91,8 +92,7 @@ def view_profile(request):
             else:
                 if Referral.objects.filter(referral_code=referral).exists():
                     request.user.referral_code = Referral.objects.filter(
-                        referral_code=referral
-                    ).get()
+                        referral_code=referral).get()
                 else:
                     messages.warning(
                         request,
@@ -100,13 +100,13 @@ def view_profile(request):
                     )
 
             messages.success(
-                request, "Your <strong>Profile</strong> has been update successfully !"
-            )
+                request,
+                "Your <strong>Profile</strong> has been update successfully !")
             form.save(commit=True)
             return redirect(reverse("view_profile"))
         if not form.errors:
-            messages.error(
-                request, "Please correct the errors mentioned below!")
+            messages.error(request,
+                           "Please correct the errors mentioned below!")
 
     else:
         form = EditProfileForm(instance=request.user, admin=False)
@@ -132,7 +132,8 @@ def change_password(request):
 
         if form.is_valid():
             messages.success(
-                request, "Your <strong>password</strong> has been update successfully !"
+                request,
+                "Your <strong>password</strong> has been update successfully !"
             )
             form.save()
             update_session_auth_hash(request, form.user)
@@ -168,8 +169,7 @@ def loginform(request):
 
         username_email = request.POST.get("username_email")
         user_obj = User.objects.filter(
-            Q(username=username_email) | Q(email=username_email)
-        )
+            Q(username=username_email) | Q(email=username_email))
         if not user_obj.exists():
             messages.warning(request, "Please create an new account !")
             return redirect(reverse("signin"))
@@ -197,7 +197,11 @@ def loginform(request):
     return render(
         request,
         "login.html",
-        {"title": "Login", "form": form, "next_url": request.GET.get("next")},
+        {
+            "title": "Login",
+            "form": form,
+            "next_url": request.GET.get("next")
+        },
     )
 
 
@@ -212,24 +216,19 @@ def signup(request):
 
             def generate_code(n: int = 7):
                 return "".join(
-                    secrets.choice(
-                        string.ascii_letters + string.digits +
-                        str(secrets.randbits(7))
-                    )
-                    for i in range(n)
-                ).upper()
+                    secrets.choice(string.ascii_letters + string.digits +
+                                   str(secrets.randbits(7)))
+                    for i in range(n)).upper()
 
             username = generate_code()
             password = generate_code(10)
             data = form.cleaned_data
-            data.update(
-                {
-                    "username": username,
-                    "password": password,
-                    "is_active": True,
-                    "address1": data.get("address"),
-                }
-            )
+            data.update({
+                "username": username,
+                "password": password,
+                "is_active": True,
+                "address1": data.get("address"),
+            })
             try:
                 del data["address"]
             except:
@@ -240,8 +239,7 @@ def signup(request):
                 user.referral_code = None
             elif Referral.objects.filter(referral_code=referral).exists():
                 user.referral_code = Referral.objects.filter(
-                    referral_code=referral
-                ).get()
+                    referral_code=referral).get()
             else:
                 messages.warning(
                     request,
