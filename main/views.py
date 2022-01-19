@@ -15,7 +15,6 @@ from .models import *
 
 @sync_to_async
 @new_session_message
-@cache_page(60 * 15)
 def home(request):
     sponser = list(Sponser.objects.iterator())
     random.shuffle(sponser)
