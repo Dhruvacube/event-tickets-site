@@ -56,7 +56,6 @@ def view_annoucements(request):
 
 
 @sync_to_async
-@login_required
 @cache_page(60 * 15)
 def view_annoucements_full(request, announcement_id):
     all_ = GlobalAnnouncements.objects.filter(

@@ -9,12 +9,13 @@ from django.views.decorators.cache import cache_page
 
 from accounts.models import User
 
-from .decorators import verify_entry_to_group
+from .decorators import verify_entry_to_group, new_session_message
 from .models import *
 
 
 @sync_to_async
 @cache_page(60 * 15)
+@new_session_message
 def home(request):
     sponser = list(Sponser.objects.iterator())
     random.shuffle(sponser)

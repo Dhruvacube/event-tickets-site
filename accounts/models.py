@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from payments.models import Payments
 from referral.models import Referral
+from main.models import GameGroup
 
 
 def validate_zip(value):
@@ -100,6 +101,14 @@ class User(AbstractUser):
                                       on_delete=models.CASCADE,
                                       null=True,
                                       blank=True)
+
+    def group_unique_id(self):
+        for i in self.orders.all():
+            if i.payment_status == 'S':
+                game_group = ''
+                for j,i in enumerate(GameGroup.objects.filter(payment_id=i).iterator()):
+                    game_group+=f'Game Group {j+1}: {i.group_unique_id} ; {i.game.name}\n'
+                return game_group
 
     class Meta:
         unique_together = ("email", "registration_no")

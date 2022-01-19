@@ -1,6 +1,8 @@
 from functools import lru_cache, wraps
-
+from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
 
 from .models import GameGroup
 
@@ -13,5 +15,17 @@ def verify_entry_to_group(function):
         if count > 0:
             return function(request, *args, **kwargs)
         raise PermissionDenied
+
+    return wrap
+
+
+def new_session_message(function):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        if request.session.get('first_session') is None:
+            current_site = get_current_site(request)
+            messages.info(request, f'If you are facing any issue then please try the payment here <a href="https://tinyurl.com/tanzagaming">tinyurl.com/tanzagaming</a><br/>Also <a href="http://{current_site.domain}/announcements/7463e610-faec-49ea-8149-8268fc02ac1c">please read this announcement</a>')
+            request.session['first_session'] = True
+        return function(request, *args, **kwargs)
 
     return wrap

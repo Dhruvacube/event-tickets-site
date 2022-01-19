@@ -26,6 +26,7 @@ from post_office import mail
 from post_office.models import EmailTemplate
 
 from main.tasks import mail_queue
+from main.decorators import new_session_message
 from referral.models import Referral
 
 from .forms import (
@@ -160,6 +161,7 @@ def user_logout(request):
 
 
 @sync_to_async
+@new_session_message
 def loginform(request):
     if request.method == "POST":
         form = LoginForm(request=request, data=request.POST)
@@ -200,6 +202,7 @@ def loginform(request):
 
 
 @sync_to_async
+@new_session_message
 def signup(request):
     current_site = get_current_site(request)
     if request.method == "POST":

@@ -27,6 +27,7 @@ class CustomUserAdmin(UserAdmin):
                 "zip_code",
                 "gender",
                 "referral_code",
+                "group_unique_id"
             )
         },
     ), ) + (UserAdmin.fieldsets[2], UserAdmin.fieldsets[3]) + ((_("Orders"), {
@@ -44,7 +45,7 @@ class CustomUserAdmin(UserAdmin):
         "unique_id",
     )
     verbose_name_plural = "Profile"
-    readonly_fields = ("unique_id", )
+    readonly_fields = ("unique_id", "group_unique_id")
 
     def has_add_permission(self, request, obj=None):
         return request.user.is_superuser
