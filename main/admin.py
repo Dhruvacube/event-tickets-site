@@ -21,11 +21,16 @@ class GamesAdmin(admin.ModelAdmin):
         "solo_entry",
         "squad_entry",
         "image_url",
-        "registrations_closed"
+        "registrations_closed",
     )
     list_filter = (("platform", ChoiceDropdownFilter), )
     search_fields = list_display
-    readonly_fields = ("view_image", "static_images_list", "game_unique_id", "registrations_closed")
+    readonly_fields = (
+        "view_image",
+        "static_images_list",
+        "game_unique_id",
+        "registrations_closed",
+    )
     list_per_page = 15
 
     fieldsets = (
@@ -71,7 +76,7 @@ class GamesAdmin(admin.ModelAdmin):
 
     def has_view_permission(self, request, obj=None):
         return request.user.is_staff
-    
+
     def registration_closed(self, request, queryset):
         queryset.update(registrations_closed=True)
 
@@ -85,9 +90,8 @@ class GamesAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-    registration_closed.short_description = (
-        "Close the Registration")
-    
+    registration_closed.short_description = "Close the Registration"
+
     def registration_open(self, request, queryset):
         queryset.update(registrations_closed=True)
 
@@ -101,8 +105,7 @@ class GamesAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-    registration_open.short_description = (
-        "Open the Registration")
+    registration_open.short_description = "Open the Registration"
 
     actions = [registration_closed, registration_open]
 
@@ -191,7 +194,6 @@ class SponserAdmin(admin.ModelAdmin):
 
     def has_view_permission(self, request, obj=None):
         return request.user.is_staff
-
 
 
 @admin.register(LogEntry)

@@ -20,17 +20,19 @@ def view_annoucements(request):
             GameGroup.objects.filter(users__in=[
                 request.user,
             ]).iterator())
-        announcements = (GlobalAnnouncements.objects.filter(publish=True).union(
-            GroupsAnnouncements.objects.filter(
-                groups__in=groups, publish=True).union(
-                    UsersAnnouncements.objects.filter(
-                        users__in=[
-                            request.user,
-                        ],
-                        publish=True,
-                    ))).reverse())
+        announcements = (GlobalAnnouncements.objects.filter(
+            publish=True).union(
+                GroupsAnnouncements.objects.filter(
+                    groups__in=groups, publish=True).union(
+                        UsersAnnouncements.objects.filter(
+                            users__in=[
+                                request.user,
+                            ],
+                            publish=True,
+                        ))).reverse())
     else:
-        announcements = GlobalAnnouncements.objects.filter(publish=True).reverse().all()
+        announcements = GlobalAnnouncements.objects.filter(
+            publish=True).reverse().all()
 
     if announcements.count() <= 0:
         messages.info(request, r"No announcements there ¯\_(ツ)_/¯")

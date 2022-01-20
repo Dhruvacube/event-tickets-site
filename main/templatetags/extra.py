@@ -29,19 +29,18 @@ def filter_users_id(queryset, value: int):
 
 @register.filter(name="check_success")
 def check_success(queryset):
-    payments_list = queryset.filter(payment_status="S").count() 
-    if payments_list >= 1 or Games.objects.filter(registrations_closed=False).count() == 0:
+    payments_list = queryset.filter(payment_status="S").count()
+    if (payments_list >= 1
+            or Games.objects.filter(registrations_closed=False).count() == 0):
         return False
     return True
 
 
 @register.filter(name="if_groups")
 def if_groups(user):
-    groups = GameGroup.objects.filter(
-        users__in=[
-            user,
-        ]
-    ).count()
+    groups = GameGroup.objects.filter(users__in=[
+        user,
+    ]).count()
     if groups >= 1:
         return True
     return False
