@@ -23,7 +23,7 @@ def verify_entry_to_group(function):
 def new_session_message(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
-        if (request.session.get("first_session") is None or
+        if (request.session.get("first_session") is None and
                 Games.objects.filter(registrations_closed=False).count() != 0):
             current_site = get_current_site(request)
             messages.info(
