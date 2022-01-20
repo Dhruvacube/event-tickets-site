@@ -26,7 +26,7 @@ def new_session_message(function):
         if (request.session.get("first_session") is None or
                 Games.objects.filter(registrations_closed=False).count() != 0):
             current_site = get_current_site(request)
-            messages.info(request, "Please check the event <a href='https://miku.anime-thighs-are-the.best/miku-chan/ZX0IZLuL' target='_blank'>from here</a>")
+            messages.info(request, "Please check the event schedule <a href='https://miku.anime-thighs-are-the.best/miku-chan/ZX0IZLuL' target='_blank'>from here</a>")
             messages.info(
                 request,
                 f'If you are facing any issue then please try the payment here <a href="https://tinyurl.com/tanzagaming" target="_blank">tinyurl.com/tanzagaming</a><br/>Also <a href="http://{current_site.domain}/announcements/7463e610-faec-49ea-8149-8268fc02ac1c">please read this announcement</a>',
