@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0008_alter_games_game_unique_id'),
+        ("main", "0008_alter_games_game_unique_id"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='games',
-            name='registrations_closed',
+            model_name="games",
+            name="registrations_closed",
             field=models.BooleanField(default=False),
         ),
     ]
