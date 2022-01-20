@@ -14,7 +14,7 @@
                     <h1 data-aos="fade-right">{{game.name}}</h1>
                     <hr/>
                     <h3 class="text-start fw-bold" data-aos="zoom-in-down">{{game.long_description|safe}}</h3>
-               {% if user.is_authenticated and user.orders.all|check_success %}<a href="{% url 'make_order' %}" data-aos="zoom-in-up"><button class="btn btn-danger btn-lg">Buy the tickets now / Pay Now</button></a>{% endif %}
+               {% if not game.registrations_closed %}{% if user.is_authenticated and user.orders.all|check_success %}<a href="{% url 'make_order' %}" data-aos="zoom-in-up"><button class="btn btn-danger btn-lg">Buy the tickets now / Pay Now</button></a>{% endif %}{% endif %}
                 </div>
                 <div class="col d-flex justify-content-center"><img src="{% static game.image_url %}" class="rounded" width="100%" height="100%" loading="lazy" data-aos="fade-down" loading="lazy"></div>
             </div>
