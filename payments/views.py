@@ -141,10 +141,11 @@ def make_order(request):
                 orders_list=str(order_list),
             )
             pay.save()
-            messages.info(
-                request,
-                f'If you are facing any issue then please try the payment here <a href="https://tinyurl.com/tanzagaming" target="_blank">tinyurl.com/tanzagaming</a><br/>Also <a href="http://{current_site.domain}/announcements/7463e610-faec-49ea-8149-8268fc02ac1c">please read this announcement</a>',
-            )
+            if Games.objects.filter(registrations_closed=False).count() != 0:
+                messages.info(
+                    request,
+                    f'If you are facing any issue then please try the payment here <a href="https://tinyurl.com/tanzagaming" target="_blank">tinyurl.com/tanzagaming</a><br/>Also <a href="http://{current_site.domain}/announcements/7463e610-faec-49ea-8149-8268fc02ac1c">please read this announcement</a>',
+                )
             request.user.orders.add(pay)
             return render(
                 request,
@@ -182,7 +183,7 @@ def make_order(request):
         request,
         "checkout.html",
         {
-            "games": Games.objects.all(),
+            "games": Games.objects.filter(registrations_closed=False).all(),
             "payafter": False,
             "display_games": True,
             "title": "Pay for the Games that you want to participate",

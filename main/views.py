@@ -69,7 +69,7 @@ def group_make(request):
             messages.success(request, "Saved Successfully!")
             parameters.update({"message_group_id": group_id})
         try:
-            groups.group_name = request.POST.get("groupname")
+            groups.group_name = str(request.POST.get("groupname"))
             groups.save()
         except Exception as e:
             messages.error(

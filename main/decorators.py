@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
 
-from .models import GameGroup
+from .models import GameGroup, Games
 
 
 @lru_cache(maxsize=5)
@@ -23,7 +23,7 @@ def verify_entry_to_group(function):
 def new_session_message(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
-        if request.session.get("first_session") is None:
+        if request.session.get("first_session") is None or Games.objects.filter(registrations_closed=False).count() != 0:
             current_site = get_current_site(request)
             messages.info(
                 request,

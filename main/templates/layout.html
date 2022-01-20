@@ -85,6 +85,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-danger" href="{% url 'home' %}#sponsers" tabindex="-1" aria-disabled="true">Our Sponsers</a>
                     </li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'all_anouncements' %}" tabindex="-1" aria-disabled="true"><i class='bx bxs-bell-ring bx-tada' ></i> Announcements</a></li>
                     {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><b>Take Actions</b> <i class='bx bx-arrow-back bx-tada'></i></a>
@@ -107,7 +108,6 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{% url 'all_anouncements' %}" tabindex="-1" aria-disabled="true"><i class='bx bxs-bell-ring bx-tada' ></i> Announcements</a></li>
                             <li><a class="dropdown-item text-danger" href="{% url 'signout' %}"><i class='bx bx-log-out'></i> Logout</a></li>
                         </ul>
                     </li>
@@ -135,7 +135,6 @@
         {% block body %}{% endblock %}
 
     </main>
-    <!-- <a id="back-to-top" href="#" class="btn btn-warning btn-lg back-to-top" role="button"><i class='bx bxs-up-arrow'></i></a> -->
 
     <footer id="footer" loading="lazy">
 

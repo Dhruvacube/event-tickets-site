@@ -21,15 +21,16 @@ class GamesAdmin(admin.ModelAdmin):
         "solo_entry",
         "squad_entry",
         "image_url",
+        "registrations_closed"
     )
     list_filter = (("platform", ChoiceDropdownFilter), )
     search_fields = list_display
-    readonly_fields = ("view_image", "static_images_list", "game_unique_id")
+    readonly_fields = ("view_image", "static_images_list", "game_unique_id", "registrations_closed")
     list_per_page = 15
 
     fieldsets = (
         (_("Name"), {
-            "fields": ("game_unique_id", "name")
+            "fields": ("game_unique_id", "name", "registrations_closed")
         }),
         (_("Description"), {
             "fields": ("short_description", "long_description")
@@ -70,6 +71,40 @@ class GamesAdmin(admin.ModelAdmin):
 
     def has_view_permission(self, request, obj=None):
         return request.user.is_staff
+    
+    def registration_closed(self, request, queryset):
+        queryset.update(registrations_closed=True)
+
+        self.message_user(
+            request,
+            ngettext(
+                "%d registration closed.",
+                "%d registrations were closed.",
+                len(queryset),
+            ) % int(len(queryset)),
+            messages.SUCCESS,
+        )
+
+    registration_closed.short_description = (
+        "Close the Registration")
+    
+    def registration_open(self, request, queryset):
+        queryset.update(registrations_closed=True)
+
+        self.message_user(
+            request,
+            ngettext(
+                "%d registration opened.",
+                "%d registrations were opened.",
+                len(queryset),
+            ) % int(len(queryset)),
+            messages.SUCCESS,
+        )
+
+    registration_open.short_description = (
+        "Open the Registration")
+
+    actions = [registration_closed, registration_open]
 
     class Media:
         js = retrivejsfile()
@@ -156,6 +191,7 @@ class SponserAdmin(admin.ModelAdmin):
 
     def has_view_permission(self, request, obj=None):
         return request.user.is_staff
+
 
 
 @admin.register(LogEntry)

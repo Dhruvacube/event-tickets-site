@@ -59,6 +59,7 @@ class Games(models.Model):
     squad_entry = models.IntegerField(help_text="Enter the Sqaud entry price",
                                       default=0)
     squad_entry_members = models.IntegerField(default=5)
+    registrations_closed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
