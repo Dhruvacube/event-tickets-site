@@ -107,7 +107,7 @@ class GameGroup(models.Model):
         Payments,
         on_delete=models.CASCADE,
         help_text=_("This is to be filled by computer"),
-        null=True
+        null=True,
     )
 
     def __str__(self):
