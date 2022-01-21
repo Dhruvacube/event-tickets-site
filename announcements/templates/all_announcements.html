@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}{% load static %}{% block body %}
 <section class="games" id="games">
     <div class="container">
-        <ol>
+        <ul>
             {% for i in announcements %}
             <li>
                 <div class="container">
@@ -12,7 +12,7 @@
                     <a href="{% url 'announcement_detail' i.announcement_id %}" data-aos="flip-left"><button type="button" class="btn btn-info">Read Full Announcement</button></a>
                 </div>
             </li>
-            <hr/> {% endfor %}</ol> {% if announcements.has_other_pages %} <span>{% if announcements.has_previous %}
+            <hr/> {% endfor %}</ul> {% if announcements.has_other_pages %} <span>{% if announcements.has_previous %}
         <a href="?page={{announcements.previous_page_number}}" data-aos="flip-left" class="float-start"><button class="btn btn-primary plr-25 btn-block" ><i class='bx bx-skip-previous' style="font-size: 30px;" ></i></button></a>{% endif %}</span>
         <span>
         {% if announcements.has_next %}
