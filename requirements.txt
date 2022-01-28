@@ -35,7 +35,7 @@ kombu==5.2.3
 numpy==1.22.1
 packaging==21.3
 pandas==1.4.0
-prompt-toolkit==3.0.24
+prompt-toolkit==3.0.26
 psycopg2==2.9.3
 pyparsing==3.0.7
 python-binary-memcached==0.31.1
