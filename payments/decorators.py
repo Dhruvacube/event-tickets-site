@@ -9,8 +9,7 @@ def verify_entry_for_orders(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
         count = request.user.orders.filter(payment_status="S").count()
-        if count > 0 or Games.objects.filter(
-                registrations_closed=False).count == 0:
+        if count > 0 or Games.objects.filter(registrations_closed=True).count() == Games.objects.count():
             raise PermissionDenied
         return function(request, *args, **kwargs)
 
